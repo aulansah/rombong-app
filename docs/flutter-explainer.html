@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ecommerce_app (Flutter) — Panduan Visual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117; --panel:#151b24; --panel2:#1b2330; --line:#263042; --text:#e6edf3; --muted:#8b98a9;
+  --go:#00add8; --go2:#5dc9e2; --amber:#f2b84b; --green:#3fb950; --red:#f0605d; --violet:#a78bfa;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.6}
+a{color:var(--go2)}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 22px 80px}
+header.hero{position:relative;padding:28px 0 8px}
+.eyebrow{font-family:"JetBrains Mono",monospace;color:var(--go);font-size:13px;letter-spacing:.08em}
+h1{font-family:"Space Grotesk",sans-serif;font-size:clamp(30px,5vw,50px);line-height:1.1;margin:10px 0 12px;font-weight:700}
+h1 span{color:var(--go)}
+.lead{color:var(--muted);max-width:760px;font-size:17px}
+.gopher{position:absolute;right:0;top:10px;width:120px;opacity:.9}
+@media(max-width:760px){.gopher{display:none}}
+.toolbar{position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 75%,transparent);padding:18px 0 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.search{flex:1 1 240px;background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:10px 16px;font:inherit;outline:none}
+.search:focus{border-color:var(--go)}
+.chip{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:7px 14px;font:500 13px Inter,sans-serif;cursor:pointer;transition:.2s}
+.chip:hover{color:var(--text);border-color:var(--go)}
+.chip.on{background:var(--go);border-color:var(--go);color:#04202a}
+.count{color:var(--muted);font-size:13px;margin-left:auto}
+section.mod{margin-top:34px}
+.mod-head{display:flex;align-items:baseline;gap:4px 12px;margin-bottom:14px;flex-wrap:wrap}
+.mod-head h2{font-family:"Space Grotesk",sans-serif;margin:0;font-size:24px}
+.mod-head p{margin:0;color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;cursor:pointer;overflow:hidden;
+  opacity:0;transform:translateY(14px);animation:rise .5s forwards;transition:border-color .2s, transform .2s, box-shadow .2s}
+.card:hover{border-color:var(--go);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,173,216,.12)}
+.card::after{content:"";position:absolute;inset:auto -40% -60% auto;width:160px;height:160px;border-radius:50%;background:radial-gradient(var(--glow,rgba(0,173,216,.18)),transparent 70%);transition:.3s}
+.card:hover::after{inset:auto -20% -40% auto}
+@keyframes rise{to{opacity:1;transform:none}}
+.tag{display:inline-block;font:600 11px "JetBrains Mono",monospace;letter-spacing:.04em;padding:3px 8px;border-radius:6px;margin-bottom:10px}
+.t-go{background:rgba(0,173,216,.15);color:var(--go2)}
+.t-pattern{background:rgba(167,139,250,.15);color:var(--violet)}
+.t-db{background:rgba(242,184,75,.15);color:var(--amber)}
+.t-sec{background:rgba(240,96,93,.15);color:var(--red)}
+.t-test{background:rgba(63,185,80,.15);color:var(--green)}
+.card h3{margin:0 0 6px;font:600 17px "Space Grotesk",sans-serif}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.card .file{margin-top:12px;font:12px "JetBrains Mono",monospace;color:#6b7a8f}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.empty{color:var(--muted);padding:40px 0;text-align:center;display:none}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(3,6,10,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:18px;z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.open{opacity:1;pointer-events:auto}
+.modal{width:min(980px,100%);max-height:92vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:18px;
+  transform:translateY(30px) scale(.96);opacity:0;transition:transform .35s cubic-bezier(.2,.9,.25,1.2),opacity .25s}
+.overlay.open .modal{transform:none;opacity:1}
+.m-top{position:sticky;top:0;background:var(--panel);border-bottom:1px solid var(--line);padding:18px 22px;display:flex;gap:14px;align-items:flex-start;z-index:2}
+.m-top h2{margin:2px 0 2px;font:700 24px "Space Grotesk",sans-serif}
+.m-top .file{font:12px "JetBrains Mono",monospace;color:var(--muted)}
+.x{margin-left:auto;background:var(--panel2);border:1px solid var(--line);color:var(--text);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:18px;flex:none}
+.x:hover{border-color:var(--go)}
+.m-body{padding:6px 22px 24px}
+.tabs{display:flex;gap:6px;margin:16px 0 4px;flex-wrap:wrap}
+.tab{background:none;border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:7px 14px;font:500 14px Inter,sans-serif;cursor:pointer}
+.tab.on{background:var(--panel2);color:var(--text);border-color:var(--go)}
+.pane{display:none;animation:fade .35s}
+.pane.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pane h4{font:600 13px "JetBrains Mono",monospace;color:var(--go);letter-spacing:.05em;margin:20px 0 6px;text-transform:uppercase}
+.pane p,.pane li{color:#c9d4df;font-size:15.5px}
+.pane ul{padding-left:20px;margin:6px 0}
+.callout{border-left:3px solid var(--amber);background:rgba(242,184,75,.07);padding:10px 14px;border-radius:0 10px 10px 0;margin:14px 0;color:#e8d9b5;font-size:15px}
+.callout.good{border-color:var(--green);background:rgba(63,185,80,.07);color:#c8e6cc}
+.callout.bad{border-color:var(--red);background:rgba(240,96,93,.07);color:#f1c9c8}
+pre{background:#0a0e14;color:#d6deeb;padding:14px 16px;overflow:auto;white-space:pre;tab-size:4}
+pre[class*=language-]{border-radius:12px;margin:10px 0 !important;font-size:13.5px !important;border:1px solid var(--line)}
+.token.comment{color:#6b7a8f;font-style:italic}.token.string{color:#a5d6a7}.token.keyword{color:#c792ea}
+.token.function{color:#82aaff}.token.number,.token.boolean{color:#f78c6c}.token.operator,.token.punctuation{color:#89ddff}
+.token.builtin,.token.class-name{color:#ffcb6b}
+code{font-family:"JetBrains Mono",monospace}
+:not(pre)>code{background:var(--panel2);padding:1px 6px;border-radius:5px;font-size:.9em;color:var(--go2)}
+.codehead{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font:12px "JetBrains Mono",monospace;color:var(--muted)}
+.copy{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:4px 10px;cursor:pointer;font:12px Inter,sans-serif}
+.copy:hover{color:var(--text)}
+.qa{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
+.qa b{display:block;color:var(--text);margin-bottom:6px}
+.qa span{color:#c9d4df}
+.navrow{display:flex;justify-content:space-between;margin-top:22px;gap:10px}
+.nav{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:9px 14px;cursor:pointer;font:500 14px Inter,sans-serif}
+.nav:hover{border-color:var(--go)}
+
+/* visuals */
+.viz{background:#0a0e14;border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.viz-title{font:600 12px "JetBrains Mono",monospace;color:var(--muted);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.play{background:var(--go);color:#04202a;border:0;border-radius:8px;padding:5px 12px;font:600 12px Inter,sans-serif;cursor:pointer}
+.lane{display:flex;align-items:center;gap:10px;margin:8px 0;font:12px "JetBrains Mono",monospace;color:var(--muted)}
+.lane .lbl{width:150px;flex:none}
+.track{position:relative;flex:1;height:24px;background:#111823;border-radius:6px;overflow:hidden}
+.bar{position:absolute;top:3px;bottom:3px;left:0;width:0;border-radius:4px;background:var(--go)}
+.bar.b2{background:var(--violet)} .bar.b3{background:var(--amber)} .bar.b4{background:var(--green)}
+.buyers{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:10px 0}
+.buyer{height:30px;border-radius:7px;background:#1b2330;display:flex;align-items:center;justify-content:center;font:600 11px "JetBrains Mono",monospace;color:var(--muted);transition:.3s}
+.buyer.ok{background:rgba(63,185,80,.25);color:var(--green)}
+.buyer.no{background:rgba(240,96,93,.2);color:var(--red)}
+.stockbox{display:flex;gap:6px;align-items:center;font:13px "JetBrains Mono",monospace;color:var(--muted)}
+.unit{width:26px;height:26px;border-radius:6px;background:var(--amber);transition:.3s}
+.unit.gone{background:#1b2330;transform:scale(.7)}
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+.node{padding:8px 12px;border-radius:9px;border:1px solid var(--line);background:#111823;font:12.5px "JetBrains Mono",monospace;color:var(--muted);transition:.3s}
+.node.hot{border-color:var(--go);color:var(--text);background:rgba(0,173,216,.12);box-shadow:0 0 0 3px rgba(0,173,216,.12)}
+.node.miss{border-color:var(--amber);color:var(--text);background:rgba(242,184,75,.12)}
+.arrow{color:#4a5668}
+.log{font:12.5px "JetBrains Mono",monospace;color:var(--muted);min-height:20px;margin-top:6px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.card{opacity:1;transform:none}}
+.views{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 4px;padding:5px;background:var(--panel);border:1px solid var(--line);border-radius:14px;width:fit-content;max-width:100%}
+.vbtn{background:none;border:0;color:var(--muted);padding:9px 16px;border-radius:10px;font:600 14px Inter,sans-serif;cursor:pointer;transition:.2s}
+.vbtn:hover{color:var(--text)}
+.vbtn.on{background:var(--go);color:#04202a}
+.view{display:none}.view.on{display:block;animation:fade .4s}
+.journey{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.jstep{display:flex;flex-direction:column;align-items:flex-start;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;color:var(--text);opacity:0;transform:translateY(10px);animation:rise .45s forwards;transition:border-color .2s}
+.jstep:hover,.jstep.on{border-color:var(--go);box-shadow:0 0 0 3px rgba(0,173,216,.12)}
+.jwho{font:600 11px "JetBrains Mono",monospace;color:var(--go2)}.jwho.admin{color:var(--violet)}.jwho.done{color:var(--green)}
+.jwhat{font:600 14px Inter,sans-serif}
+.jarrow{color:#4a5668;font-size:18px}
+.flowchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.seqcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;scroll-margin-top:16px}
+.seqhead{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.seqhead h3{margin:0;font:700 22px "Space Grotesk",sans-serif}.seqhead p{margin:4px 0 0;color:var(--muted)}
+.seqctl{display:flex;gap:8px}.play{font-size:13px;padding:8px 14px}.nav.small{padding:7px 12px;font-size:13px}
+.legend2{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0 8px;font-size:12.5px;color:var(--muted)}
+.lg{display:inline-block;width:22px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.lg.req{background:#00add8}.lg.ret{background:repeating-linear-gradient(90deg,#8b98a9 0 5px,transparent 5px 9px)}.lg.db{background:#f2b84b}.lg.err{background:repeating-linear-gradient(90deg,#f0605d 0 5px,transparent 5px 9px)}
+.seqscroll{overflow-x:auto;border-radius:12px;background:#0a0e14;border:1px solid var(--line)}
+#seq{display:block}
+#seq .life{stroke:#2a3546;stroke-dasharray:3 5}
+#seq .lanehd rect{fill:#151b24;stroke:#2a3546;transition:.25s}
+#seq .lanehd text{fill:#c9d4df;font:600 13px Inter,sans-serif}
+#seq .lanehd.on rect{fill:rgba(0,173,216,.16);stroke:#00add8}
+#seq .step{cursor:pointer}
+#seq .step .hit{fill:transparent}
+#seq .step:hover .hit,#seq .step:focus .hit{fill:rgba(255,255,255,.035)}
+#seq .step.active .hit{fill:rgba(0,173,216,.09)}
+#seq .step .lbl{fill:#c9d4df;font:500 12.5px Inter,sans-serif;paint-order:stroke;stroke:#0a0e14;stroke-width:5px}
+#seq .step.done{opacity:.55}
+#seq .step.active .lbl{fill:#fff}
+#packet{filter:drop-shadow(0 0 6px currentColor)}
+.seqcard .caption{position:sticky;bottom:12px;box-shadow:0 -8px 24px rgba(0,0,0,.35)}
+.caption{margin-top:12px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:#c9d4df;font-size:15px;min-height:48px}
+.cap-who{font:12px "JetBrains Mono",monospace;color:var(--go2);margin-left:6px}
+.cap-file{display:inline-block;font:12px "JetBrains Mono",monospace;color:var(--muted);margin-top:4px}
+.flowwho{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.who{font:600 12px "JetBrains Mono",monospace;background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:3px 9px}
+.kind{font:12px "JetBrains Mono",monospace;margin-left:4px}
+.runtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.rtab{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:9px 16px;font:600 14px Inter,sans-serif;cursor:pointer}
+.rtab.on{border-color:var(--go);color:var(--text);background:var(--panel2)}
+.runpane{display:none}.runpane.on{display:block;animation:fade .35s}
+.need{background:rgba(0,173,216,.08);border:1px solid rgba(0,173,216,.3);border-radius:12px;padding:12px 16px;color:#cfe9f2;margin-bottom:8px}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.steps>li{counter-increment:s;position:relative;padding:4px 0 10px 48px;border-left:2px solid var(--line);margin-left:16px}
+ol.steps>li::before{content:counter(s);position:absolute;left:-17px;top:4px;width:32px;height:32px;border-radius:50%;background:var(--panel2);border:2px solid var(--go);color:var(--go2);font:700 14px "JetBrains Mono",monospace;display:flex;align-items:center;justify-content:center}
+ol.steps>li:last-child{border-left-color:transparent}
+ol.steps h4{margin:6px 0 4px;font:600 16px "Space Grotesk",sans-serif}
+ol.steps p{color:#c9d4df;margin:6px 0}
+ol.steps.compact>li{padding-bottom:14px;color:#c9d4df;padding-top:9px}
+.whybox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 22px;color:#c9d4df}
+.whybox li{margin:4px 0}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.vs{grid-template-columns:1fr}}
+.vscol{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px;color:#c9d4df}
+.vscol h4{margin:4px 0 6px;font:600 16px "Space Grotesk",sans-serif;color:var(--text)}
+.vscol.bad{border-color:rgba(240,96,93,.4)}.vscol.good{border-color:rgba(63,185,80,.45)}
+.vscol li{margin:5px 0}
+h3.sub{font:600 18px "Space Grotesk",sans-serif;margin:24px 0 10px}
+.dockflow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dstep{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--text);font:500 13.5px Inter,sans-serif;cursor:pointer;display:flex;gap:8px;align-items:center}
+.dstep:hover,.dstep.on{border-color:var(--go)}
+.dn{width:20px;height:20px;border-radius:50%;background:var(--go);color:#04202a;font:700 11px Inter,sans-serif;display:inline-flex;align-items:center;justify-content:center}
+.card.static{cursor:default}
+table.cmp{width:100%;border-collapse:collapse;margin:10px 0;font-size:14.5px;background:var(--panel);border-radius:12px;overflow:hidden}
+table.cmp th,table.cmp td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;color:#c9d4df}
+table.cmp th{background:var(--panel2);color:var(--text);font:600 13px Inter,sans-serif}
+.node small{color:var(--muted);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">ecommerce_app / flutter / docs</div>
+    <h1>Flutter + <span>Clean Architecture + Riverpod</span></h1>
+    <p class="lead">Panduan visual aplikasi Flutter yang tersambung ke backend go-ecommerce-api: konsep yang dipakai beserta kode aslinya, alur data dalam sequence diagram yang bisa diklik, cara menjalankan dengan backend lokal, dan alasan memilih Riverpod.</p>
+    <div class="legend">
+      <span class="tag t-go">DART</span><span class="tag t-pattern">ARSITEKTUR</span><span class="tag t-db">STATE</span><span class="tag t-sec">NETWORK</span><span class="tag t-test">TESTING</span>
+    </div>
+    <svg class="gopher" viewBox="0 0 120 120" aria-hidden="true">
+      <rect x="22" y="70" width="76" height="22" rx="7" fill="#a78bfa"/><rect x="22" y="44" width="76" height="22" rx="7" fill="#00add8"/><rect x="22" y="18" width="76" height="22" rx="7" fill="#3fb950"/>
+      <text x="60" y="34" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#04202a">presentation</text>
+      <text x="60" y="60" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#04202a">domain</text>
+      <text x="60" y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#1b1340">data</text></svg>
+  </header>
+  <nav class="views" id="views">
+    <button class="vbtn on" data-view="konsep">Konsep kode</button>
+    <button class="vbtn" data-view="alur">Alur sistem</button>
+    <button class="vbtn" data-view="jalankan">Cara menjalankan</button>
+    <button class="vbtn" data-view="kenapa">Kenapa begini?</button>
+  </nav>
+
+  <div class="view on" id="v-konsep">
+  <div class="toolbar">
+    <input class="search" id="q" placeholder="Cari konsep: AsyncValue, provider, override, interceptor…" aria-label="Cari konsep">
+    <div id="chips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    <span class="count" id="count"></span>
+  </div>
+
+  <main id="sections"></main>
+  <div class="empty" id="empty">Tidak ada konsep yang cocok.</div>
+  </div>
+<div class="view" id="v-alur">
+  <section class="mod">
+    <div class="mod-head"><h2>User flow</h2><p>perjalanan user di aplikasi (fase 1). Klik satu tahap untuk melihat sequence diagram-nya.</p></div>
+    <div class="journey" id="journey"></div>
+  </section>
+
+  <section class="mod">
+    <div class="mod-head"><h2>Sequence diagram</h2><p>urutan pesan antar komponen. Klik panah untuk detail service, file, dan kodenya.</p></div>
+    <div class="flowchips" id="flowchips"></div>
+    <div class="seqcard">
+      <div class="seqhead">
+        <div><h3 id="flow-title"></h3><p id="flow-desc"></p></div>
+        <div class="seqctl">
+          <button class="play" id="flow-play">Putar alur</button>
+          <button class="nav small" id="flow-reset">Reset</button>
+        </div>
+      </div>
+      <div class="legend2">
+        <span><i class="lg req"></i>request</span><span><i class="lg ret"></i>respons</span>
+        <span><i class="lg db"></i>API / storage</span><span><i class="lg err"></i>kalau gagal</span>
+      </div>
+      <div class="seqscroll"><svg id="seq" role="img" aria-label="Sequence diagram"></svg></div>
+      <div class="caption" id="flow-caption">Tekan "Putar alur" atau klik salah satu panah.</div>
+    </div>
+  </section>
+</div>
+<div class="view" id="v-jalankan">
+  <section class="mod">
+    <div class="mod-head"><h2>Menjalankan aplikasi</h2><p>backend Go berjalan lokal di laptop, Flutter tersambung ke sana</p></div>
+    <div class="runtabs">
+      <button class="rtab on" data-run="backend">1. Nyalakan backend</button>
+      <button class="rtab" data-run="flutter">2. Jalankan Flutter</button>
+      <button class="rtab" data-run="cek">3. Cek & test</button>
+      <button class="rtab" data-run="error">Kalau error</button>
+    </div>
+
+    <div class="runpane on" data-run="backend">
+      <div class="need">Flutter hanya tampilan. Tanpa backend Go yang hidup, login akan gagal dengan pesan "Tidak bisa terhubung ke server".</div>
+      <ol class="steps">
+        <li><h4>Pakai Docker (paling mudah)</h4>
+<pre><code>cd "I:\Fullstack Web Developer and Flutter Developer\ECommerce API"
+docker compose up --build -d</code></pre></li>
+        <li><h4>Atau tanpa Docker</h4>
+<pre><code>go run ./cmd/api</code></pre>
+<p>Butuh PostgreSQL lokal dan file <code>.env</code>; langkah lengkapnya ada di panduan visual backend.</p></li>
+        <li><h4>Pastikan hidup</h4>
+<pre><code>curl.exe http://localhost:8080/health</code></pre>
+<p>Akun admin bawaan: <code>admin@example.com</code> / <code>Admin12345</code>.</p></li>
+      </ol>
+    </div>
+
+    <div class="runpane" data-run="flutter">
+      <ol class="steps">
+        <li><h4>Buat folder platform (sekali saja)</h4>
+<pre><code>cd "I:\Fullstack Web Developer and Flutter Developer\ECommerce App"
+flutter create --org com.aulansah --project-name ecommerce_app .</code></pre>
+<p>Ini membuat folder <code>android/</code>, <code>ios/</code>, <code>web/</code>, <code>windows/</code>. File yang sudah ada (<code>lib/</code>, <code>test/</code>, <code>pubspec.yaml</code>) tidak ditimpa.</p></li>
+        <li><h4>Install package</h4>
+<pre><code>flutter --version   # app ini butuh Flutter 3.35+ (Dart 3.9+)
+flutter pub get</code></pre></li>
+        <li><h4>Jalankan sesuai target</h4>
+<table class="cmp"><tr><th>Target</th><th>Perintah</th><th>URL backend yang dipakai</th></tr>
+<tr><td>Emulator Android</td><td><code>flutter run</code></td><td><code>10.0.2.2:8080</code></td></tr>
+<tr><td>Chrome</td><td><code>flutter run -d chrome --web-port 3000</code></td><td><code>localhost:8080</code></td></tr>
+<tr><td>Windows desktop</td><td><code>flutter run -d windows</code></td><td><code>localhost:8080</code></td></tr>
+<tr><td>HP asli (Wi-Fi sama)</td><td><code>flutter run --dart-define=API_BASE_URL=http://IP-LAPTOP:8080/api/v1</code></td><td>IP laptop, cek dengan <code>ipconfig</code></td></tr></table>
+<p>Chrome harus port 3000 karena backend hanya mengizinkan origin <code>http://localhost:3000</code> (CORS).</p></li>
+      </ol>
+    </div>
+
+    <div class="runpane" data-run="cek">
+      <ol class="steps">
+        <li><h4>Analisis statis</h4>
+<pre><code>flutter analyze</code></pre>
+<p>Harus "No issues found". Kalau ada error, kirim hasilnya ke Claude.</p></li>
+        <li><h4>Unit & widget test</h4>
+<pre><code>flutter test</code></pre>
+<p>Tidak butuh backend: semuanya memakai mock, provider override, dan fake backend.</p></li>
+        <li><h4>CI di GitHub</h4>
+<p>Setelah di-push ke GitHub, workflow <code>.github/workflows/flutter-ci.yml</code> otomatis menjalankan analyze dan test. Hasilnya terlihat di tab <b>Actions</b> repo.</p></li>
+        <li><h4>Coba di aplikasi</h4>
+<ol class="steps compact">
+<li>Login dengan akun admin → masuk ke home, terlihat badge "Admin".</li>
+<li>Logout → daftar akun baru dengan password lemah → muncul error validasi.</li>
+<li>Daftar dengan email yang sama dua kali → muncul "Email is already registered" dari backend.</li>
+<li>Tutup aplikasi lalu buka lagi → langsung ke home (sesi dipulihkan).</li>
+<li>Matikan backend lalu buka aplikasi → kembali ke login, dan saat login muncul pesan "Tidak bisa terhubung ke server".</li>
+</ol></li>
+        <li><h4>Uji auto refresh lebih cepat</h4>
+<p>Access token default berlaku 15 menit. Untuk mencobanya, tambahkan <code>JWT_ACCESS_TTL: 1m</code> di bagian <code>environment</code> service <code>api</code> pada <code>docker-compose.yml</code>, lalu <code>docker compose up -d</code>. Setelah 1 menit, aplikasi tetap jalan tanpa diminta login lagi.</p></li>
+      </ol>
+    </div>
+
+    <div class="runpane" data-run="error">
+      <table class="cmp"><tr><th>Gejala</th><th>Penyebab & solusi</th></tr>
+      <tr><td>"Tidak bisa terhubung ke server"</td><td>Backend belum jalan, atau URL salah untuk target (lihat tabel di tab 2). HP asli: izinkan port 8080 di Windows Firewall.</td></tr>
+      <tr><td>Chrome: error CORS</td><td>Jalankan dengan <code>--web-port 3000</code>.</td></tr>
+      <tr><td>Android: "Cleartext HTTP traffic not permitted"</td><td>Tambahkan <code>android:usesCleartextTraffic="true"</code> di tag <code>&lt;application&gt;</code> pada <code>android/app/src/debug/AndroidManifest.xml</code>.</td></tr>
+      <tr><td>Build Android: minSdk dari flutter_secure_storage</td><td>Set <code>minSdk = 23</code> atau lebih di <code>android/app/build.gradle(.kts)</code>.</td></tr>
+      <tr><td><code>pub get</code>: "requires SDK version &gt;=3.9.0"</td><td>Flutter terlalu lama (butuh 3.35+). Jalankan <code>flutter upgrade</code>.</td></tr>
+      <tr><td><code>pub get</code> konflik versi</td><td>Kirim hasil <code>flutter --version</code>; rentang versi di pubspec disesuaikan.</td></tr>
+      </table>
+    </div>
+  </section>
+</div>
+<div class="view" id="v-kenapa">
+  <section class="mod">
+    <div class="mod-head"><h2>Kenapa aplikasi ini ada?</h2></div>
+    <div class="whybox">
+      <p>Ini <b>aplikasi toko online</b> yang memakai backend <code>go-ecommerce-api</code>. Semua aturan (harga, stok, status pesanan) tetap di server; aplikasi hanya menampilkan dan mengirim aksi user.</p>
+      <p>Sebagai portfolio, pasangan backend Go + aplikasi Flutter menunjukkan kemampuan <b>end-to-end</b>: merancang API sekaligus memakainya dengan benar, termasuk hal yang sering terlewat seperti refresh token paralel, error validasi per field, dan sesi yang kedaluwarsa.</p>
+    </div>
+  </section>
+
+  <section class="mod">
+    <div class="mod-head"><h2>Kenapa Clean Architecture?</h2></div>
+    <div class="vs">
+      <div class="vscol bad"><h4>Semua di widget</h4><ul>
+        <li>Widget memanggil HTTP, parsing JSON, dan menyimpan token sendiri.</li>
+        <li>Logika tidak bisa di-test tanpa menjalankan UI.</li>
+        <li>API berubah sedikit → banyak layar ikut diubah.</li>
+        <li>Cepat di awal, makin lambat saat fitur bertambah.</li></ul></div>
+      <div class="vscol good"><h4>Clean Architecture</h4><ul>
+        <li><b>Domain</b> berisi aturan bisnis, tanpa Flutter dan Dio.</li>
+        <li><b>Data</b> mengurus HTTP dan penyimpanan.</li>
+        <li><b>Presentation</b> hanya UI dan state.</li>
+        <li>Tiap layer di-test terpisah dengan objek palsu lewat provider override. Konsepnya sejajar dengan handler–service–repository di backend Go.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="mod">
+    <div class="mod-head"><h2>Riverpod atau Bloc?</h2><p>keputusan: Riverpod</p></div>
+    <table class="cmp"><tr><th></th><th>Riverpod (dipakai)</th><th>Bloc</th></tr>
+      <tr><td>Cara kerja</td><td>Provider dibaca lewat <code>ref</code>, state berupa AsyncValue</td><td>UI kirim event → Bloc → emit state</td></tr>
+      <tr><td>Loading / error</td><td>AsyncValue bawaan</td><td>Class state ditulis sendiri</td></tr>
+      <tr><td>Dependency injection</td><td>Bawaan (provider = DI)</td><td>Terpisah (get_it)</td></tr>
+      <tr><td>Testing</td><td>ProviderContainer + override</td><td>bloc_test</td></tr>
+      <tr><td>Jumlah kode</td><td>Lebih ringkas</td><td>Lebih banyak</td></tr>
+    </table>
+    <div class="callout good" style="margin-top:14px">Versi pertama memakai Bloc. Lowongan Flutter Mobile Engineer yang dituju meminta Riverpod (providers, AsyncValue, provider overrides untuk testing, DI lewat Riverpod), jadi state management dipindah. Hanya presentation dan wiring DI yang berubah; domain dan data tetap sama.</div>
+  </section>
+
+  <section class="mod">
+    <div class="mod-head"><h2>Kenapa tiap bagian ada?</h2><p>klik untuk melihat alurnya</p></div>
+    <div class="grid" id="whymods"></div>
+  </section>
+
+  <section class="mod">
+    <div class="mod-head"><h2>Yang terjadi saat <code>flutter run</code></h2></div>
+    <div class="dockflow" id="dockflow"></div>
+    <div class="caption" id="dock-caption">Klik salah satu tahap.</div>
+  </section>
+
+  <section class="mod">
+    <div class="mod-head"><h2>Kenapa package ini?</h2></div>
+    <div class="grid" id="whytech"></div>
+  </section>
+</div>
+
+</div>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="modal" id="modal"></div>
+</div>
+
+<!-- ====================================================== CODE SNIPPETS -->
+<script type="text/plain" id="c-layers">lib/
+  core/providers.dart          ← provider bersama: Dio, TokenStorage, SessionEvents
+  features/auth/
+    domain/                    ← pure Dart: tanpa Flutter, Riverpod, Dio, JSON
+      entities/user.dart
+      repositories/auth_repository.dart     (abstract interface)
+      usecases/auth_usecases.dart           (Login, Register, GetCurrentUser, Logout)
+    data/                      ← tahu HTTP dan JSON
+      models/auth_models.dart
+      datasources/auth_remote_data_source.dart
+      repositories/auth_repository_impl.dart   implements AuthRepository
+    auth_providers.dart        ← wiring fitur: data → domain (DI lewat Riverpod)
+    presentation/              ← tahu Flutter dan Riverpod
+      controllers/auth_controller.dart        (AsyncNotifier sesi)
+      controllers/auth_form_controllers.dart  (login & daftar, autoDispose)
+      pages/login_page.dart, register_page.dart
+
+Arah dependency:  presentation → domain ← data</script>
+<script type="text/plain" id="c-entity">// domain/entities/user.dart — entity: hanya data yang dipahami aplikasi
+class User extends Equatable {
+  const User({required this.id, required this.name, required this.email, required this.role});
+  final String id;
+  final String name;
+  final String email;
+  final String role;
+
+  bool get isAdmin => role == 'admin'; // aturan kecil milik domain
+  @override
+  List<Object?> get props => [id, name, email, role];
+}
+
+// data/models/auth_models.dart — model: entity + cara membaca JSON
+class UserModel extends User {
+  const UserModel({required super.id, required super.name, required super.email, required super.role});
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        id: json['id'] as String,
+        name: json['name'] as String,
+        email: json['email'] as String,
+        role: json['role'] as String,
+      );
+}</script>
+<script type="text/plain" id="c-repo">// domain/repositories/auth_repository.dart — KONTRAK, ditulis di domain
+abstract interface class AuthRepository {
+  Future<Result<User>> login({required String email, required String password});
+  Future<Result<User?>> currentUser();
+  Future<Result<void>> logout();
+  ...
+}
+
+// data/repositories/auth_repository_impl.dart — IMPLEMENTASI, di data
+class AuthRepositoryImpl implements AuthRepository {
+  AuthRepositoryImpl({required AuthRemoteDataSource remote, required TokenStorage storage})
+      : _remote = remote, _storage = storage;
+
+  @override
+  Future<Result<User>> login({required String email, required String password}) {
+    return guard(() async {
+      final (user, tokens) = await _remote.login(email, password); // record destructuring
+      await _storage.save(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken);
+      return user;
+    });
+  }
+}</script>
+<script type="text/plain" id="c-usecase">// core/usecase.dart
+abstract interface class UseCase<T, P> {
+  Future<Result<T>> call(P params);
+}
+
+// domain/usecases/auth_usecases.dart
+class Register implements UseCase<User, RegisterParams> {
+  const Register(this._repository);
+  final AuthRepository _repository;
+
+  // Aturan bisnis: setelah daftar, langsung login.
+  @override
+  Future<Result<User>> call(RegisterParams p) async {
+    final created = await _repository.register(name: p.name.trim(), email: p.email.trim(), password: p.password);
+    if (created is Err<User>) return created;
+    return _repository.login(email: p.email.trim(), password: p.password);
+  }
+}
+
+// Dipanggil seperti fungsi, karena method-nya bernama call():
+final result = await register(const RegisterParams(name: 'Auldy', email: 'a@b.co', password: 'Secret123'));</script>
+<script type="text/plain" id="c-result">// core/result.dart
+sealed class Result<T> { const Result(); }
+final class Ok<T> extends Result<T>  { const Ok(this.value);   final T value; }
+final class Err<T> extends Result<T> { const Err(this.failure); final Failure failure; }
+
+// core/error/failure.dart
+sealed class Failure extends Equatable { const Failure(this.message); final String message; ... }
+final class NetworkFailure extends Failure { ... }      // backend mati / URL salah
+final class UnauthorizedFailure extends Failure { ... } // 401
+final class ServerFailure extends Failure {             // 4xx/5xx lain
+  final int statusCode; final String? code; final Map<String, String> fieldErrors; ...
+}
+
+// Pemakaian: switch harus menangani SEMUA kasus, kalau tidak → compile error
+emit(switch (result) {
+  Ok(:final value)     => AuthFormState(status: FormStatus.success, user: value),
+  Err(:final failure)  => AuthFormState.fromFailure(failure),
+});</script>
+<script type="text/plain" id="c-di">// lib/core/providers.dart — objek bersama
+final tokenStorageProvider = Provider<TokenStorage>(
+  (ref) => SecureTokenStorage(const FlutterSecureStorage()),
+);
+
+final dioProvider = Provider<Dio>((ref) {
+  final dio = createDio(
+    baseUrl: Env.apiBaseUrl,
+    storage: ref.watch(tokenStorageProvider),   // dependency dibaca lewat ref
+    session: ref.watch(sessionEventsProvider),
+  );
+  ref.onDispose(dio.close);
+  return dio;
+});
+
+// lib/features/auth/auth_providers.dart — wiring fitur auth
+final authRepositoryProvider = Provider<AuthRepository>(   // bertipe INTERFACE domain
+  (ref) => AuthRepositoryImpl(
+    remote: ref.watch(authRemoteDataSourceProvider),
+    storage: ref.watch(tokenStorageProvider),
+  ),
+);
+
+final loginUseCaseProvider = Provider<Login>((ref) => Login(ref.watch(authRepositoryProvider)));
+
+// lib/main.dart — ProviderScope = container semua provider
+runApp(const ProviderScope(child: App()));</script>
+<script type="text/plain" id="c-bloc">// presentation/controllers/auth_controller.dart
+//   AsyncLoading     → sedang cek sesi (splash)
+//   AsyncData(user)  → sudah login
+//   AsyncData(null)  → belum login
+class AuthController extends AsyncNotifier<User?> {
+  @override
+  Future<User?> build() async {
+    // lapisan network melapor sesi habis lewat Stream
+    final sub = ref.watch(sessionEventsProvider).expired.listen((_) {
+      state = const AsyncData(null);
+    });
+    ref.onDispose(sub.cancel);
+
+    final result = await ref.read(getCurrentUserUseCaseProvider)(const NoParams());
+    return switch (result) {
+      Ok(:final value) => value,
+      Err() => null,          // backend mati saat start → tampilkan login
+    };
+  }
+
+  void signedIn(User user) => state = AsyncData(user);
+
+  Future<void> logout() async {
+    await ref.read(logoutUseCaseProvider)(const NoParams());
+    state = const AsyncData(null);
+  }
+}
+
+final authControllerProvider = AsyncNotifierProvider<AuthController, User?>(AuthController.new);</script>
+<script type="text/plain" id="c-cubit">// presentation/controllers/auth_form_controllers.dart
+class LoginController extends AsyncNotifier<User?> {
+  @override
+  FutureOr<User?> build() => null;              // idle
+
+  Future<void> submit({required String email, required String password}) async {
+    if (state.isLoading) return;                 // abaikan double tap
+    state = const AsyncLoading();
+    final result = await ref.read(loginUseCaseProvider)(LoginParams(email: email, password: password));
+    if (!ref.mounted) return;                    // layar sudah ditutup
+    state = switch (result) {
+      Ok(:final value) => AsyncData(value),
+      Err(:final failure) => AsyncError(failure, StackTrace.current),
+    };
+  }
+}
+
+// autoDispose: state dibuang saat layar ditutup → form bersih saat dibuka lagi
+final loginControllerProvider =
+    AsyncNotifierProvider.autoDispose<LoginController, User?>(LoginController.new);
+
+// UI: AsyncValue langsung dipakai
+final state = ref.watch(loginControllerProvider);
+if (state case AsyncError(:final error)) ErrorBanner.fromError(error),
+PrimaryButton(label: 'Masuk', loading: state.isLoading, onPressed: _submit),</script>
+<script type="text/plain" id="c-riverpod">// Gambaran kalau sesi yang sama ditulis dengan Bloc (TIDAK dipakai lagi):
+sealed class AuthEvent {}
+final class AuthStarted extends AuthEvent {}
+final class AuthLoggedIn extends AuthEvent { final User user; ... }
+
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc({required GetCurrentUser getCurrentUser, ...}) : super(const AuthState.unknown()) {
+    on<AuthStarted>(_onStarted);
+    on<AuthLoggedIn>((event, emit) => emit(AuthState.authenticated(event.user)));
+  }
+}
+
+// + get_it untuk DI, + class AuthState sendiri untuk loading/data/error
+// Riverpod: AsyncValue sudah punya loading/data/error, provider sudah jadi DI.</script>
+<script type="text/plain" id="c-equatable">// Equatable dipakai di entity, params, dan Failure
+class LoginParams extends Equatable {
+  const LoginParams({required this.email, required this.password});
+  final String email;
+  final String password;
+  @override
+  List<Object?> get props => [email, password];
+}
+
+// Kenapa penting di test: mocktail mencocokkan argumen dengan ==
+when(() => login(const LoginParams(email: 'a@b.co', password: 'Secret123')))
+    .thenAnswer((_) async => const Ok(testUser));
+
+// Tanpa Equatable: dua LoginParams dengan isi sama dianggap BERBEDA → stub tidak cocok
+// AsyncValue Riverpod sendiri sudah membandingkan berdasarkan nilai.</script>
+<script type="text/plain" id="c-listener">class _LoginPageState extends ConsumerState<LoginPage> {
+  void _submit() {
+    // ref.read: ambil SEKALI, untuk aksi (di callback)
+    ref.read(loginControllerProvider.notifier).submit(email: _email.text, password: _password.text);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // ref.listen: efek samping SEKALI per perubahan
+    ref.listen(loginControllerProvider, (previous, next) {
+      if (next case AsyncData(value: final User user)) {
+        ref.read(authControllerProvider.notifier).signedIn(user);  // router lalu pindah ke /home
+      }
+    });
+
+    // ref.watch: rebuild setiap state berubah
+    final state = ref.watch(loginControllerProvider);
+    ...
+  }
+}
+
+// home_page.dart — select: rebuild hanya kalau user berubah
+final user = ref.watch(authControllerProvider.select((s) => s.value));</script>
+<script type="text/plain" id="c-interceptor">// core/network/auth_interceptor.dart
+class AuthInterceptor extends QueuedInterceptor {   // error ditangani SATU per SATU
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    if (!_publicPaths.contains(options.path)) {
+      final token = await _storage.readAccessToken();
+      if (token != null) options.headers['Authorization'] = 'Bearer $token';
+    }
+    handler.next(options);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
+    final request = err.requestOptions;
+    if (err.response?.statusCode != 401 || _publicPaths.contains(request.path)) {
+      return handler.next(err);
+    }
+    final current = await _storage.readAccessToken();
+    if (current == null) return handler.next(err);
+
+    // Request lain di antrean SUDAH refresh → cukup ulangi dengan token baru
+    if (request.headers['Authorization'] != 'Bearer $current') {
+      return handler.resolve(await _retry(request, current));
+    }
+
+    final res = await _plain.post('/auth/refresh', data: {'refresh_token': await _storage.readRefreshToken()});
+    final data = res.data!['data'];
+    await _storage.save(accessToken: data['access_token'], refreshToken: data['refresh_token']);
+    handler.resolve(await _retry(request, data['access_token']));
+  }
+}</script>
+<script type="text/plain" id="c-errmap">// core/network/api_error_mapper.dart
+Failure mapDioException(DioException e) {
+  switch (e.type) {
+    case DioExceptionType.connectionTimeout:
+    case DioExceptionType.connectionError:
+      return const NetworkFailure('Tidak bisa terhubung ke server. Pastikan backend sudah berjalan.');
+    default:
+      break;
+  }
+  // Baca format error standar backend Go:
+  // { "message": "...", "error": { "code": "...", "details": [{field, message}] } }
+  ...
+  if (status == 401) return UnauthorizedFailure(message);
+  return ServerFailure(message, statusCode: status, code: code, fieldErrors: fieldErrors);
+}
+
+// Repository tidak perlu try/catch berulang
+Future<Result<T>> guard<T>(Future<T> Function() run) async {
+  try {
+    return Ok(await run());
+  } on DioException catch (e) {
+    return Err(mapDioException(e));
+  } catch (e) {
+    return Err(UnexpectedFailure(e.toString()));
+  }
+}</script>
+<script type="text/plain" id="c-storage">// core/storage/token_storage.dart
+class SecureTokenStorage implements TokenStorage {
+  SecureTokenStorage(this._storage);
+  final FlutterSecureStorage _storage; // Android Keystore / iOS Keychain
+  String? _accessToken;                // cache di memori: dibaca tiap request
+  bool _loaded = false;
+
+  @override
+  Future<String?> readAccessToken() async {
+    if (!_loaded) {
+      _accessToken = await _storage.read(key: 'access_token');
+      _loaded = true;
+    }
+    return _accessToken;
+  }
+
+  @override
+  Future<void> save({required String accessToken, required String refreshToken}) async {
+    _accessToken = accessToken;
+    _loaded = true;
+    await _storage.write(key: 'access_token', value: accessToken);
+    await _storage.write(key: 'refresh_token', value: refreshToken);
+  }
+}</script>
+<script type="text/plain" id="c-env">// core/config/env.dart
+abstract final class Env {
+  static const _override = String.fromEnvironment('API_BASE_URL');
+
+  static String get apiBaseUrl {
+    if (_override.isNotEmpty) return _override;     // --dart-define
+    if (kIsWeb) return 'http://localhost:8080/api/v1';
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return 'http://10.0.2.2:8080/api/v1';        // emulator → laptop
+    }
+    return 'http://localhost:8080/api/v1';
+  }
+}
+
+// HP asli:
+// flutter run --dart-define=API_BASE_URL=http://192.168.1.10:8080/api/v1</script>
+<script type="text/plain" id="c-router">// core/router/app_router.dart
+final routerProvider = Provider<GoRouter>((ref) {
+  final refresh = ValueNotifier<AsyncValue<User?>>(const AsyncLoading());
+  // listen (bukan watch): router dibuat SEKALI, hanya diberi kabar
+  ref.listen(authControllerProvider, (previous, next) => refresh.value = next, fireImmediately: true);
+
+  final router = GoRouter(
+    initialLocation: '/splash',
+    refreshListenable: refresh,
+    redirect: (context, state) {
+      final auth = ref.read(authControllerProvider);
+      final location = state.matchedLocation;
+      final onAuthPage = location == '/login' || location == '/register';
+
+      if (auth.isLoading && !auth.hasValue) return location == '/splash' ? null : '/splash';
+      if (auth.value == null) return onAuthPage ? null : '/login';
+      return (onAuthPage || location == '/splash') ? '/home' : null;
+    },
+    routes: [ ... '/splash', '/login', '/register', '/home' ],
+  );
+  ref.onDispose(() { router.dispose(); refresh.dispose(); });
+  return router;
+});</script>
+<script type="text/plain" id="c-blocte">// test/features/auth/auth_controller_test.dart
+ProviderContainer makeContainer() => ProviderContainer.test(
+      overrides: [
+        getCurrentUserUseCaseProvider.overrideWithValue(getCurrentUser), // mock
+        logoutUseCaseProvider.overrideWithValue(logout),                 // mock
+        sessionEventsProvider.overrideWithValue(session),
+      ],
+    );
+
+test('starts as AsyncLoading, then restores the saved session', () async {
+  when(() => getCurrentUser(any())).thenAnswer((_) async => const Ok<User?>(testUser));
+  final container = makeContainer();
+
+  expect(container.read(authControllerProvider), isA<AsyncLoading<User?>>());
+  expect(await container.read(authControllerProvider.future), testUser);
+});
+
+// test/widget_test.dart — override yang sama di widget test
+await tester.pumpWidget(ProviderScope(
+  overrides: [loginUseCaseProvider.overrideWithValue(login)],
+  child: const MaterialApp(home: LoginPage()),
+));</script>
+<script type="text/plain" id="c-fakebackend">// test/helpers/fakes.dart — pura-pura jadi backend Go, tanpa jaringan
+class FakeBackend implements HttpClientAdapter {
+  int refreshCalls = 0;
+
+  @override
+  Future<ResponseBody> fetch(RequestOptions options, Stream<Uint8List>? body, Future<void>? cancel) async {
+    await Future<void>.delayed(const Duration(milliseconds: 20)); // supaya request benar-benar tumpang tindih
+    if (options.path == '/auth/refresh') {
+      refreshCalls++;
+      return _json(200, {'data': {'access_token': 'new-access', 'refresh_token': 'new-refresh'}});
+    }
+    if (options.headers['Authorization'] != 'Bearer new-access') {
+      return _json(401, {'message': 'Invalid or expired token', 'error': {'code': 'UNAUTHORIZED'}});
+    }
+    return _json(200, {'data': {'path': options.path}});
+  }
+}
+
+// test/core/network/auth_interceptor_test.dart
+final results = await Future.wait([dio.get('/a'), dio.get('/b'), dio.get('/c')]);
+expect(backend.refreshCalls, 1); // BUKAN 3</script>
+<script type="text/plain" id="c-ci"># .github/workflows/flutter-ci.yml
+name: Flutter CI
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test --coverage</script>
+<script type="text/plain" id="c-pagination">// product_list_controller.dart
+class ProductListController extends AsyncNotifier<ProductListState> {
+  static const pageSize = 20;
+
+  @override
+  Future<ProductListState> build() async {
+    final filter = ref.watch(catalogFilterProvider);   // filter berubah → build ulang dari page 1
+    final first = await _fetch(filter, 1);
+    return ProductListState(filter: filter, items: first.items, page: first.page,
+        totalPages: first.totalPages, totalItems: first.totalItems);
+  }
+
+  Future<void> loadMore() async {
+    final current = state.value;
+    // abaikan: belum ada data, sedang reload, halaman berikut sedang dimuat, atau sudah habis
+    if (current == null || state.isLoading || current.isLoadingMore || !current.hasMore) return;
+
+    state = AsyncData(current.copyWith(isLoadingMore: true, clearError: true));
+    final result = await ref.read(getProductsUseCaseProvider)(ProductQuery(page: current.page + 1, ...));
+
+    final latest = state.value;
+    // filter sudah berganti selama menunggu → respons ini basi, buang
+    if (!ref.mounted || state.isLoading || latest == null || latest.filter != current.filter) return;
+
+    state = AsyncData(switch (result) {
+      Ok(:final value) => latest.copyWith(items: [...latest.items, ...value.items], page: value.page, ...),
+      Err(:final failure) => latest.copyWith(isLoadingMore: false, loadMoreError: failure),
+    });
+  }
+}
+
+// catalog_page.dart — infinite scroll
+void _maybeLoadMore() {
+  if (_scroll.position.extentAfter < 400) {
+    ref.read(productListControllerProvider.notifier).loadMore();
+  }
+}</script>
+<script type="text/plain" id="c-debounce">// catalog_filter_controller.dart
+final searchDebounceProvider = Provider<Duration>((ref) => const Duration(milliseconds: 400));
+
+class CatalogFilterController extends Notifier<CatalogFilter> {
+  Timer? _debounce;
+
+  @override
+  CatalogFilter build() {
+    ref.onDispose(() => _debounce?.cancel());
+    return const CatalogFilter();
+  }
+
+  void setSearch(String text) {            // dipanggil setiap ketikan
+    _debounce?.cancel();                   // batalkan timer sebelumnya
+    _debounce = Timer(ref.read(searchDebounceProvider), () {
+      final term = text.trim();
+      if (term != state.search) state = CatalogFilter(search: term, categoryId: state.categoryId);
+    });
+  }
+}
+
+// test: debounce di-override jadi 50ms / 0ms supaya test cepat dan pasti
+ProviderContainer.test(overrides: [searchDebounceProvider.overrideWithValue(Duration.zero)]);</script>
+<script type="text/plain" id="c-family">// catalog_queries.dart
+// Data baca-saja tanpa aksi user → FutureProvider cukup
+final categoriesProvider = FutureProvider<List<Category>>((ref) async {
+  final result = await ref.watch(getCategoriesUseCaseProvider)(const NoParams());
+  return switch (result) {
+    Ok(:final value) => value,
+    Err(:final failure) => throw failure,     // → AsyncError di UI
+  };
+});
+
+// family: satu entri per ID produk. autoDispose: dibuang saat layar detail ditutup
+final productDetailProvider = FutureProvider.autoDispose.family<Product, String>((ref, id) async {
+  final result = await ref.watch(getProductDetailUseCaseProvider)(id);
+  return switch (result) {
+    Ok(:final value) => value,
+    Err(:final failure) => throw failure,
+  };
+});
+
+// UI
+final product = ref.watch(productDetailProvider(productId));
+body: switch (product) {
+  AsyncData(:final value) => _DetailBody(product: value),
+  AsyncError(:final error) => StateView.error(error, onRetry: () => ref.invalidate(productDetailProvider(productId))),
+  _ => const Center(child: CircularProgressIndicator()),
+},</script>
+<script type="text/plain" id="c-tokens">// Figma: collection "Color" → lib/core/theme/app_theme.dart
+abstract final class AppColors {
+  static const primary = Color(0xFF0B7A94);          // Color/primary
+  static const primaryContainer = Color(0xFFD9F2F8); // Color/primary-container
+  static const border = Color(0xFFDDE3E7);           // Color/border
+  static const textMuted = Color(0xFF5B6670);        // Color/text-muted
+  ...
+}
+
+// Figma: text style "Price" (Roboto Bold 15/20)
+static const price = TextStyle(fontSize: 15, height: 20 / 15, fontWeight: FontWeight.w700);
+
+// Figma: component "ProductCard" → lib/features/catalog/presentation/widgets/catalog_widgets.dart
+class ProductCard extends StatelessWidget {
+  // image tile 120px, padding 12/10/12/12, nama max 2 baris, harga, StockBadge
+}
+
+// Figma: component "TextField" → lib/core/widgets/app_text_field.dart
+// label di atas, field outlined 52px, radius 12, ikon 20px</script>
+<script type="text/plain" id="c-optimistic">// cart_controller.dart
+Future<Failure?> updateQuantity(String itemId, int quantity) {
+  _optimistic((cart) => cart.withQuantity(itemId, quantity));   // 1. layar langsung berubah
+  return _send(() => ref.read(updateCartItemUseCaseProvider)(
+      UpdateCartItemParams(itemId: itemId, quantity: quantity)));
+}
+
+Future<Failure?> _send(Future<Result<Cart>> Function() request) {
+  _pending++;
+  final task = _queue.then((_) async {                      // 2. antre: satu request per waktu
+    final result = await request();
+    _pending--;
+    if (!ref.mounted) return null;
+    switch (result) {
+      case Ok(:final value):
+        if (_pending == 0) state = AsyncData(value);          // 3. hanya respons terakhir yang dipasang
+        return null;
+      case Err(:final failure):
+        await _reload();                                    // gagal → ambil ulang dari server
+        return failure;                                     // layar menampilkan SnackBar
+    }
+  });
+  _queue = task.then((_) {}, onError: (_) {});
+  return task;
+}
+
+// build(): keranjang ikut ganti saat login/logout
+final userId = ref.watch(authControllerProvider.select((auth) => auth.value?.id));
+if (userId == null) return Cart.empty;</script>
+<script type="text/plain" id="c-checkout">// order_controllers.dart
+Future<Order?> placeOrder() async {
+  if (state.isLoading) return null;              // tap kedua diabaikan
+  state = const AsyncLoading();
+
+  final result = await ref.read(placeOrderUseCaseProvider)(const NoParams());
+  if (!ref.mounted) return null;
+
+  switch (result) {
+    case Ok(:final value):
+      state = AsyncData(value);
+      ref.invalidate(cartControllerProvider);      // backend sudah mengosongkan keranjang
+      ref.invalidate(orderListControllerProvider); // riwayat dimuat ulang saat dibuka
+      return value;
+    case Err(:final failure):
+      state = AsyncError(failure, StackTrace.current);
+      if (failure is ServerFailure && failure.statusCode == 409) {
+        ref.invalidate(cartControllerProvider);    // stok berubah → tandai item bermasalah
+      }
+      return null;
+  }
+}
+
+// Status dari API → enum. Status baru dari backend tidak membuat app crash.
+static OrderStatus fromApi(String? value) => switch (value) {
+  'PENDING' => pending, 'PAID' => paid, ..., _ => unknown,
+};
+
+// Family notifier di Riverpod 3: parameter lewat constructor
+class OrderDetailController extends AsyncNotifier<Order> {
+  OrderDetailController(this.orderId);
+  final String orderId;
+}
+final orderDetailControllerProvider =
+    AsyncNotifierProvider.autoDispose.family<OrderDetailController, Order, String>(OrderDetailController.new);</script>
+<script type="text/plain" id="c-idem">// payment_usecases.dart
+class StartPayment implements UseCase<Payment, String> {
+  @override
+  Future<Result<Payment>> call(String orderId) async {
+    final first = await _create(orderId);
+    // key lama milik pembayaran yang gagal/kedaluwarsa → buang, buat percobaan baru
+    if (first case Ok(:final value) when value.status.isFinalFailure || value.isExpiredAt(_now())) {
+      await _keys.clear(orderId);
+      return _create(orderId);
+    }
+    return first;
+  }
+
+  Future<Result<Payment>> _create(String orderId) async =>
+      _repository.createPayment(orderId: orderId, idempotencyKey: await _keys.keyFor(orderId));
+}
+
+// payment_repository_impl.dart — key disimpan di keystore, per pesanan
+Future<String> keyFor(String orderId) async {
+  final existing = await _storage.read(key: 'payment_key_$orderId');
+  if (existing != null) return existing;      // retry / buka ulang / restart → key sama
+  final key = uuidV4();
+  await _storage.write(key: 'payment_key_$orderId', value: key);   // disimpan SEBELUM request
+  return key;
+}
+
+// payment_remote_data_source.dart
+_dio.post('/payments', data: {'order_id': orderId},
+    options: Options(headers: {'Idempotency-Key': idempotencyKey}));</script>
+<script type="text/plain" id="c-admin">// app_router.dart — menyembunyikan layar admin (kenyamanan, bukan keamanan)
+if (location.startsWith('/admin') && !user.isAdmin) return '/home';
+
+// admin_providers.dart — setelah menulis, segarkan data yang basi
+Future<Failure?> saveProduct(ProductDraft draft, {String? id}) async {
+  final result = await _ref.read(saveProductUseCaseProvider)(draft, id: id);
+  if (result is Ok<Product>) {
+    _ref.invalidate(productListControllerProvider);       // katalog pelanggan
+    _ref.invalidate(productDetailProvider(result.value.id));
+  }
+  return result.failureOrNull;
+}
+
+// admin_usecases.dart — use case hanya untuk operasi yang punya aturan
+class SaveProduct {
+  Future<Result<Product>> call(ProductDraft input, {String? id}) async {
+    final draft = input.trimmed();
+    final problems = {
+      if (draft.name.length < 3) 'name': 'Minimal 3 karakter',
+      if (draft.price <= 0) 'price': 'Harga harus lebih dari 0',
+      ...
+    };
+    if (problems.isNotEmpty) return Err(ServerFailure('Periksa kembali isian produk.', statusCode: 422, fieldErrors: problems));
+    return id == null ? _repository.createProduct(draft) : _repository.updateProduct(id, draft);
+  }
+}
+
+// order.dart — tabel transisi yang sama dengan backend
+OrderStatus? get nextForAdmin => switch (this) {
+  paid => processing, processing => shipped, shipped => completed, _ => null,
+};</script>
+<script type="text/plain" id="c-async-mini">// Contoh goroutine kamu (Go):
+//   go getCurrency()
+//   go getExchangeRate()
+//   time.Sleep(time.Second)
+
+// Versi Dart:
+Future<void> getCurrency() async => print('Get Currency');
+Future<void> getExchangeRate() async => print('Get Exchange Rate');
+
+Future<void> main() async {
+  // Dua-duanya dimulai sekarang, lalu ditunggu bersama.
+  await Future.wait([getCurrency(), getExchangeRate()]);
+}</script>
+<script type="text/plain" id="c-async">// Di project: menunggu 3 request HTTP sekaligus (test interceptor)
+final results = await Future.wait([
+  dio.get('/a'),
+  dio.get('/b'),
+  dio.get('/c'),
+]);
+
+// Di AsyncNotifier: build() async, UI menampilkan AsyncLoading selama menunggu
+@override
+Future<User?> build() async {
+  final result = await ref.read(getCurrentUserUseCaseProvider)(const NoParams()); // tidak memblok UI
+  ...
+}</script>
+<script type="text/plain" id="c-stream">// core/network/session_events.dart
+class SessionEvents {
+  final _expired = StreamController<void>.broadcast();
+  Stream<void> get expired => _expired.stream;
+  void notifyExpired() {
+    if (!_expired.isClosed) _expired.add(null);
+  }
+}
+
+// Interceptor (lapisan network) memberi kabar...
+_session.notifyExpired();
+
+// ...AuthController (lapisan presentation) yang mendengarkan
+final sub = ref.watch(sessionEventsProvider).expired.listen((_) {
+  state = const AsyncData(null);
+});
+ref.onDispose(sub.cancel);  // berhenti mendengar saat provider dibuang</script>
+<script type="text/plain" id="c-records">// Record: mengembalikan dua nilai tanpa membuat class baru
+Future<(UserModel, TokenPair)> login(String email, String password) async {
+  final res = await _dio.post<Map<String, dynamic>>('/auth/login', data: {...});
+  final data = res.data!['data'] as Map<String, dynamic>;
+  return (
+    UserModel.fromJson(data['user'] as Map<String, dynamic>),
+    TokenPair.fromJson(data['tokens'] as Map<String, dynamic>),
+  );
+}
+
+// Destructuring di pemanggil:
+final (user, tokens) = await _remote.login(email, password);
+
+// Pattern matching di if:
+if (result case Err(failure: UnauthorizedFailure())) {
+  await _storage.clear();
+}</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-dart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+<script>
+const MODULES = [
+  {id:"arsitektur", name:"Clean Architecture", desc:"layer, entity, repository, use case, DI"},
+  {id:"state", name:"State management", desc:"Riverpod: AsyncNotifier, AsyncValue, ref"},
+  {id:"network", name:"Network & penyimpanan", desc:"Dio, refresh token, error, secure storage"},
+  {id:"katalog", name:"Katalog (Fase 2)", desc:"pagination, debounce, family, design token"},
+  {id:"keranjang", name:"Keranjang (Fase 3)", desc:"optimistic update, antrean request, select"},
+  {id:"pesanan", name:"Pesanan (Fase 4)", desc:"checkout aman, invalidate, family notifier, enum status"},
+  {id:"bayar", name:"Pembayaran & Admin (Fase 5–6)", desc:"Idempotency-Key, role admin, invalidate lintas fitur"},
+  {id:"navigasi", name:"Navigasi", desc:"go_router yang mengikuti status login"},
+  {id:"dart", name:"Dart dasar", desc:"async/await, Stream, record & pattern"},
+  {id:"testing", name:"Testing & CI", desc:"provider override, mocktail, fake backend, GitHub Actions"},
+
+{id:"ci", mod:"testing", tag:"test", title:"CI dengan GitHub Actions", short:"Setiap push dan pull request otomatis menjalankan analyze dan test.",
+ file:".github/workflows/flutter-ci.yml",
+ code:[["Di project ini","c-ci"]],
+ what:`<p>GitHub Actions menjalankan workflow di server GitHub setiap ada push ke <code>main</code>/<code>develop</code> atau pull request: install Flutter, <code>flutter pub get</code>, <code>flutter analyze</code>, lalu <code>flutter test --coverage</code>. Hasil coverage disimpan sebagai artifact.</p>
+ <p>Backend Go juga punya workflow sendiri (<code>go-ci.yml</code>) yang menjalankan integration test dengan PostgreSQL sebagai service container.</p>`,
+ why:`<ul><li>Lowongan meminta pengalaman CI/CD untuk mobile. Ini fondasinya; tahap berikutnya adalah build APK/IPA dan distribusi (Codemagic atau Fastlane).</li>
+ <li>Pull request yang membuat test gagal langsung terlihat merah sebelum di-merge.</li>
+ <li>Reviewer bisa melihat badge hijau tanpa menjalankan project sendiri.</li></ul>`,
+ without:`<div class="callout bad">Tanpa CI: test hanya jalan kalau ada yang ingat menjalankannya, dan branch utama bisa rusak tanpa ketahuan.</div>`,
+ qa:[["Apa isi pipeline CI-mu?","Checkout, setup Flutter stable dengan cache, pub get, flutter analyze, lalu flutter test dengan coverage di setiap push dan pull request."],
+     ["Apa langkah berikutnya untuk CD?","Build APK/AAB dan IPA bertanda tangan, lalu distribusi ke Firebase App Distribution atau TestFlight lewat Codemagic atau Fastlane."]]},
+];
+const TAGS = {dart:["DART","t-go"], arch:["ARSITEKTUR","t-pattern"], state:["STATE","t-db"], net:["NETWORK","t-sec"], test:["TESTING","t-test"]};
+
+const C = [
+/* ---------------- ARSITEKTUR ---------------- */
+{id:"clean", mod:"arsitektur", tag:"arch", title:"Clean Architecture", short:"Kode dibagi tiga layer: domain, data, presentation. Dependency selalu mengarah ke domain.",
+ file:"lib/features/auth/", viz:"layers",
+ code:[["Struktur folder","c-layers"]],
+ what:`<p>Clean Architecture memisahkan kode berdasarkan <b>alasan berubahnya</b>:</p>
+ <ul><li><b>Domain</b>: aturan bisnis (entity, kontrak repository, use case). Pure Dart, tidak tahu Flutter, Dio, atau JSON.</li>
+ <li><b>Data</b>: cara mengambil data (HTTP, JSON, penyimpanan). Mengimplementasikan kontrak dari domain.</li>
+ <li><b>Presentation</b>: tampilan dan state (widget, Riverpod notifier).</li></ul>
+ <p>Aturan utamanya: <b>dependency hanya boleh mengarah ke dalam</b>. Presentation dan data boleh meng-import domain; domain tidak boleh meng-import keduanya.</p>`,
+ why:`<ul><li><b>Ganti backend tanpa menyentuh UI.</b> Kalau besok API pindah ke GraphQL atau Firebase, cukup tulis ulang layer data.</li>
+ <li><b>Terbukti saat ganti state management:</b> pindah dari Bloc ke Riverpod hanya mengubah presentation.</li>
+ <li><b>Mudah di-test.</b> Notifier di-test dengan use case palsu lewat provider override; repository di-test dengan data source palsu. Tidak perlu emulator atau backend.</li>
+ <li><b>Sejajar dengan backend Go.</b> Handler ↔ presentation, service ↔ use case, repository ↔ repository. Konsep yang sama, dua bahasa: enak diceritakan saat interview full-stack.</li>
+ <li>Folder <b>per fitur</b> (feature-first): semua yang berhubungan dengan auth ada di <code>features/auth</code>, jadi fitur baru tidak menyentuh fitur lain.</li></ul>`,
+ without:`<div class="callout bad">Tanpa layer: widget memanggil <code>http.post</code> langsung, mem-parsing JSON di <code>onPressed</code>, dan menyimpan token di <code>setState</code>. Satu layar bisa 800 baris, logikanya tidak bisa di-test, dan setiap perubahan API merusak banyak layar.</div>
+ <div class="callout">Jujur soal trade-off: untuk aplikasi kecil, Clean Architecture terasa berlebihan (banyak file untuk satu fitur). Ia mulai terbayar saat fitur bertambah dan saat ditulis test.</div>`,
+ qa:[["Apa itu Clean Architecture?","Memisahkan kode jadi domain, data, dan presentation dengan aturan dependency mengarah ke domain. Domain berisi aturan bisnis yang tidak bergantung pada framework."],
+     ["Kenapa domain tidak boleh tahu Flutter atau Dio?","Supaya aturan bisnis bisa di-test tanpa framework dan tidak ikut berubah saat library atau API berganti."],
+     ["Apa padanannya di backend Go project ini?","Handler ≈ presentation, service ≈ use case, repository interface di service ≈ repository di domain, GormRepository ≈ repository impl di data."]]},
+
+{id:"entity", mod:"arsitektur", tag:"arch", title:"Entity vs Model", short:"User (domain) tidak tahu JSON. UserModel (data) yang membaca JSON.",
+ file:"lib/features/auth/data/models/auth_models.dart",
+ code:[["Di project ini","c-entity"]],
+ what:`<p><b>Entity</b> adalah objek bisnis yang dipakai di seluruh aplikasi. <b>Model</b> adalah versi entity yang tahu cara dibuat dari JSON API.</p>
+ <p>Di sini <code>UserModel extends User</code>, jadi repository bisa langsung mengembalikan model sebagai entity.</p>`,
+ why:`<ul><li>Nama field JSON (<code>snake_case</code> dari Go) tidak bocor ke UI.</li>
+ <li>Kalau backend mengganti format JSON, hanya <code>fromJson</code> yang berubah.</li>
+ <li>Entity bisa punya logika kecil seperti <code>isAdmin</code>.</li></ul>`,
+ without:`<div class="callout bad">Widget membaca <code>json['user']['role']</code> langsung: salah ketik nama key baru ketahuan saat runtime, dan ada di puluhan tempat.</div>`,
+ qa:[["Kenapa entity dan model dipisah?","Entity mewakili konsep bisnis dan dipakai di seluruh app; model menangani detail transport seperti JSON. Perubahan format API berhenti di layer data."]]},
+
+{id:"repository", mod:"arsitektur", tag:"arch", title:"Repository pattern", short:"Domain mendefinisikan kontrak, data mengisinya. UI tidak tahu data datang dari mana.",
+ file:"lib/features/auth/data/repositories/auth_repository_impl.dart",
+ code:[["Di project ini","c-repo"]],
+ what:`<p>Repository adalah pintu tunggal ke data untuk satu fitur. Kontraknya (<code>abstract interface class AuthRepository</code>) ada di <b>domain</b>, implementasinya (<code>AuthRepositoryImpl</code>) ada di <b>data</b>.</p>
+ <p>Ini yang disebut <b>Dependency Inversion</b>: modul tingkat tinggi (domain) tidak bergantung pada detail (HTTP); justru detail yang bergantung pada kontrak domain.</p>`,
+ why:`<ul><li>Repository menggabungkan beberapa sumber: data source remote (API) dan <code>TokenStorage</code> (penyimpanan lokal). Use case cukup memanggil <code>login()</code>.</li>
+ <li>Repository yang mengubah exception menjadi <code>Result</code>, jadi lapisan di atasnya tidak pernah menerima <code>DioException</code>.</li>
+ <li>Nanti mudah ditambah cache lokal (misalnya katalog offline) tanpa mengubah notifier.</li></ul>`,
+ without:`<div class="callout bad">Notifier memanggil Dio langsung: notifier jadi tahu URL, format JSON, dan tempat token disimpan. Test-nya butuh server palsu.</div>`,
+ qa:[["Apa beda data source dan repository?","Data source hanya bicara dengan satu sumber (HTTP) dan melempar exception. Repository menggabungkan sumber-sumber itu dan mengembalikan Result yang aman dipakai domain."],
+     ["Apa itu dependency inversion di sini?","Interface AuthRepository dimiliki domain; AuthRepositoryImpl di data meng-implementasinya. Jadi data bergantung ke domain, bukan sebaliknya."]]},
+
+{id:"usecase", mod:"arsitektur", tag:"arch", title:"Use case", short:"Satu class untuk satu aksi bisnis: Login, Register, GetCurrentUser, Logout.",
+ file:"lib/features/auth/domain/usecases/auth_usecases.dart",
+ code:[["Di project ini","c-usecase"]],
+ what:`<p>Use case membungkus satu aksi bisnis. Method-nya bernama <code>call()</code>, jadi objeknya bisa dipanggil seperti fungsi: <code>await login(params)</code>.</p>`,
+ why:`<ul><li>Aturan bisnis punya rumah yang jelas. Contoh: "setelah daftar, langsung login" ada di use case <code>Register</code>, bukan di widget atau repository.</li>
+ <li>Notifier hanya membaca use case yang dia butuhkan, sehingga mudah di-override di test.</li>
+ <li>Padanan service di backend Go.</li></ul>
+ <div class="callout">Untuk aksi yang hanya meneruskan ke repository (seperti <code>Logout</code>), use case terasa tipis. Itu wajar; konsistensinya yang dijaga, dan logika bisa ditambah kemudian tanpa mengubah notifier.</div>`,
+ without:`<div class="callout bad">Logika "daftar lalu login" ditulis di RegisterController, lalu ditulis lagi di layar lain yang juga mendaftarkan user. Dua salinan, dua tempat bug.</div>`,
+ qa:[["Apakah use case wajib?","Tidak, tapi ia memberi tempat yang jelas untuk aturan bisnis dan membuat notifier lebih tipis. Untuk aksi sederhana memang hanya meneruskan, dan itu bisa diterima demi konsistensi."]]},
+
+{id:"result", mod:"arsitektur", tag:"dart", title:"Result & Failure (sealed class)", short:"Error dikembalikan sebagai nilai, dan compiler memaksa semua kasus ditangani.",
+ file:"lib/core/result.dart",
+ code:[["Di project ini","c-result"]],
+ what:`<p><code>sealed class</code> (Dart 3) berarti semua subclass-nya diketahui compiler. Akibatnya <code>switch</code> atas <code>Result</code> wajib menangani <code>Ok</code> dan <code>Err</code>; kalau ada yang terlewat, kode tidak bisa di-compile.</p>
+ <p><code>Failure</code> juga sealed: <code>NetworkFailure</code>, <code>UnauthorizedFailure</code>, <code>ServerFailure</code>, <code>UnexpectedFailure</code>.</p>`,
+ why:`<ul><li>Error jadi bagian dari tipe fungsi. Siapa pun yang memanggil <code>login()</code> langsung melihat bahwa hasilnya bisa gagal.</li>
+ <li>UI bisa bereaksi berbeda: <code>NetworkFailure</code> → "cek koneksi", <code>ServerFailure</code> 422 → tampilkan error per field.</li>
+ <li>Mirip cara Go mengembalikan <code>(value, error)</code>, tapi dicek oleh compiler.</li>
+ <li>Tidak butuh package tambahan seperti <code>dartz</code>/<code>fpdart</code>; fitur bawaan Dart 3 sudah cukup.</li></ul>`,
+ without:`<div class="callout bad">Melempar exception sampai ke UI: mudah lupa <code>try/catch</code>, aplikasi crash dengan layar merah, dan tidak terlihat dari signature fungsi bahwa ia bisa gagal.</div>`,
+ qa:[["Kenapa tidak pakai try/catch di notifier saja?","Exception tidak terlihat di tipe fungsi dan mudah terlupa. Dengan Result yang sealed, compiler memaksa jalur gagal ditangani."],
+     ["Apa itu sealed class?","Class yang subclass-nya hanya boleh didefinisikan di library yang sama, sehingga compiler tahu semua kemungkinan dan bisa mengecek switch secara exhaustive."]]},
+
+{id:"di", mod:"arsitektur", tag:"arch", title:"Dependency injection lewat Riverpod", short:"Setiap objek bersama adalah Provider. Tidak perlu get_it.",
+ file:"lib/core/providers.dart, lib/features/auth/auth_providers.dart",
+ code:[["Di project ini","c-di"]],
+ what:`<p>Di Riverpod, <b>provider adalah cara membuat dan membagikan objek</b>. <code>Provider&lt;Dio&gt;((ref) =&gt; ...)</code> mendeskripsikan cara membuat Dio; objeknya baru dibuat saat pertama dibaca, lalu disimpan di <code>ProviderScope</code>.</p>
+ <p>Provider lain membaca dependency-nya dengan <code>ref.watch(...)</code>, sehingga terbentuk rantai: <code>loginUseCaseProvider → authRepositoryProvider → authRemoteDataSourceProvider → dioProvider</code>.</p>`,
+ why:`<ul><li><b>Bisa diganti saat test</b>: <code>loginUseCaseProvider.overrideWithValue(mockLogin)</code>. Ini yang dimaksud lowongan dengan "provider overrides for testing" dan "dependency injection through Riverpod".</li>
+ <li><b>Tipe repository adalah interface domain</b> (<code>Provider&lt;AuthRepository&gt;</code>), jadi presentation tidak pernah tahu <code>AuthRepositoryImpl</code>.</li>
+ <li><b>Siklus hidup jelas</b>: <code>ref.onDispose</code> menutup Dio dan StreamController saat scope dibuang.</li>
+ <li>Satu library untuk state <i>dan</i> DI. Dibanding Bloc + get_it, satu dependency berkurang.</li></ul>`,
+ without:`<div class="callout bad">Membuat <code>Dio()</code> di dalam widget atau repository: tidak bisa diganti di test, dan interceptor refresh token jadi lebih dari satu.</div>`,
+ qa:[["Bagaimana dependency injection di Riverpod?","Setiap dependency adalah Provider dan membaca dependency lain lewat ref.watch. ProviderScope menyimpan instansinya, dan test mengganti provider mana pun dengan overrideWithValue."],
+     ["Kenapa provider repository bertipe interface?","Supaya layer di atasnya bergantung pada kontrak domain, bukan implementasi. Saat test, override dengan mock yang meng-implement interface yang sama."]]},
+
+/* ---------------- STATE ---------------- */
+{id:"bloc", mod:"state", tag:"state", title:"AsyncNotifier & AsyncValue", short:"AuthController menyimpan status sesi untuk seluruh aplikasi sebagai AsyncValue<User?>.",
+ file:"lib/features/auth/presentation/controllers/auth_controller.dart", viz:"bloc",
+ code:[["Di project ini","c-bloc"]],
+ what:`<p><code>AsyncNotifier&lt;T&gt;</code> adalah class yang memegang state asinkron. Method <code>build()</code> menghasilkan nilai awal (boleh <code>async</code>), dan method lain mengubah <code>state</code>.</p>
+ <p><code>AsyncValue&lt;T&gt;</code> adalah sealed class dengan tiga bentuk: <code>AsyncLoading</code>, <code>AsyncData</code>, <code>AsyncError</code>. Untuk sesi, artinya:</p>
+ <ul><li><code>AsyncLoading</code>: sedang mengecek sesi tersimpan → splash.</li><li><code>AsyncData(user)</code>: sudah login.</li><li><code>AsyncData(null)</code>: belum login.</li></ul>`,
+ why:`<ul><li><b>Loading/error tidak perlu ditulis manual.</b> Dengan Bloc, kita membuat enum status dan class state sendiri; di sini AsyncValue sudah menyediakannya.</li>
+ <li><b>Satu sumber kebenaran</b> untuk router, halaman home, dan interceptor (lewat <code>SessionEvents</code>).</li>
+ <li><b>Pemulihan sesi otomatis</b>: <code>build()</code> langsung memanggil use case saat provider pertama kali dibaca router, tanpa event "AppStarted".</li></ul>`,
+ without:`<div class="callout bad">Status login di <code>setState</code> halaman home: layar lain tidak tahu user sudah logout, dan interceptor tidak bisa memberi tahu UI bahwa sesi habis.</div>`,
+ qa:[["Apa itu AsyncValue?","Sealed class Riverpod untuk data asinkron: AsyncLoading, AsyncData, AsyncError. UI cukup switch atas tiga kasus itu."],
+     ["Kenapa sesi berupa AsyncNotifier<User?>, bukan Notifier<bool>?","Karena pengecekan sesi saat start itu asinkron (butuh request ke server). AsyncLoading otomatis menjadi status splash, dan user ikut tersimpan untuk ditampilkan."]]},
+
+{id:"cubit", mod:"state", tag:"state", title:"Form controller (autoDispose)", short:"State login/daftar hidup selama layar terbuka, lalu dibuang.",
+ file:"lib/features/auth/presentation/controllers/auth_form_controllers.dart",
+ code:[["Di project ini","c-cubit"]],
+ what:`<p><code>LoginController</code> juga AsyncNotifier, dengan state <code>AsyncValue&lt;User?&gt;</code>: idle (<code>AsyncData(null)</code>), mengirim (<code>AsyncLoading</code>), berhasil (<code>AsyncData(user)</code>), gagal (<code>AsyncError(Failure)</code>).</p>
+ <p><code>.autoDispose</code> membuat provider dibuang otomatis saat tidak ada widget yang mendengarkannya lagi.</p>`,
+ why:`<ul><li>Form selalu bersih saat halaman dibuka lagi, tanpa kode reset manual.</li>
+ <li><code>ref.mounted</code> dicek setelah <code>await</code>: kalau user menutup layar saat request berjalan, hasilnya tidak ditulis ke provider yang sudah dibuang.</li>
+ <li>Tap kedua saat loading diabaikan (<code>if (state.isLoading) return;</code>), dan ini diuji.</li>
+ <li><code>AsyncError</code> membawa objek <code>Failure</code>, sehingga <code>ErrorBanner.fromError</code> bisa menampilkan error per field dari 422.</li></ul>`,
+ without:`<div class="callout bad">Provider tanpa autoDispose: buka login, gagal, kembali, buka lagi → pesan error lama masih tampil.</div>`,
+ qa:[["Kapan memakai autoDispose?","Untuk state milik satu layar atau satu pencarian. State yang dibagi seluruh app, seperti sesi, tidak boleh autoDispose."],
+     ["Kenapa perlu cek ref.mounted?","Setelah await, provider autoDispose mungkin sudah dibuang karena layarnya ditutup. Menulis state ke provider yang sudah dibuang akan error."]]},
+
+{id:"vsriverpod", mod:"state", tag:"state", title:"Kenapa Riverpod, bukan Bloc?", short:"Awalnya Bloc. Pindah ke Riverpod karena lowongan yang dituju memintanya.",
+ file:"keputusan arsitektur",
+ code:[["Gambaran versi Bloc (tidak dipakai lagi)","c-riverpod"]],
+ what:`<table class="cmp"><tr><th></th><th>Riverpod (dipakai)</th><th>Bloc</th></tr>
+ <tr><td>Gaya</td><td>Provider + ref, Notifier</td><td>Event → State, eksplisit</td></tr>
+ <tr><td>Loading/error</td><td>AsyncValue bawaan</td><td>Class state ditulis sendiri</td></tr>
+ <tr><td>DI</td><td>Bawaan (provider = DI)</td><td>Butuh get_it / provider tree</td></tr>
+ <tr><td>Testing</td><td>ProviderContainer + override</td><td>bloc_test</td></tr>
+ <tr><td>Jumlah kode</td><td>Lebih ringkas</td><td>Lebih banyak</td></tr></table>`,
+ why:`<p>Versi pertama project ini memakai Bloc. Setelah melihat lowongan Flutter Mobile Engineer yang secara spesifik meminta <b>Riverpod di production, AsyncValue, provider overrides untuk testing, dan DI lewat Riverpod</b>, state management dipindah.</p>
+ <p>Yang berubah hanya <b>presentation</b> dan wiring DI. <code>domain/</code> dan <code>data/</code> tidak tersentuh sama sekali. Itu bukti praktis bahwa Clean Architecture bekerja, dan cerita bagus untuk interview.</p>
+ <div class="callout">Dua-duanya dipakai luas. Pilihan terbaik adalah yang dipakai tim tempat kamu melamar.</div>`,
+ without:`<div class="callout">Kalau hanya <code>setState</code>: cukup untuk state satu widget, tapi tidak bisa dibagi antar layar dan tidak bisa di-test tanpa widget.</div>`,
+ qa:[["Kenapa memilih Riverpod?","AsyncValue menangani loading/data/error, provider sekaligus menjadi DI, override memudahkan test, dan kodenya lebih ringkas dari Bloc."],
+     ["Kalau pindah dari Bloc ke Riverpod, apa yang berubah?","Dengan Clean Architecture hanya presentation dan wiring DI. Entity, use case, repository, dan data source tetap sama."]]},
+
+{id:"equatable", mod:"state", tag:"state", title:"Equatable", short:"Objek dibandingkan berdasarkan isi. Penting untuk mocktail dan perbandingan state.",
+ file:"lib/features/auth/domain/usecases/auth_usecases.dart",
+ code:[["Di project ini","c-equatable"]],
+ what:`<p>Secara default, dua objek Dart dianggap sama hanya jika keduanya objek yang <b>sama persis</b> di memori. <code>Equatable</code> membuat <code>==</code> membandingkan field di <code>props</code>.</p>`,
+ why:`<ul><li><b>mocktail</b> mencocokkan argumen dengan <code>==</code>. <code>when(() =&gt; login(params))</code> hanya cocok kalau <code>LoginParams</code> dibandingkan berdasarkan isi.</li>
+ <li><b>Riverpod</b> tidak memberi tahu listener kalau state baru sama dengan state lama. <code>User</code> dan <code>Failure</code> yang Equatable membuat perbandingan itu akurat.</li></ul>`,
+ without:`<div class="callout bad">Lupa menambahkan field baru ke <code>props</code>: dua objek berbeda dianggap sama, sehingga UI tidak ter-update dan stub mock tidak cocok.</div>`,
+ qa:[["Kenapa entity dan params memakai Equatable?","Supaya perbandingan berdasarkan nilai: dibutuhkan mocktail untuk mencocokkan argumen dan Riverpod untuk mendeteksi perubahan state."]]},
+
+{id:"listener", mod:"state", tag:"state", title:"ref.watch, ref.read, ref.listen, select", short:"Empat cara membaca provider, dan kapan memakai masing-masing.",
+ file:"lib/features/auth/presentation/pages/login_page.dart",
+ code:[["Di project ini","c-listener"]],
+ what:`<ul><li><code>ref.watch</code>: baca dan <b>rebuild</b> setiap berubah. Dipakai di <code>build()</code>.</li>
+ <li><code>ref.read</code>: baca <b>sekali</b>, tanpa mendengarkan. Dipakai di callback seperti <code>onPressed</code>.</li>
+ <li><code>ref.listen</code>: jalankan <b>efek samping</b> sekali per perubahan (navigasi, snackbar, memberi tahu provider lain).</li>
+ <li><code>.select</code>: hanya rebuild kalau bagian tertentu dari state berubah.</li></ul>`,
+ why:`<p>Saat login berhasil, halaman login tidak menavigasi sendiri. <code>ref.listen</code> memanggil <code>authController.signedIn(user)</code>, lalu router yang memindahkan ke /home. Satu jalur navigasi, tidak ada navigasi ganda.</p>`,
+ without:`<div class="callout bad"><code>ref.read</code> di <code>build()</code>: UI tidak ter-update saat state berubah. <code>ref.watch</code> di <code>onPressed</code>: memicu error/rebuild yang tidak perlu.</div>`,
+ qa:[["Beda ref.watch, ref.read, dan ref.listen?","watch untuk membangun UI dan rebuild saat berubah; read untuk aksi sekali di callback; listen untuk efek samping seperti navigasi tanpa rebuild."]]},
+
+/* ---------------- NETWORK ---------------- */
+{id:"interceptor", mod:"network", tag:"net", title:"Auto refresh token (QueuedInterceptor)", short:"Tiga request kena 401 bersamaan, refresh hanya sekali. Ini wajib karena backend mendeteksi token dipakai ulang.",
+ file:"lib/core/network/auth_interceptor.dart", viz:"queue",
+ code:[["Di project ini","c-interceptor"]],
+ what:`<p>Interceptor Dio berjalan di setiap request: <code>onRequest</code> menambahkan header <code>Authorization</code>, dan <code>onError</code> menangani 401 dengan meminta token baru lalu mengulang request.</p>
+ <p><code>QueuedInterceptor</code> memproses error <b>satu per satu</b>, bukan paralel.</p>`,
+ why:`<p>Backend Go melakukan <b>refresh token rotation</b>: setiap refresh, token lama dicabut. Kalau token yang sudah dicabut dipakai lagi, backend menganggapnya dicuri dan <b>mencabut semua sesi</b>.</p>
+ <p>Halaman home bisa memanggil 3 API sekaligus. Saat access token habis, ketiganya kena 401 bersamaan. Kalau masing-masing refresh sendiri, request kedua memakai refresh token yang sudah dirotasi, dan user langsung ter-logout.</p>
+ <p>Dengan antrean: request pertama refresh; request kedua dan ketiga melihat token di storage sudah berganti, jadi cukup mengulang dengan token baru.</p>
+ <div class="callout">Retry memakai Dio kedua <b>tanpa interceptor</b>. Kalau retry lewat Dio yang sama dan kena 401 lagi, error-nya masuk ke antrean yang sedang menunggu dirinya sendiri, dan aplikasi macet (deadlock).</div>`,
+ without:`<div class="callout bad">Interceptor biasa: tiga refresh paralel → backend mendeteksi reuse → semua sesi dicabut → user ditendang ke halaman login secara acak.</div>`,
+ qa:[["Bagaimana mencegah refresh token berjalan berkali-kali?","Pakai QueuedInterceptor sehingga error diproses berurutan, lalu cek apakah token di storage sudah berubah dari yang dikirim. Kalau sudah, cukup retry."],
+     ["Kenapa retry pakai Dio terpisah?","Supaya request ulang tidak masuk lagi ke antrean interceptor yang sama, yang bisa menyebabkan deadlock."]]},
+
+{id:"errmap", mod:"network", tag:"net", title:"Error mapping & guard()", short:"DioException diterjemahkan ke Failure di satu tempat.",
+ file:"lib/core/network/api_error_mapper.dart",
+ code:[["Di project ini","c-errmap"]],
+ what:`<p><code>mapDioException</code> membaca format error standar backend Go (<code>message</code>, <code>error.code</code>, <code>error.details</code>) dan menghasilkan <code>Failure</code> yang tepat. <code>guard()</code> membungkus pemanggilan data source supaya repository tidak perlu try/catch berulang.</p>`,
+ why:`<ul><li>Backend sudah dirancang dengan format error yang konsisten; frontend memanfaatkannya: 422 menampilkan error per field, 409 menampilkan pesan bisnis ("Email is already registered").</li>
+ <li>Koneksi gagal punya pesan sendiri ("pastikan backend sudah berjalan"), sangat membantu saat development lokal.</li>
+ <li>Body error yang bukan JSON (misalnya HTML dari proxy) tetap menghasilkan pesan yang terbaca.</li></ul>`,
+ without:`<div class="callout bad">Menampilkan <code>e.toString()</code>: user melihat "DioException [bad response]: This exception was thrown because the response has a status code of 422…".</div>`,
+ qa:[["Di mana exception diubah jadi error untuk UI?","Di layer data, lewat guard() dan mapDioException. Di atas repository, yang beredar hanya Result dan Failure."]]},
+
+{id:"storage", mod:"network", tag:"net", title:"flutter_secure_storage", short:"Token disimpan di Keystore/Keychain, bukan SharedPreferences.",
+ file:"lib/core/storage/token_storage.dart",
+ code:[["Di project ini","c-storage"]],
+ what:`<p><code>flutter_secure_storage</code> menyimpan data di penyimpanan terenkripsi milik sistem operasi: Android Keystore, iOS Keychain, dan Windows Credential Manager.</p>`,
+ why:`<ul><li>Refresh token berlaku 7 hari; siapa yang memegangnya bisa login sebagai user. Tempatnya harus aman.</li>
+ <li>Access token di-cache di memori karena dibaca di setiap request, sementara baca dari keystore relatif lambat.</li>
+ <li>Dibungkus interface <code>TokenStorage</code>, sehingga test memakai <code>InMemoryTokenStorage</code>.</li></ul>`,
+ without:`<div class="callout bad">SharedPreferences menyimpan teks biasa di file XML. Di HP yang di-root atau dari backup, token bisa dibaca langsung.</div>`,
+ qa:[["Di mana token disimpan dan kenapa?","Di flutter_secure_storage (Keystore/Keychain), karena refresh token setara kredensial login. Access token juga di-cache di memori untuk performa."]]},
+
+{id:"env", mod:"network", tag:"net", title:"Base URL per platform", short:"Kenapa emulator Android memakai 10.0.2.2, bukan localhost.",
+ file:"lib/core/config/env.dart",
+ code:[["Di project ini","c-env"]],
+ what:`<p>Di dalam emulator Android, <code>localhost</code> berarti emulator itu sendiri. Alamat khusus <code>10.0.2.2</code> diarahkan ke laptop yang menjalankan emulator. Chrome, Windows desktop, dan simulator iOS bisa memakai <code>localhost</code> langsung.</p>
+ <p><code>String.fromEnvironment</code> membaca nilai dari <code>--dart-define</code> saat build, untuk HP asli atau server lain.</p>`,
+ why:`<p>Backend sementara berjalan lokal. Dengan deteksi platform, <code>flutter run</code> langsung tersambung tanpa mengubah kode, dan HP asli cukup diberi IP laptop lewat <code>--dart-define</code>.</p>`,
+ without:`<div class="callout bad">URL di-hardcode <code>localhost</code>: di emulator Android muncul "Connection refused" dan kelihatannya seperti bug backend.</div>`,
+ qa:[["Kenapa Android emulator tidak bisa pakai localhost?","Emulator adalah mesin virtual dengan jaringannya sendiri. 10.0.2.2 adalah alias untuk host machine."]]},
+
+/* ---------------- NAVIGASI ---------------- */
+{id:"pagination", mod:"katalog", tag:"state", title:"Pagination & infinite scroll", short:"Produk dimuat 20 per halaman; halaman berikut diambil saat user mendekati bawah layar.",
+ file:"lib/features/catalog/presentation/controllers/product_list_controller.dart", viz:"paging",
+ code:[["Di project ini","c-pagination"]],
+ what:`<p>Backend mengembalikan satu halaman produk beserta <code>meta: {page, limit, total_items, total_pages}</code>. Aplikasi menyimpan item yang sudah dimuat dan nomor halamannya di <code>ProductListState</code>, lalu <code>loadMore()</code> menambahkan halaman berikutnya.</p>
+ <p>Infinite scroll: <code>ScrollController</code> memanggil <code>loadMore()</code> ketika sisa jarak ke bawah kurang dari 400px.</p>`,
+ why:`<ul><li><b>Cepat dan hemat</b>: tidak memuat ribuan produk sekaligus.</li>
+ <li><b>Event scroll muncul puluhan kali per detik</b>, jadi <code>loadMore()</code> menolak dipanggil lagi selama <code>isLoadingMore</code>. Ada test: tiga panggilan bersamaan hanya memicu satu request.</li>
+ <li><b>Respons basi dibuang</b>: kalau user mengganti kategori saat halaman 2 masih dimuat, hasil halaman 2 milik filter lama tidak ditempel ke daftar baru. Ini bug pagination yang sering lolos.</li>
+ <li><b>Gagal di tengah tidak menghapus daftar</b>: error halaman pertama menampilkan layar error penuh, error halaman berikutnya hanya menampilkan "Coba lagi" di bawah.</li>
+ <li>Halaman pertama yang terlalu pendek untuk di-scroll tetap memicu pengecekan setelah layout.</li></ul>`,
+ without:`<div class="callout bad">Tanpa guard: scroll cepat mengirim halaman 2 tiga kali dan produk tampil dobel. Tanpa cek filter: hasil pencarian lama muncul di tengah hasil pencarian baru.</div>`,
+ qa:[["Bagaimana kamu mengimplementasikan infinite scroll?","ScrollController memanggil loadMore saat mendekati bawah. Notifier menyimpan page, totalPages, dan flag isLoadingMore, lalu menolak panggilan ganda dan berhenti saat page sama dengan totalPages."],
+     ["Bagaimana menangani race condition saat filter berubah di tengah load?","Setiap state menyimpan filter-nya. Setelah respons datang, notifier membandingkan filter saat request dikirim dengan filter sekarang; kalau berbeda, respons dibuang."]]},
+
+{id:"debounce", mod:"katalog", tag:"state", title:"Debounce pencarian", short:"Request dikirim 400ms setelah user berhenti mengetik, bukan setiap huruf.",
+ file:"lib/features/catalog/presentation/controllers/catalog_filter_controller.dart",
+ code:[["Di project ini","c-debounce"]],
+ what:`<p>Debounce menunda aksi sampai input berhenti berubah selama jeda tertentu. Setiap ketikan membatalkan <code>Timer</code> sebelumnya dan memulai yang baru; hanya timer terakhir yang benar-benar menjalankan pencarian.</p>`,
+ why:`<ul><li>Mengetik "kopi arabika" tanpa debounce = 12 request; dengan debounce = 1.</li>
+ <li>Mengurangi beban backend dan mencegah hasil lama menimpa hasil baru.</li>
+ <li>Lama jeda adalah provider (<code>searchDebounceProvider</code>), jadi test mengganti jadi 0ms atau 50ms lewat override, tanpa <code>sleep</code> panjang.</li>
+ <li>Spasi di awal/akhir diabaikan, sehingga "kopi" dan " kopi " tidak memicu pencarian ulang.</li></ul>`,
+ without:`<div class="callout bad">Request per ketikan: backend terkena lonjakan request, kena rate limit (100/menit di backend kita), dan daftar berkedip-kedip.</div>`,
+ qa:[["Apa beda debounce dan throttle?","Debounce menunggu sampai input berhenti lalu menjalankan sekali. Throttle menjalankan paling banyak sekali per interval walaupun input terus berubah. Pencarian cocok dengan debounce."]]},
+
+{id:"family", mod:"katalog", tag:"state", title:"FutureProvider, family & autoDispose", short:"Data baca-saja cukup FutureProvider; family untuk satu cache per ID produk.",
+ file:"lib/features/catalog/presentation/controllers/catalog_queries.dart",
+ code:[["Di project ini","c-family"]],
+ what:`<ul><li><code>FutureProvider</code>: memuat data sekali dan mengeksposnya sebagai <code>AsyncValue</code>. Cocok untuk data tanpa aksi user, seperti daftar kategori.</li>
+ <li><code>.family</code>: provider yang menerima parameter. <code>productDetailProvider('p1')</code> dan <code>productDetailProvider('p2')</code> punya state sendiri-sendiri.</li>
+ <li><code>.autoDispose</code>: state dibuang saat tidak ada yang mendengarkan.</li></ul>`,
+ why:`<ul><li>Tidak perlu membuat Notifier untuk sesuatu yang hanya dibaca.</li>
+ <li>Membuka detail produk yang sama dua kali berturut-turut tidak memuat ulang, tapi setelah layar ditutup, data dibuang sehingga stok yang tampil berikutnya selalu segar.</li>
+ <li><code>ref.invalidate(productDetailProvider(id))</code> untuk tombol "Coba lagi".</li>
+ <li>Kategori gagal dimuat? Baris filter disembunyikan, katalog tetap jalan.</li></ul>`,
+ without:`<div class="callout bad">Satu provider global "selectedProduct": membuka produk B sebentar menampilkan data produk A, dan tidak ada cache per produk.</div>`,
+ qa:[["Kapan memakai FutureProvider dan kapan AsyncNotifier?","FutureProvider untuk data baca-saja. AsyncNotifier kalau ada aksi yang mengubah state, seperti loadMore atau submit."],
+     ["Apa gunanya family?","Membuat satu instance state per parameter, misalnya per ID produk, lengkap dengan cache dan siklus hidupnya sendiri."]]},
+
+{id:"tokens", mod:"katalog", tag:"arch", title:"Dari Figma ke kode (design token)", short:"Warna, ukuran, dan text style di Figma disalin satu-satu ke AppColors, AppSizes, AppTextStyles.",
+ file:"lib/core/theme/app_theme.dart",
+ code:[["Di project ini","c-tokens"]],
+ what:`<p>File Figma "E-Commerce App — UI Design" berisi variable collection <b>Color</b> dan <b>Size</b>, 9 text style Roboto, dan komponen <b>Button</b>, <b>TextField</b>, <b>CategoryChip</b>, <b>ProductCard</b>. Nama dan nilainya dipetakan langsung ke kode:</p>
+ <ul><li><code>Color/primary</code> → <code>AppColors.primary</code></li><li><code>Size/radius-12</code> → <code>AppSizes.radius12</code></li><li>Text style <code>Price</code> → <code>AppTextStyles.price</code></li><li>Komponen <code>ProductCard</code> → widget <code>ProductCard</code></li></ul>`,
+ why:`<ul><li><b>Pixel-accurate</b>: angka di kode sama persis dengan Figma, bukan kira-kira dari screenshot.</li>
+ <li><b>Satu sumber</b>: <code>buildAppTheme()</code> memasang warna dan bentuk ke ThemeData, sehingga widget bawaan (TextField, FilledButton) otomatis mengikuti desain.</li>
+ <li>Desainer mengganti warna primer → cukup ubah satu konstanta.</li></ul>`,
+ without:`<div class="callout bad">Warna hex ditulis langsung di setiap widget: lama-lama ada lima versi "biru" yang sedikit berbeda, dan perubahan desain harus dicari satu per satu.</div>`,
+ qa:[["Bagaimana kamu menerjemahkan desain Figma ke Flutter?","Token Figma (warna, spacing, radius, text style) dijadikan konstanta di AppColors/AppSizes/AppTextStyles dan dipasang ke ThemeData. Komponen Figma punya pasangan widget dengan nama yang sama."]]},
+
+{id:"optimistic", mod:"keranjang", tag:"state", title:"Optimistic update + antrean request", short:"Jumlah di keranjang langsung berubah saat ditap; server menyusul, dan kalau gagal dikembalikan.",
+ file:"lib/features/cart/presentation/controllers/cart_controller.dart", viz:"optimistic",
+ code:[["Di project ini","c-optimistic"]],
+ what:`<p><b>Optimistic update</b>: UI diubah dulu seolah request pasti berhasil, baru request dikirim. Kalau server menolak (misalnya stok kurang), keranjang diambil ulang dari server dan pesan error ditampilkan.</p>
+ <p>Tiga aturan di <code>CartController</code>:</p><ol><li>Ubah jumlah dan hapus item langsung terlihat.</li><li>Request dikirim <b>satu per satu sesuai urutan tap</b> (antrean <code>Future</code>), sehingga server berakhir di jumlah tap terakhir.</li><li>Respons server hanya dipasang kalau tidak ada request lain yang menunggu (<code>_pending == 0</code>).</li></ol>`,
+ why:`<ul><li><b>Terasa instan</b>: tap + tidak menunggu 200–500ms ke server.</li>
+ <li><b>Tanpa antrean</b>, tap 2→3→4 dikirim bersamaan dan bisa tiba di server tidak berurutan: server bisa berakhir di 3 padahal layar menunjukkan 4.</li>
+ <li><b>Tanpa aturan 3</b>, respons "2" yang datang setelah user sudah tap sampai 4 membuat angka melompat mundur sebentar (flicker).</li>
+ <li>Total dan subtotal dihitung dari item, jadi ikut benar selama update optimis.</li>
+ <li>Tambah ke keranjang <b>tidak</b> optimis: butuh validasi stok dari server dulu.</li>
+ <li><code>ref.watch(authControllerProvider.select((a) => a.value?.id))</code>: keranjang dibangun ulang saat login/logout, jadi user berikutnya tidak melihat keranjang user sebelumnya. Badge memakai <code>cartCountProvider</code> sehingga hanya ikon yang rebuild.</li></ul>`,
+ without:`<div class="callout bad">Tunggu server setiap tap: tombol terasa lambat. Kirim paralel tanpa antrean: jumlah di server dan di layar bisa berbeda.</div>`,
+ qa:[["Apa itu optimistic update dan risikonya?","UI diubah sebelum server menjawab. Risikonya server menolak, jadi harus ada rollback: di sini keranjang diambil ulang dari server sebagai sumber kebenaran."],
+     ["Bagaimana mencegah race condition saat user tap cepat?","Request diserialisasi lewat antrean Future, dan hanya respons dari request terakhir yang dipasang ke state."]]},
+
+{id:"checkout", mod:"pesanan", tag:"state", title:"Checkout yang aman", short:"Satu tap = satu pesanan; keranjang dan riwayat disegarkan dengan invalidate; konflik stok ditangani.",
+ file:"lib/features/orders/presentation/controllers/order_controllers.dart",
+ code:[["Di project ini","c-checkout"]],
+ what:`<p><code>POST /orders</code> tanpa body: backend membuat pesanan dari keranjang di server, mengunci harga (snapshot), mengurangi stok, dan mengosongkan keranjang dalam <b>satu transaksi</b>. Aplikasi hanya menampilkan ringkasan dan mengirim satu request.</p>
+ <ul><li><code>ref.invalidate(provider)</code>: buang state provider lain supaya dimuat ulang. Cara Riverpod memberi tahu fitur lain bahwa datanya basi.</li>
+ <li><b>Family notifier</b> (Riverpod 3): <code>OrderDetailController(orderId)</code>, satu state per pesanan, plus aksi <code>cancel()</code>.</li>
+ <li><code>OrderStatus.fromApi</code>: string status jadi enum, dengan <code>unknown</code> untuk status yang belum dikenal app.</li></ul>`,
+ why:`<ul><li><b>Double tap</b>: tombol mengabaikan tap kedua selama request pertama berjalan. Di backend, baris keranjang dikunci <code>FOR UPDATE</code>, jadi request kedua menemukan keranjang kosong. Dua lapis pengaman.</li>
+ <li><b>409 stok berubah</b>: pesan dari backend tampil dan keranjang dimuat ulang, sehingga item yang bermasalah langsung ditandai merah.</li>
+ <li><b>Harga snapshot</b>: detail pesanan memakai <code>unit_price</code> dari pesanan, bukan harga produk sekarang. Total tidak dihitung ulang di app.</li>
+ <li><b>Batal</b>: hanya status PENDING; hasilnya langsung dipasang di detail dan di daftar (<code>replace</code>) tanpa memuat ulang semua halaman. 409 (misal sudah dibayar) → muat ulang status asli.</li>
+ <li>Setelah checkout: <code>go('/home')</code> lalu <code>push('/orders/:id')</code>, jadi tombol kembali menuju katalog, bukan keranjang kosong.</li></ul>`,
+ without:`<div class="callout bad">Tanpa guard: dua pesanan dari satu keranjang (atau error membingungkan). Tanpa invalidate: badge keranjang masih menunjukkan 3 barang padahal sudah dipesan.</div>`,
+ qa:[["Bagaimana fitur satu memberi tahu fitur lain bahwa datanya berubah di Riverpod?","ref.invalidate(provider): state dibuang dan dibangun ulang saat dibaca lagi. Checkout meng-invalidate cart dan daftar pesanan."],
+     ["Kenapa total pesanan tidak dihitung di client?","Total adalah snapshot saat checkout yang dihitung backend. Harga produk bisa berubah, tapi pesanan lama harus tetap sama."]]},
+
+{id:"idempotency", mod:"bayar", tag:"state", title:"Idempotency-Key di client", short:"Satu key per percobaan bayar, disimpan di keystore, jadi retry tidak pernah membuat pembayaran ganda.",
+ file:"lib/features/payment/domain/usecases/payment_usecases.dart", viz:"idem",
+ code:[["Di project ini","c-idem"]],
+ what:`<p>Backend menerima header <code>Idempotency-Key</code> di <code>POST /payments</code>: key yang sama dikirim lagi → backend mengembalikan pembayaran yang <b>sama</b>, bukan membuat baru. Tugas app: memakai key yang benar.</p>
+ <ul><li>Key (UUID v4) dibuat per pesanan dan <b>disimpan sebelum request dikirim</b>.</li>
+ <li>Timeout, tutup layar, bahkan restart app → key yang sama dipakai lagi.</li>
+ <li>Pembayaran berhasil → key dihapus. Gagal atau kedaluwarsa → key dihapus, percobaan berikutnya memakai key baru.</li></ul>`,
+ why:`<ul><li><b>Timeout bukan berarti gagal</b>: request mungkin sampai ke server tapi jawabannya hilang. Kirim ulang dengan key baru = risiko bayar dua kali.</li>
+ <li>Backend hanya mengizinkan <b>satu pembayaran aktif per pesanan</b>. Key baru untuk pesanan yang masih punya pembayaran PENDING ditolak 409, jadi key harus bertahan setelah app ditutup: disimpan di <code>flutter_secure_storage</code>.</li>
+ <li>Replay mengembalikan pembayaran apa adanya, termasuk yang sudah lewat waktunya. Use case mendeteksi itu dan membuat percobaan baru dengan key baru.</li>
+ <li>Logikanya ada di <b>use case</b> (domain), bukan di widget, sehingga dites tanpa UI: 8 test.</li>
+ <li>Countdown di layar; saat habis, pembayaran baru dibuat otomatis.</li></ul>`,
+ without:`<div class="callout bad">Tanpa key yang disimpan: user di jaringan lemah menekan "Bayar" lagi setelah loading lama, dan saldo terpotong dua kali. Atau setelah restart, app terkunci 409 "Order already has an active payment".</div>`,
+ qa:[["Apa itu idempotency dan kenapa penting di pembayaran?","Operasi yang hasilnya sama walau diulang. Di pembayaran, retry setelah timeout tidak boleh membuat transaksi kedua; Idempotency-Key membuat server mengenali request ulang."],
+     ["Kapan client membuat key baru?","Hanya untuk percobaan baru: setelah pembayaran FAILED/EXPIRED. Retry karena error jaringan selalu memakai key lama."]]},
+
+{id:"admin", mod:"bayar", tag:"arch", title:"Fitur admin & role", short:"Layar admin hanya untuk role admin; backend tetap memeriksa setiap request.",
+ file:"lib/features/admin/admin_providers.dart",
+ code:[["Di project ini","c-admin"]],
+ what:`<p>Admin bisa menambah/mengubah/menghapus produk, mengubah stok, mengelola kategori, melihat semua pesanan, dan memajukan status pesanan (Dibayar → Diproses → Dikirim → Selesai).</p>
+ <ul><li><b>Router</b>: <code>/admin</code> dialihkan ke <code>/home</code> untuk non-admin, ikon admin hanya muncul untuk admin.</li>
+ <li><b>AdminActions</b>: setiap aksi meng-<code>invalidate</code> data yang terdampak, jadi katalog pelanggan langsung ikut berubah.</li>
+ <li>Daftar pesanan memakai widget yang sama dengan pelanggan (<code>OrderListView</code>): endpoint yang sama mengembalikan semua pesanan untuk admin.</li></ul>`,
+ why:`<ul><li><b>Keamanan ada di backend</b>: menyembunyikan tombol hanya kenyamanan. Siapa pun bisa memanggil API langsung; middleware admin di Go yang menolak.</li>
+ <li><b>Use case hanya bila ada aturan</b>: <code>SaveProduct</code> (validasi per field, sama dengan validator backend) dan <code>AdvanceOrder</code> (tabel transisi). Hapus/rename langsung ke repository: use case yang cuma meneruskan panggilan tidak menambah makna. Ini keputusan sadar, bagus untuk dibahas saat interview.</li>
+ <li>Error backend seperti "Category still has products" ditampilkan apa adanya.</li></ul>`,
+ without:`<div class="callout bad">Mengandalkan UI saja untuk membatasi admin: user biasa cukup memanggil PATCH /orders/:id/status dengan curl. Lupa invalidate: admin menghapus produk tapi produk itu masih tampil di katalog sampai app di-restart.</div>`,
+ qa:[["Di mana otorisasi seharusnya ditegakkan?","Di server. Client hanya menyesuaikan tampilan berdasarkan role."],
+     ["Apakah setiap operasi harus punya use case?","Tidak harus. Use case berguna saat ada aturan bisnis; untuk operasi pass-through, langsung ke repository lebih jujur dan lebih sedikit boilerplate."]]},
+
+{id:"router", mod:"navigasi", tag:"arch", title:"go_router + Riverpod", short:"Layar tidak bernavigasi sendiri setelah login/logout. Router mengikuti AuthController.",
+ file:"lib/core/router/app_router.dart",
+ code:[["Di project ini","c-router"]],
+ what:`<p>Router dibuat di dalam provider. <code>ref.listen</code> meneruskan setiap perubahan sesi ke <code>ValueNotifier</code> yang menjadi <code>refreshListenable</code>, sehingga <code>redirect</code> dijalankan ulang.</p>`,
+ why:`<ul><li><b>Satu sumber kebenaran</b>: login, logout, atau sesi habis dari interceptor cukup mengubah AuthController.</li>
+ <li>Memakai <code>ref.listen</code>, bukan <code>ref.watch</code>, supaya GoRouter tidak dibuat ulang dan tumpukan halaman tidak hilang.</li>
+ <li>Selama <code>AsyncLoading</code>, splash ditampilkan sehingga layar login tidak berkedip saat sesi sedang dicek.</li>
+ <li>Membaca provider ini dari App juga yang memicu <code>AuthController.build()</code>, jadi pemulihan sesi berjalan otomatis.</li></ul>`,
+ without:`<div class="callout bad"><code>ref.watch(authControllerProvider)</code> di dalam routerProvider: setiap perubahan sesi membuat GoRouter baru dan user terlempar ke halaman awal.</div>`,
+ qa:[["Bagaimana menangani route yang butuh login?","Redirect di go_router membaca authControllerProvider. Loading → splash, tidak ada user → /login, ada user → menjauh dari /login."],
+     ["Kenapa router memakai ref.listen?","Supaya instance GoRouter tetap satu. Perubahan sesi hanya memicu redirect, bukan membuat router baru."]]},
+
+/* ---------------- DART ---------------- */
+{id:"async", mod:"dart", tag:"dart", title:"async/await & Future (vs goroutine)", short:"Contoh goroutine-mu dalam versi Dart, dan kenapa Dart berbeda.",
+ file:"lib/features/auth/presentation/controllers/auth_controller.dart", viz:"async",
+ code:[["Contoh goroutine-mu versi Dart","c-async-mini"],["Di project ini","c-async"]],
+ what:`<p>Dart menjalankan kode di <b>satu thread</b> dengan <b>event loop</b>. <code>Future</code> mewakili hasil yang datang nanti; <code>await</code> menunggu tanpa memblok thread, sehingga UI tetap bisa digambar.</p>
+ <p><code>Future.wait</code> memulai beberapa pekerjaan sekaligus lalu menunggu semuanya, mirip <code>go</code> + <code>WaitGroup</code> di Go.</p>`,
+ why:`<ul><li>Pekerjaan aplikasi ini kebanyakan <b>menunggu I/O</b> (HTTP, storage). Event loop sangat efisien untuk itu, tanpa risiko data race seperti di goroutine.</li>
+ <li>Perbedaan penting dengan Go: goroutine bisa berjalan <b>paralel</b> di banyak core. Future di Dart <b>bergantian</b> di satu thread. Untuk komputasi berat (misalnya parsing JSON yang sangat besar) Dart memakai <code>Isolate</code> / <code>compute()</code>.</li></ul>`,
+ without:`<div class="callout bad">Melakukan pekerjaan sinkron yang berat di UI thread: animasi tersendat (jank) karena event loop tidak sempat menggambar frame.</div>`,
+ qa:[["Apa beda Future Dart dan goroutine Go?","Goroutine bisa paralel di banyak thread dan butuh sinkronisasi. Future Dart berjalan bergantian di satu event loop, jadi tidak ada data race, tapi komputasi berat harus dipindah ke Isolate."],
+     ["Apa padanan WaitGroup di Dart?","Future.wait, yang menunggu sekumpulan Future selesai."]]},
+
+{id:"stream", mod:"dart", tag:"dart", title:"Stream", short:"Aliran event dari waktu ke waktu. Kabar sesi kedaluwarsa dari network ke UI memakai ini.",
+ file:"lib/core/network/session_events.dart",
+ code:[["Di project ini","c-stream"]],
+ what:`<p><code>Future</code> menghasilkan satu nilai; <code>Stream</code> menghasilkan banyak nilai dari waktu ke waktu. <code>StreamController.broadcast()</code> membuat stream yang boleh didengarkan banyak pihak.</p>`,
+ why:`<ul><li>Interceptor (layer network) perlu memberi tahu AuthController (layer presentation) bahwa sesi habis, tanpa meng-import Riverpod. <code>SessionEvents</code> menjadi jembatannya.</li>
+ <li>Subscription dibatalkan lewat <code>ref.onDispose</code> saat provider dibuang.</li>
+ <li>Padanan konsep channel di Go.</li></ul>`,
+ without:`<div class="callout bad">Interceptor memanggil AuthController langsung: layer network jadi bergantung pada layer presentation, melanggar arah dependency.</div>
+ <div class="callout">Subscription harus dibatalkan (<code>sub.cancel</code> di <code>ref.onDispose</code>), kalau tidak terjadi memory leak.</div>`,
+ qa:[["Beda Future dan Stream?","Future satu nilai di masa depan; Stream banyak nilai berurutan. Di project ini Stream dipakai untuk kabar sesi habis dari interceptor ke AuthController."]]},
+
+{id:"records", mod:"dart", tag:"dart", title:"Record & pattern matching", short:"Fitur Dart 3: mengembalikan beberapa nilai dan membongkar data dengan aman.",
+ file:"lib/features/auth/data/datasources/auth_remote_data_source.dart",
+ code:[["Di project ini","c-records"]],
+ what:`<p><b>Record</b> <code>(UserModel, TokenPair)</code> adalah tipe ringan untuk mengembalikan beberapa nilai sekaligus, mirip multiple return value di Go. <b>Pattern</b> membongkar dan mencocokkan data: <code>final (user, tokens) = ...</code> atau <code>if (result case Err(failure: UnauthorizedFailure()))</code>.</p>`,
+ why:`<p>Login mengembalikan user dan token sekaligus. Tanpa record, perlu class <code>LoginResult</code> yang hanya dipakai sekali. Pattern matching membuat pengecekan jenis error ringkas dan dicek compiler.</p>`,
+ without:`<div class="callout">Alternatif lama: <code>Map&lt;String, dynamic&gt;</code> (tidak aman tipe) atau class kecil khusus (lebih panjang).</div>`,
+ qa:[["Fitur Dart 3 apa yang kamu pakai?","Sealed class untuk Result dan Failure, record untuk mengembalikan user dan token, serta pattern matching di switch dan if-case."]]},
+
+/* ---------------- TESTING ---------------- */
+{id:"blocte", mod:"testing", tag:"test", title:"Provider override + mocktail", short:"Mengganti use case dengan mock di ProviderContainer (unit test) dan ProviderScope (widget test).",
+ file:"test/features/auth/auth_controller_test.dart",
+ code:[["Di project ini","c-blocte"]],
+ what:`<p><code>ProviderContainer.test(overrides: [...])</code> membuat container khusus test di mana provider tertentu diganti, lalu otomatis dibuang di akhir test. Di widget test, override yang sama dipasang lewat <code>ProviderScope(overrides: ...)</code>.</p>`,
+ why:`<ul><li>Ini persis yang diminta lowongan: <b>unit test untuk use case dan notifier dengan repository yang di-mock</b>, plus <b>provider overrides for testing</b>.</li>
+ <li>Yang diuji: sesi dipulihkan, tidak ada sesi, backend mati, logout, sesi habis dari interceptor, urutan state login (idle → loading → data), error 422 per field, tap ganda diabaikan, dan use case Register (daftar lalu login, berhenti kalau gagal).</li>
+ <li>Widget test login memastikan pesan error backend tampil dan validasi lokal mencegah request yang jelas salah.</li></ul>`,
+ without:`<div class="callout bad">Hanya test manual di emulator: kasus seperti "backend mati saat app dibuka" jarang dicoba dan baru ketahuan di tangan user.</div>`,
+ qa:[["Bagaimana menguji notifier Riverpod?","Buat ProviderContainer.test dengan override use case berupa mock mocktail, panggil method notifier, lalu cek state atau rekam urutan state dengan container.listen."],
+     ["Bagaimana provider override dipakai di widget test?","Bungkus widget dengan ProviderScope(overrides: [...]) sehingga halaman memakai mock tanpa mengubah kode produksi."]]},
+
+{id:"fakebackend", mod:"testing", tag:"test", title:"Fake backend (HttpClientAdapter)", short:"Menguji interceptor refresh token dengan request bersamaan, tanpa server.",
+ file:"test/helpers/fakes.dart",
+ code:[["Di project ini","c-fakebackend"]],
+ what:`<p>Dio mengirim request lewat <code>HttpClientAdapter</code>. Di test, adapter diganti dengan <code>FakeBackend</code> yang meniru perilaku backend Go: hanya menerima token baru, dan endpoint refresh menghitung berapa kali dipanggil.</p>`,
+ why:`<p>Perilaku paling berisiko di aplikasi ini adalah refresh token saat banyak request paralel. Test ini membuktikan dengan angka: tiga request 401 sekaligus → <code>refreshCalls == 1</code>, ketiganya akhirnya 200, dan token tersimpan adalah token baru. Ada juga test untuk refresh yang ditolak (token dihapus, sesi dinyatakan habis).</p>`,
+ without:`<div class="callout bad">Mock di level repository saja: interceptor tidak pernah diuji, padahal di situlah bug konkurensi bersembunyi.</div>`,
+ qa:[["Bagaimana menguji race condition refresh token di Flutter?","Mengganti HttpClientAdapter Dio dengan fake backend, mengirim beberapa request lewat Future.wait, lalu memastikan endpoint refresh hanya dipanggil sekali."]]},
+];
+
+/* ====================================================== RENDER */
+const $ = s => document.querySelector(s);
+let activeMod = "all";
+
+function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+
+function renderChips(){
+  const chips = [{id:"all",name:"Semua"}, ...MODULES];
+  $("#chips").innerHTML = chips.map(m=>`<button class="chip ${m.id===activeMod?"on":""}" data-mod="${m.id}">${m.name}</button>`).join("");
+  $("#chips").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{activeMod=b.dataset.mod;renderChips();renderCards();});
+}
+
+function matches(c,q){
+  if(activeMod!=="all" && c.mod!==activeMod) return false;
+  if(!q) return true;
+  const hay = (c.title+" "+c.short+" "+c.file+" "+c.what+" "+c.why).toLowerCase();
+  return q.split(/\s+/).every(w=>hay.includes(w));
+}
+
+function renderCards(){
+  const q = $("#q").value.trim().toLowerCase();
+  let html="", n=0, delay=0;
+  MODULES.forEach(m=>{
+    const list = C.filter(c=>c.mod===m.id && matches(c,q));
+    if(!list.length) return;
+    n += list.length;
+    html += `<section class="mod"><div class="mod-head"><h2>${m.name}</h2><p>${m.desc}</p></div><div class="grid">`;
+    list.forEach(c=>{
+      const [tl,tc]=TAGS[c.tag];
+      html += `<article class="card" tabindex="0" data-id="${c.id}" style="animation-delay:${(delay++)*35}ms">
+        <span class="tag ${tc}">${tl}</span><h3>${c.title}</h3><p>${c.short}</p><div class="file">${c.file}</div></article>`;
+    });
+    html += `</div></section>`;
+  });
+  $("#sections").innerHTML = html;
+  $("#empty").style.display = n? "none":"block";
+  $("#count").textContent = `${n} konsep`;
+  document.querySelectorAll(".card").forEach(el=>{
+    el.onclick=()=>openModal(el.dataset.id);
+    el.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openModal(el.dataset.id);}};
+  });
+}
+
+function codeBlock(label,id){
+  const src = document.getElementById(id).textContent.replace(/^\n/,"");
+  return `<div class="codehead"><span>${label}</span><button class="copy" data-src="${id}">Salin</button></div>
+  <pre><code class="language-dart">${esc(src)}</code></pre>`;
+}
+
+function vizHTML(kind){
+  if(kind==="goroutine") return `<div class="viz"><div class="viz-title">Tanpa vs dengan goroutine <button class="play" data-viz="goroutine">Putar</button></div>
+    <div class="lane"><span class="lbl">berurutan: A</span><div class="track"><div class="bar" id="g1"></div></div></div>
+    <div class="lane"><span class="lbl">berurutan: B</span><div class="track"><div class="bar b2" id="g2"></div></div></div>
+    <div class="lane"><span class="lbl">go A</span><div class="track"><div class="bar" id="g3"></div></div></div>
+    <div class="lane"><span class="lbl">go B</span><div class="track"><div class="bar b2" id="g4"></div></div></div>
+    <div class="log" id="glog">Berurutan: B menunggu A selesai. Dengan goroutine: A dan B jalan bersamaan.</div></div>`;
+  if(kind==="select") return `<div class="viz"><div class="viz-title">select menunggu yang datang duluan <button class="play" data-viz="select">Putar</button></div>
+    <div class="flow"><span class="node" id="s1">go Listen()</span><span class="arrow">→</span><span class="node" id="s2">serverErr</span></div>
+    <div class="flow"><span class="node" id="s3">OS: SIGTERM</span><span class="arrow">→</span><span class="node" id="s4">quit</span><span class="arrow">→</span><span class="node" id="s5">select</span><span class="arrow">→</span><span class="node" id="s6">Shutdown(15s)</span></div>
+    <div class="log" id="slog"></div></div>`;
+  if(kind==="tx") return `<div class="viz"><div class="viz-title">Satu transaksi checkout <button class="play" data-viz="tx">Putar (gagal di item 2)</button></div>
+    <div class="flow"><span class="node" id="t1">BEGIN</span><span class="arrow">→</span><span class="node" id="t2">stok Kopi -2</span><span class="arrow">→</span><span class="node" id="t3">stok Susu -2</span><span class="arrow">→</span><span class="node" id="t4">insert order</span><span class="arrow">→</span><span class="node" id="t5">COMMIT</span></div>
+    <div class="log" id="tlog"></div></div>`;
+  if(kind==="cache") return `<div class="viz"><div class="viz-title">GET /products/:id <button class="play" data-viz="cache">Request</button></div>
+    <div class="flow"><span class="node" id="k1">handler</span><span class="arrow">→</span><span class="node" id="k2">Redis</span><span class="arrow">→</span><span class="node" id="k3">PostgreSQL</span><span class="arrow">→</span><span class="node" id="k4">SET key TTL 10m</span></div>
+    <div class="log" id="klog">Request pertama MISS, berikutnya HIT. Klik beberapa kali.</div></div>`;
+  if(kind==="oversell") return `<div class="viz"><div class="viz-title">20 pembeli, 5 unit, bersamaan <button class="play" data-viz="oversell">Mulai flash sale</button></div>
+    <div class="stockbox">stok: <span class="unit"></span><span class="unit"></span><span class="unit"></span><span class="unit"></span><span class="unit"></span></div>
+    <div class="buyers">${Array.from({length:20},(_,i)=>`<div class="buyer">${i+1}</div>`).join("")}</div>
+    <div class="log" id="olog">UPDATE ... WHERE stock &gt;= 1 — hanya 5 yang mendapat baris.</div></div>`;
+  if(kind==="deadlock") return `<div class="viz"><div class="viz-title">Urutan lock <button class="play" data-viz="deadlock">Bandingkan</button></div>
+    <div class="flow"><span class="node">tanpa sort</span><span class="node" id="d1">U1: Kopi → Teh</span><span class="node" id="d2">U2: Teh → Kopi</span><span class="node" id="d3">?</span></div>
+    <div class="flow"><span class="node">dengan sort</span><span class="node" id="d4">U1: Kopi → Teh</span><span class="node" id="d5">U2: Kopi → Teh</span><span class="node" id="d6">?</span></div>
+    <div class="log" id="dlog"></div></div>`;
+  if(kind==="rotation") return `<div class="viz"><div class="viz-title">Rotasi refresh token <button class="play" data-viz="rotation">Putar</button></div>
+    <div class="flow"><span class="node" id="r1">RT#1 aktif</span><span class="arrow">→</span><span class="node" id="r2">refresh → RT#2</span><span class="arrow">→</span><span class="node" id="r3">penyerang pakai RT#1</span><span class="arrow">→</span><span class="node" id="r4">semua sesi dicabut</span></div>
+    <div class="log" id="rlog"></div></div>`;
+  if(kind==="idem") return `<div class="viz"><div class="viz-title">10 request, Idempotency-Key sama <button class="play" data-viz="idem">Kirim</button></div>
+    <div class="buyers" id="ib">${Array.from({length:10},(_,i)=>`<div class="buyer">#${i+1}</div>`).join("")}</div>
+    <div class="log" id="ilog"></div></div>`;
+  if(kind==="layers") return `<div class="viz"><div class="viz-title">Arah dependency <button class="play" data-viz="layers">Putar</button></div>
+    <div class="flow"><span class="node" id="ly1">presentation<br><small>widget, notifier</small></span><span class="arrow" id="la1">→</span><span class="node" id="ly2">domain<br><small>entity, use case, interface</small></span><span class="arrow" id="la2">←</span><span class="node" id="ly3">data<br><small>model, Dio, storage</small></span></div>
+    <div class="log" id="lylog">Domain di tengah tidak meng-import siapa pun.</div></div>`;
+  if(kind==="bloc") return `<div class="viz"><div class="viz-title">AsyncValue sesi <button class="play" data-viz="bloc">Putar</button></div>
+    <div class="flow"><span class="node" id="b1">router</span><span class="arrow">→</span><span class="node" id="b2">ref.listen</span><span class="arrow">→</span><span class="node" id="b3">AuthController.build()</span><span class="arrow">→</span><span class="node" id="b4">use case</span></div>
+    <div class="flow"><span class="node">state:</span><span class="node" id="bs1">AsyncLoading</span><span class="node" id="bs2">AsyncData(user)</span><span class="node" id="bs3">AsyncData(null)</span></div>
+    <div class="log" id="blog"></div></div>`;
+  if(kind==="queue") return `<div class="viz"><div class="viz-title">3 request kena 401 bersamaan <button class="play" data-viz="queue">Putar</button></div>
+    <div class="flow"><span class="node" id="q1">GET /users/me</span><span class="node" id="q2">GET /products</span><span class="node" id="q3">GET /cart</span></div>
+    <div class="flow"><span class="node" id="qr">POST /auth/refresh</span><span class="node" id="qc">refresh dipanggil: 0×</span></div>
+    <div class="log" id="qlog"></div></div>`;
+  if(kind==="async") return `<div class="viz"><div class="viz-title">await satu per satu vs Future.wait <button class="play" data-viz="async">Putar</button></div>
+    <div class="lane"><span class="lbl">await A; await B</span><div class="track"><div class="bar" id="as1"></div></div></div>
+    <div class="lane"><span class="lbl"></span><div class="track"><div class="bar b2" id="as2"></div></div></div>
+    <div class="lane"><span class="lbl">Future.wait([A, B])</span><div class="track"><div class="bar" id="as3"></div></div></div>
+    <div class="lane"><span class="lbl"></span><div class="track"><div class="bar b2" id="as4"></div></div></div>
+    <div class="log" id="aslog">Keduanya menunggu jaringan; dengan Future.wait waktu tunggunya tumpang tindih.</div></div>`;
+  if(kind==="paging") return `<div class="viz"><div class="viz-title">Infinite scroll, 20 produk per halaman <button class="play" data-viz="paging">Putar</button></div>
+    <div class="buyers" id="pg">${Array.from({length:20},(_,i)=>`<div class="buyer">${i<8?i+1:''}</div>`).join("")}</div>
+    <div class="log" id="pglog">Halaman 1 sudah tampil. Scroll ke bawah…</div></div>`;
+  if(kind==="optimistic") return `<div class="viz"><div class="viz-title">Tap + tiga kali dengan cepat <button class="play" data-viz="optimistic">Putar</button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0"><div><div style="opacity:.7;font-size:12px;margin-bottom:6px">Layar</div><div id="opUi" style="font:700 34px/1 monospace;padding:14px 0;border:1px solid #2a3440;border-radius:12px;text-align:center">1</div></div><div><div style="opacity:.7;font-size:12px;margin-bottom:6px">Server</div><div id="opSv" style="font:700 34px/1 monospace;padding:14px 0;border:1px solid #2a3440;border-radius:12px;text-align:center">1</div></div></div>
+    <div class="log" id="oplog">Jumlah awal: 1</div></div>`;
+  if(kind==="idem") return `<div class="viz"><div class="viz-title">Timeout lalu "Bayar" lagi <button class="play" data-viz="idem">Putar</button></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0"><div><div style="opacity:.7;font-size:12px">Tanpa key tersimpan</div><div id="idA" style="padding:10px 12px;border:1px solid #2a3440;border-radius:10px;font-size:13px;margin:6px 0">-</div></div><div><div style="opacity:.7;font-size:12px">Dengan Idempotency-Key</div><div id="idB" style="padding:10px 12px;border:1px solid #2a3440;border-radius:10px;font-size:13px;margin:6px 0">-</div></div></div>
+    <div class="log" id="idlog">Siap.</div></div>`;
+  return "";
+}
+
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+const animating = new Set();
+async function runViz(kind){
+  if(animating.has(kind)) return; animating.add(kind);
+  try{
+  if(kind==="goroutine"){
+    const set=(id,l,w,d)=>{const e=document.getElementById(id);e.style.transition="none";e.style.left=l+"%";e.style.width="0";e.offsetWidth;e.style.transition=`width ${d}ms linear`;e.style.width=w+"%";};
+    set("g1",0,45,900); set("g3",0,45,900); set("g4",0,45,900);
+    document.getElementById("g2").style.width="0";
+    await sleep(900); set("g2",45,45,900);
+    document.getElementById("glog").textContent="Dengan goroutine selesai di 1 detik. Berurutan butuh 2 detik.";
+    await sleep(900);
+  }
+  if(kind==="select"){
+    const ids=["s1","s2","s3","s4","s5","s6"];ids.forEach(i=>document.getElementById(i).className="node");
+    const L=document.getElementById("slog");
+    document.getElementById("s1").classList.add("hot");L.textContent="Server jalan di goroutine sendiri, main() bebas menunggu…";await sleep(900);
+    document.getElementById("s3").classList.add("miss");L.textContent="docker stop mengirim SIGTERM";await sleep(700);
+    document.getElementById("s4").classList.add("hot");await sleep(500);
+    document.getElementById("s5").classList.add("hot");L.textContent="select memilih cabang quit karena datang duluan";await sleep(700);
+    document.getElementById("s6").classList.add("hot");L.textContent="Request yang sedang berjalan diberi waktu selesai, lalu proses keluar dengan rapi.";
+  }
+  if(kind==="tx"){
+    const ids=["t1","t2","t3","t4","t5"];ids.forEach(i=>{const e=document.getElementById(i);e.className="node";e.textContent=e.textContent.replace(" ✗","").replace("ROLLBACK","COMMIT");});
+    const L=document.getElementById("tlog");L.textContent="";
+    for(const i of ["t1","t2"]){document.getElementById(i).classList.add("hot");await sleep(600);}
+    const s=document.getElementById("t3");s.classList.add("miss");s.textContent+=" ✗";L.textContent="Stok susu tinggal 1 → RowsAffected = 0 → fungsi return error";await sleep(1000);
+    const c=document.getElementById("t5");c.textContent="ROLLBACK";c.classList.add("miss");
+    document.getElementById("t2").className="node";
+    L.textContent="ROLLBACK: pengurangan stok Kopi ikut dibatalkan. Tidak ada stok yang hilang, cart tidak berubah.";
+  }
+  if(kind==="cache"){
+    window._cacheHit = window._cacheHit || false;
+    ["k1","k2","k3","k4"].forEach(i=>document.getElementById(i).className="node");
+    const L=document.getElementById("klog");
+    document.getElementById("k1").classList.add("hot");await sleep(350);
+    if(window._cacheHit){document.getElementById("k2").classList.add("hot");L.textContent="HIT: dijawab Redis, PostgreSQL tidak disentuh (±1 ms).";}
+    else{document.getElementById("k2").classList.add("miss");L.textContent="MISS: key belum ada di Redis…";await sleep(600);
+      document.getElementById("k3").classList.add("hot");L.textContent="Baca PostgreSQL…";await sleep(600);
+      document.getElementById("k4").classList.add("hot");L.textContent="Simpan ke Redis. Request berikutnya akan HIT.";window._cacheHit=true;}
+  }
+  if(kind==="oversell"){
+    const units=[...document.querySelectorAll(".modal .unit")], buyers=[...document.querySelectorAll(".modal .buyer")];
+    units.forEach(u=>u.classList.remove("gone"));buyers.forEach(b=>b.className="buyer");
+    const order=buyers.map((_,i)=>i).sort(()=>Math.random()-.5);let stock=5;
+    const L=document.getElementById("olog");
+    for(const i of order){await sleep(110);
+      if(stock>0){stock--;units[4-stock].classList.add("gone");buyers[i].classList.add("ok");}
+      else buyers[i].classList.add("no");
+      L.textContent=`stok tersisa: ${stock}`;}
+    L.textContent="Selesai: 5 order (201), 15 ditolak (409 CONFLICT), stok 0 — tidak pernah minus.";
+  }
+  if(kind==="deadlock"){
+    ["d1","d2","d3","d4","d5","d6"].forEach(i=>{const e=document.getElementById(i);e.className="node";});
+    document.getElementById("d3").textContent="?";document.getElementById("d6").textContent="?";
+    const L=document.getElementById("dlog");
+    document.getElementById("d1").classList.add("hot");document.getElementById("d2").classList.add("hot");
+    L.textContent="U1 mengunci Kopi, U2 mengunci Teh, lalu masing-masing menunggu yang lain…";await sleep(1100);
+    const d3=document.getElementById("d3");d3.textContent="DEADLOCK";d3.classList.add("miss");await sleep(700);
+    document.getElementById("d4").classList.add("hot");await sleep(400);
+    document.getElementById("d5").classList.add("miss");
+    L.textContent="Dengan sort: U2 juga mulai dari Kopi, jadi cukup menunggu U1 selesai.";await sleep(900);
+    document.getElementById("d5").className="node hot";const d6=document.getElementById("d6");d6.textContent="aman";d6.classList.add("hot");
+  }
+  if(kind==="rotation"){
+    ["r1","r2","r3","r4"].forEach(i=>document.getElementById(i).className="node");const L=document.getElementById("rlog");
+    document.getElementById("r1").classList.add("hot");L.textContent="User login, dapat RT#1. Penyerang diam-diam mencurinya.";await sleep(1000);
+    document.getElementById("r1").className="node";document.getElementById("r2").classList.add("hot");L.textContent="User refresh: RT#1 dicabut (revoked_at diisi), terbit RT#2.";await sleep(1100);
+    document.getElementById("r3").classList.add("miss");L.textContent="Penyerang memakai RT#1 → Revoke() RowsAffected = 0 → token sudah pernah dipakai!";await sleep(1100);
+    document.getElementById("r4").classList.add("miss");L.textContent="RevokeAllForUser: RT#2 juga dicabut. Penyerang dan user sama-sama harus login ulang.";
+  }
+  if(kind==="idem"){
+    const b=[...document.querySelectorAll("#ib .buyer")];b.forEach(x=>{x.className="buyer";x.textContent=x.textContent.split(" ")[0];});
+    const L=document.getElementById("ilog");const winner=Math.floor(Math.random()*10);
+    const order=b.map((_,i)=>i).sort(()=>Math.random()-.5);
+    for(const i of order){await sleep(110);b[i].classList.add("ok");b[i].textContent+= i===winner?" 201":" 200";}
+    L.textContent=`Satu request membuat payment (201), sembilan lainnya menerima payment yang SAMA (200). Di database: 1 baris.`;
+  }
+  if(kind==="layers"){
+    ["ly1","ly2","ly3"].forEach(i=>document.getElementById(i).className="node");
+    const L=document.getElementById("lylog");
+    document.getElementById("ly1").classList.add("hot");L.textContent="Presentation meng-import domain (memanggil use case).";await sleep(1000);
+    document.getElementById("ly3").classList.add("hot");L.textContent="Data meng-import domain (meng-implementasi AuthRepository).";await sleep(1000);
+    document.getElementById("ly2").classList.add("miss");L.textContent="Domain tidak meng-import keduanya. Ganti Dio atau ganti UI, aturan bisnis tetap utuh.";
+  }
+  if(kind==="bloc"){
+    ["b1","b2","b3","b4","bs1","bs2","bs3"].forEach(i=>document.getElementById(i).className="node");
+    const L=document.getElementById("blog");
+    document.getElementById("bs1").classList.add("hot");L.textContent="App dibuka: AsyncLoading → splash.";await sleep(900);
+    document.getElementById("b1").classList.add("hot");await sleep(300);
+    document.getElementById("b2").classList.add("hot");L.textContent="Router me-listen authControllerProvider, sehingga provider dibuat.";await sleep(700);
+    document.getElementById("b3").classList.add("hot");await sleep(400);
+    document.getElementById("b4").classList.add("hot");L.textContent="build() memanggil GetCurrentUser…";await sleep(900);
+    document.getElementById("bs1").className="node";document.getElementById("bs2").classList.add("hot");
+    L.textContent="Sesi valid → AsyncData(user) → router pindah ke /home.";await sleep(1300);
+    document.getElementById("bs2").className="node";document.getElementById("bs3").classList.add("miss");
+    L.textContent="Nanti interceptor melapor sesi habis → state = AsyncData(null) → /login.";
+  }
+  if(kind==="queue"){
+    const ids=["q1","q2","q3","qr","qc"];ids.forEach(i=>document.getElementById(i).className="node");
+    const L=document.getElementById("qlog"), qc=document.getElementById("qc");qc.textContent="refresh dipanggil: 0×";
+    ["q1","q2","q3"].forEach(i=>document.getElementById(i).classList.add("miss"));L.textContent="Ketiganya 401 karena access token kedaluwarsa. Error masuk antrean.";await sleep(1200);
+    document.getElementById("q1").className="node hot";document.getElementById("qr").classList.add("hot");qc.textContent="refresh dipanggil: 1×";
+    L.textContent="#1 memproses dulu: token masih lama → refresh → simpan token baru → ulangi → 200.";await sleep(1400);
+    document.getElementById("qr").className="node";
+    document.getElementById("q2").className="node hot";L.textContent="#2: token di storage sudah berubah → langsung ulangi, TANPA refresh.";await sleep(1000);
+    document.getElementById("q3").className="node hot";L.textContent="#3: sama. Hasil akhir: 3 sukses, refresh tetap 1×. Backend tidak mendeteksi token dipakai ulang.";
+  }
+  if(kind==="async"){
+    const set=(id,l,w,d)=>{const e=document.getElementById(id);e.style.transition="none";e.style.left=l+"%";e.style.width="0";e.offsetWidth;e.style.transition=`width ${d}ms linear`;e.style.width=w+"%";};
+    set("as1",0,45,900); set("as3",0,45,900); set("as4",0,45,900);
+    document.getElementById("as2").style.width="0";
+    await sleep(900); set("as2",45,45,900);
+    document.getElementById("aslog").textContent="Future.wait selesai dalam waktu request terlama, bukan jumlah keduanya. Tetap satu thread: yang ditunggu bersamaan adalah jaringannya.";
+    await sleep(900);
+  }
+  if(kind==="paging"){
+    const cells=[...document.querySelectorAll("#pg .buyer")], L=document.getElementById("pglog");
+    cells.forEach((c,i)=>{c.className="buyer";c.textContent=i<8?i+1:"";if(i<8)c.classList.add("ok");});
+    await sleep(700);L.textContent="Sisa jarak < 400px → loadMore() terpanggil 5× oleh event scroll, 4 diabaikan (isLoadingMore).";await sleep(1300);
+    L.textContent="GET /products?page=2 …";for(let i=8;i<16;i++){cells[i].textContent="…";}await sleep(900);
+    for(let i=8;i<16;i++){cells[i].textContent=i+1;cells[i].classList.add("ok");await sleep(70);}
+    L.textContent="Halaman 2 ditambahkan. Lanjut scroll…";await sleep(900);
+    for(let i=16;i<20;i++){cells[i].textContent=i+1;cells[i].classList.add("ok");await sleep(70);}
+    L.textContent="page == totalPages → 'Semua produk sudah ditampilkan'. loadMore() berikutnya langsung berhenti.";
+  }
+  if(kind==="optimistic"){
+    const U=document.getElementById("opUi"),S=document.getElementById("opSv"),L=document.getElementById("oplog");
+    U.textContent="1";S.textContent="1";
+    for(const q of [2,3,4]){U.textContent=q;L.textContent=`Tap + → layar langsung ${q} (optimis), PUT quantity=${q} masuk antrean`;await sleep(450);}
+    for(const q of [2,3,4]){await sleep(700);S.textContent=q;L.textContent=q<4?`Server menjawab ${q}. Masih ada request menunggu → layar TIDAK diubah ke ${q}`:"Server menjawab 4, tidak ada yang menunggu → state = respons server";}
+    await sleep(900);L.textContent="Layar dan server sama-sama 4, tanpa lompat mundur.";
+  }
+  if(kind==="idem"){
+    const A=document.getElementById("idA"),B=document.getElementById("idB"),L=document.getElementById("idlog");
+    A.textContent="-";B.textContent="-";
+    L.textContent="Tap Bayar → POST /payments … server membuat pembayaran, tapi jawabannya hilang (timeout).";
+    A.textContent="Pembayaran #1 dibuat";B.textContent="Pembayaran #1 dibuat (key k-7f3a)";await sleep(1500);
+    L.textContent="User tap Bayar lagi.";await sleep(900);
+    A.innerHTML="Pembayaran #1<br>Pembayaran #2 ← <b style='color:#ff6b6b'>ganda</b>";
+    B.innerHTML="Key k-7f3a dikirim lagi → server mengembalikan #1 <b style='color:#4ade80'>(sama)</b>";
+    L.textContent="Key disimpan sebelum request, jadi retry, buka ulang, atau restart app selalu memakai key yang sama.";
+  }
+  } catch (e) { /* popup closed mid-animation */ } finally { animating.delete(kind); }
+}
+
+let currentIndex = -1, navList = [];
+function visible(){ const q=$("#q").value.trim().toLowerCase(); return C.filter(c=>matches(c,q)); }
+
+function openModal(id){
+  let list = visible(); currentIndex = list.findIndex(c=>c.id===id);
+  if(currentIndex<0){ list = C; currentIndex = C.findIndex(c=>c.id===id); }
+  modalMode="concept"; navList=list;
+  const c = list[currentIndex] || C.find(x=>x.id===id); const [tl,tc]=TAGS[c.tag];
+  const mod = MODULES.find(m=>m.id===c.mod).name;
+  const prev = list[currentIndex-1], next = list[currentIndex+1];
+  $("#modal").innerHTML = `
+  <div class="m-top"><div><span class="tag ${tc}">${tl} · ${mod}</span><h2 id="m-title">${c.title}</h2><div class="file">${c.file}</div></div>
+    <button class="x" aria-label="Tutup">✕</button></div>
+  <div class="m-body">
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-p="code">Kode</button><button class="tab" data-p="what">Apa ini?</button>
+      <button class="tab" data-p="why">Kenapa dipakai?</button><button class="tab" data-p="without">Kalau tidak?</button>
+      <button class="tab" data-p="qa">Interview</button>
+    </div>
+    <div class="pane on" data-p="code">${c.viz?vizHTML(c.viz):""}${c.code.map(([l,i])=>codeBlock(l,i)).join("")}</div>
+    <div class="pane" data-p="what"><h4>Apa ini?</h4>${c.what}</div>
+    <div class="pane" data-p="why"><h4>Kenapa dipakai di sini?</h4>${c.why}</div>
+    <div class="pane" data-p="without"><h4>Kalau tidak dipakai?</h4>${c.without}</div>
+    <div class="pane" data-p="qa"><h4>Latihan interview</h4>${c.qa.map(([q,a])=>`<div class="qa"><b>${q}</b><span>${a}</span></div>`).join("")}</div>
+    <div class="navrow">
+      <button class="nav" ${prev?`data-go="${prev.id}"`:"disabled style='opacity:.35'"}>← ${prev?prev.title:""}</button>
+      <button class="nav" ${next?`data-go="${next.id}"`:"disabled style='opacity:.35'"}>${next?next.title:""} →</button>
+    </div>
+  </div>`;
+  const m=$("#modal");
+  m.querySelector(".x").onclick=closeModal;
+  m.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+    m.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===t));
+    m.querySelectorAll(".pane").forEach(p=>p.classList.toggle("on",p.dataset.p===t.dataset.p));
+  });
+  m.querySelectorAll(".nav[data-go]").forEach(b=>b.onclick=()=>openModal(b.dataset.go));
+  m.querySelectorAll(".play").forEach(b=>b.onclick=()=>runViz(b.dataset.viz));
+  m.querySelectorAll(".copy").forEach(b=>b.onclick=async()=>{
+    try{await navigator.clipboard.writeText(document.getElementById(b.dataset.src).textContent.trim());b.textContent="Tersalin ✓";}
+    catch{b.textContent="Gagal menyalin";}
+    setTimeout(()=>b.textContent="Salin",1500);
+  });
+  if(window.Prism) Prism.highlightAllUnder(m);
+  m.scrollTop=0;
+  $("#overlay").classList.add("open");
+  document.body.style.overflow="hidden";
+  window._cacheHit=false;
+  if(c.viz) setTimeout(()=>runViz(c.viz),450);
+  try{ history.replaceState(null,"","#"+c.id); }catch{}
+  m.querySelector(".x").focus();
+}
+function closeModal(){
+  $("#overlay").classList.remove("open");document.body.style.overflow="";
+  try{ history.replaceState(null,"","#"+(curView==="alur"?curFlow.id:curView)); }catch{}
+}
+$("#overlay").onclick=e=>{if(e.target.id==="overlay")closeModal();};
+document.addEventListener("keydown",e=>{
+  if(!$("#overlay").classList.contains("open")) return;
+  if(e.key==="Escape") closeModal();
+  if(modalMode!=="concept") return;
+  const list=navList;
+  if(e.key==="ArrowRight" && list[currentIndex+1]) openModal(list[currentIndex+1].id);
+  if(e.key==="ArrowLeft" && list[currentIndex-1]) openModal(list[currentIndex-1].id);
+});
+$("#q").oninput=renderCards;
+
+/* ====================================================== FLOWS */
+const LANES = ["UI","Notifier","UseCase","Repository","DataSource","Dio","Storage","Go API"];
+const LANE_HINT = {
+  UI:"Widget / page (presentation)",
+  Notifier:"AuthController, LoginController, RegisterController — AsyncNotifier (presentation)",
+  UseCase:"Login, Register, GetCurrentUser, Logout (domain)",
+  Repository:"AuthRepositoryImpl (data) — implements AuthRepository (domain)",
+  DataSource:"AuthRemoteDataSource (data) — bicara HTTP",
+  Dio:"HTTP client + AuthInterceptor (core/network)",
+  Storage:"SecureTokenStorage — Keystore / Keychain",
+  "Go API":"Backend go-ecommerce-api yang berjalan lokal"
+};
+const L = a => a.join("\n");
+
+const FLOWS = [
+{id:"arsitektur", name:"Alur umum (Clean Architecture)", desc:"Perjalanan satu aksi dari tombol sampai backend dan kembali lagi.",
+ steps:[
+  {f:"UI",t:"Notifier",k:"req",l:"ref.read(...notifier).submit()",d:"Widget tidak tahu HTTP. Ia hanya memanggil method notifier, misalnya saat tombol Masuk ditekan.",concept:"bloc"},
+  {f:"Notifier",t:"UseCase",k:"req",l:"panggil use case",d:"Notifier membaca use case lewat ref.read(loginUseCaseProvider), bukan repository langsung.",concept:"usecase"},
+  {f:"UseCase",t:"Repository",k:"req",l:"lewat interface domain",d:"Use case hanya kenal AuthRepository (interface). Implementasinya disuntikkan lewat authRepositoryProvider.",concept:"repository"},
+  {f:"Repository",t:"DataSource",k:"req",l:"ambil data",d:"Repository memilih sumber data: remote (API) atau lokal (storage).",concept:"repository"},
+  {f:"DataSource",t:"Dio",k:"req",l:"HTTP request",d:"Data source menyusun request: path, method, body JSON."},
+  {f:"Dio",t:"Go API",k:"db",l:"interceptor tambah Bearer token",d:"AuthInterceptor menambahkan header Authorization dari storage.",concept:"interceptor"},
+  {f:"Go API",t:"Dio",k:"ret",l:"JSON {success, data}",d:"Format respons standar dari backend Go."},
+  {f:"Dio",t:"DataSource",k:"ret",l:"Response / DioException",d:"Status 4xx/5xx menjadi DioException."},
+  {f:"DataSource",t:"Repository",k:"ret",l:"Model (dari JSON)",d:"JSON diubah menjadi UserModel di sini, satu-satunya tempat yang tahu nama field JSON.",concept:"entity"},
+  {f:"Repository",t:"UseCase",k:"ret",l:"Result: Ok / Err(Failure)",d:"Exception tidak pernah lewat dari sini. guard() mengubahnya menjadi Failure.",concept:"errmap"},
+  {f:"UseCase",t:"Notifier",k:"ret",l:"Result",d:"",concept:"result"},
+  {f:"Notifier",t:"UI",k:"ret",l:"state = AsyncData / AsyncError",d:"ref.watch menggambar ulang UI; ref.listen menjalankan efek samping.",concept:"listener"}
+ ]},
+
+{id:"startup", name:"Buka aplikasi", desc:"Memulihkan sesi yang tersimpan, lalu router memilih layar pertama.",
+ steps:[
+  {f:"UI",t:"UI",k:"self",l:"main(): ProviderScope",d:"ProviderScope menjadi container semua provider. Belum ada objek yang dibuat; provider dibuat saat pertama dibaca.",file:"lib/main.dart",concept:"di"},
+  {f:"UI",t:"Notifier",k:"req",l:"router membaca authControllerProvider",d:"App membaca routerProvider, yang me-listen authControllerProvider. Itu memicu AuthController.build(). Status AsyncLoading → router menampilkan splash.",file:"lib/app.dart",concept:"router"},
+  {f:"Notifier",t:"UseCase",k:"req",l:"GetCurrentUser",d:""},
+  {f:"UseCase",t:"Repository",k:"req",l:"currentUser()",d:"",file:"auth_repository_impl.dart"},
+  {f:"Repository",t:"Storage",k:"db",l:"ada refresh token?",d:"Tidak ada → Ok(null) tanpa memanggil API sama sekali.",concept:"storage"},
+  {f:"Repository",t:"DataSource",k:"req",l:"me()",d:"Ada sesi tersimpan: cek ke server apakah masih valid."},
+  {f:"DataSource",t:"Go API",k:"db",l:"GET /users/me",d:"Kalau access token sudah kedaluwarsa, interceptor otomatis refresh dulu (lihat alur Auto refresh token)."},
+  {f:"Go API",t:"Repository",k:"ret",l:"200 user",d:""},
+  {f:"Repository",t:"Notifier",k:"ret",l:"Ok(user) / Ok(null)",d:"401 setelah refresh gagal → token dihapus dan dikembalikan Ok(null). Backend mati → Err(NetworkFailure) → dianggap belum login."},
+  {f:"Notifier",t:"UI",k:"ret",l:"AsyncData(user) / AsyncData(null)",d:"Router mendengar perubahan ini lewat refreshListenable lalu redirect ke /home atau /login.",concept:"router"}
+ ]},
+
+{id:"login", name:"Login", desc:"Form login sampai pindah ke halaman home.",
+ steps:[
+  {f:"UI",t:"UI",k:"self",l:"validasi form lokal",d:"Email harus valid dan password tidak kosong. Kesalahan jelas ditangkap sebelum request dikirim.",file:"login_page.dart"},
+  {f:"UI",t:"Notifier",k:"req",l:"LoginController.submit()",d:"Tap kedua saat sedang loading diabaikan.",concept:"cubit"},
+  {f:"Notifier",t:"Notifier",k:"self",l:"state = AsyncLoading()",d:"Tombol berubah jadi spinner (state.isLoading)."},
+  {f:"Notifier",t:"UseCase",k:"req",l:"Login(LoginParams)",d:""},
+  {f:"UseCase",t:"Repository",k:"req",l:"login(email, password)",d:""},
+  {f:"Repository",t:"DataSource",k:"req",l:"login()",d:""},
+  {f:"DataSource",t:"Go API",k:"db",l:"POST /auth/login",d:"Endpoint publik: interceptor tidak menambahkan token dan tidak mencoba refresh kalau 401."},
+  {f:"Go API",t:"Repository",k:"ret",l:"200 {user, tokens}",d:"Dikembalikan sebagai record (UserModel, TokenPair).",concept:"records"},
+  {f:"Repository",t:"Storage",k:"db",l:"simpan access + refresh token",d:"Di Keystore/Keychain.",concept:"storage"},
+  {f:"Go API",t:"Repository",k:"err",l:"401 / 422 → Err(Failure)",d:"Password salah → UnauthorizedFailure. Validasi gagal → ServerFailure dengan fieldErrors. Ditampilkan di ErrorBanner.",concept:"errmap"},
+  {f:"Notifier",t:"UI",k:"ret",l:"state = AsyncData(user)",d:"Kalau gagal: AsyncError(Failure) → ErrorBanner.fromError menampilkan pesan dan error per field."},
+  {f:"UI",t:"Notifier",k:"req",l:"ref.listen → signedIn(user)",d:"Halaman login memberi tahu AuthController. Ia tidak bernavigasi sendiri.",concept:"listener"},
+  {f:"Notifier",t:"UI",k:"ret",l:"AsyncData(user) → router ke /home",d:"",concept:"router"}
+ ]},
+
+{id:"register", name:"Daftar", desc:"Membuat akun lalu langsung login.",
+ steps:[
+  {f:"UI",t:"UI",k:"self",l:"validasi password kuat",d:"Aturan sama dengan backend: 8–72 karakter, huruf besar, huruf kecil, angka."},
+  {f:"UI",t:"Notifier",k:"req",l:"RegisterController.submit()",d:""},
+  {f:"Notifier",t:"UseCase",k:"req",l:"Register",d:"Use case ini berisi aturan: daftar, lalu login.",concept:"usecase"},
+  {f:"UseCase",t:"Go API",k:"db",l:"POST /auth/register",d:"Lewat repository dan data source (diringkas)."},
+  {f:"Go API",t:"UseCase",k:"err",l:"409 email sudah terdaftar",d:"Use case berhenti dan mengembalikan Err. ErrorBanner menampilkan pesan dari backend."},
+  {f:"UseCase",t:"Go API",k:"db",l:"POST /auth/login",d:"Kalau daftar berhasil."},
+  {f:"UseCase",t:"Storage",k:"db",l:"simpan token",d:""},
+  {f:"Notifier",t:"UI",k:"ret",l:"AsyncData(user) → signedIn → /home",d:""}
+ ]},
+
+{id:"katalog", name:"Buka katalog", desc:"Halaman pertama produk dan daftar kategori dimuat bersamaan.",
+ steps:[
+  {f:"UI",t:"Notifier",k:"req",l:"ref.watch(productListControllerProvider)",d:"CatalogPage dibangun. Provider belum ada → build() dijalankan.",concept:"pagination"},
+  {f:"Notifier",t:"Notifier",k:"self",l:"ref.watch(catalogFilterProvider)",d:"Filter awal: pencarian kosong, kategori 'Semua'."},
+  {f:"Notifier",t:"UseCase",k:"req",l:"GetProducts(page 1, limit 20)",d:""},
+  {f:"UseCase",t:"Repository",k:"req",l:"getProducts(query)",d:"Use case merapikan teks pencarian (trim)."},
+  {f:"Repository",t:"DataSource",k:"req",l:"guard(getProducts)",d:"",concept:"errmap"},
+  {f:"DataSource",t:"Go API",k:"db",l:"GET /products?page=1&limit=20",d:"Hanya parameter yang terisi yang dikirim. Backend menjawab dari cache Redis bila ada."},
+  {f:"Go API",t:"DataSource",k:"ret",l:"{data: [...], meta: {...}}",d:"meta berisi page, limit, total_items, total_pages."},
+  {f:"DataSource",t:"Notifier",k:"ret",l:"Paged<Product>",d:"Lewat repository dan use case (diringkas)."},
+  {f:"Notifier",t:"UI",k:"ret",l:"AsyncData(ProductListState)",d:"Grid 2 kolom memakai ProductCard sesuai komponen Figma.",concept:"tokens"},
+  {f:"UI",t:"Go API",k:"db",l:"GET /categories (paralel)",d:"categoriesProvider, sebuah FutureProvider. Gagal? Baris chip disembunyikan.",concept:"family"}
+ ]},
+
+{id:"scroll", name:"Infinite scroll", desc:"User menggulir ke bawah dan halaman berikutnya ditambahkan.",
+ steps:[
+  {f:"UI",t:"UI",k:"self",l:"extentAfter < 400px",d:"Listener ScrollController.",concept:"pagination"},
+  {f:"UI",t:"Notifier",k:"req",l:"loadMore() × banyak",d:"Event scroll terjadi berkali-kali per detik."},
+  {f:"Notifier",t:"Notifier",k:"self",l:"guard: isLoadingMore / !hasMore",d:"Panggilan kedua dan seterusnya langsung diabaikan."},
+  {f:"Notifier",t:"UI",k:"ret",l:"isLoadingMore = true",d:"Footer: 'Memuat produk lainnya…'."},
+  {f:"Notifier",t:"Go API",k:"db",l:"GET /products?page=2",d:"Lewat use case, repository, data source (diringkas)."},
+  {f:"Go API",t:"Notifier",k:"ret",l:"halaman 2",d:""},
+  {f:"Notifier",t:"Notifier",k:"self",l:"filter masih sama?",d:"Kalau user sudah ganti kategori/pencarian, respons ini dibuang."},
+  {f:"Notifier",t:"UI",k:"ret",l:"items lama + items baru",d:"Saat page == totalPages: footer 'Semua produk sudah ditampilkan'."},
+  {f:"Go API",t:"Notifier",k:"err",l:"gagal → loadMoreError",d:"Produk yang sudah tampil tetap ada; footer menampilkan 'Coba lagi'."}
+ ]},
+
+{id:"search", name:"Cari & filter", desc:"Mengetik di kolom cari atau memilih kategori.",
+ steps:[
+  {f:"UI",t:"Notifier",k:"req",l:"setSearch('k'), ('ko'), ('kop'), ('kopi')",d:"onChanged dipanggil setiap ketikan.",concept:"debounce"},
+  {f:"Notifier",t:"Notifier",k:"self",l:"Timer 400ms di-reset tiap ketikan",d:"CatalogFilterController."},
+  {f:"Notifier",t:"Notifier",k:"self",l:"filter = {search: 'kopi'}",d:"Hanya sekali, setelah user berhenti mengetik."},
+  {f:"Notifier",t:"Notifier",k:"self",l:"ProductListController.build() ulang",d:"Karena ref.watch(catalogFilterProvider). Data lama tetap tampil dengan progress bar tipis."},
+  {f:"Notifier",t:"Go API",k:"db",l:"GET /products?page=1&search=kopi",d:""},
+  {f:"Go API",t:"UI",k:"ret",l:"hasil baru / 'Produk tidak ditemukan'",d:"Daftar kosong menampilkan StateView dengan istilah pencariannya."},
+  {f:"UI",t:"Notifier",k:"req",l:"pilih chip kategori",d:"selectCategory(id). Pencarian tetap dipertahankan; tanpa debounce karena satu tap = satu niat."}
+ ]},
+
+{id:"detail", name:"Detail produk", desc:"Tap kartu produk → halaman detail.",
+ steps:[
+  {f:"UI",t:"UI",k:"self",l:"context.push('/products/:id')",d:"go_router dengan path parameter."},
+  {f:"UI",t:"Notifier",k:"req",l:"ref.watch(productDetailProvider(id))",d:"FutureProvider.autoDispose.family: satu state per ID.",concept:"family"},
+  {f:"Notifier",t:"Go API",k:"db",l:"GET /products/:id",d:"Lewat use case GetProductDetail (diringkas)."},
+  {f:"Go API",t:"UI",k:"ret",l:"AsyncData(product)",d:"Nama kategori diambil dari categoriesProvider yang sudah ada di cache."},
+  {f:"Go API",t:"UI",k:"err",l:"404 → StateView + 'Coba lagi'",d:"Produk sudah dihapus admin: pesan dari backend ditampilkan."},
+  {f:"UI",t:"UI",k:"self",l:"stepper 1…stok",d:"Aturan yang sama dengan validasi cart di backend. Tombol keranjang aktif di fase 3."},
+  {f:"UI",t:"UI",k:"self",l:"kembali → provider dibuang",d:"autoDispose: membuka lagi akan memuat stok terbaru."}
+ ]},
+
+{id:"keranjang", name:"Keranjang", desc:"Tambah dari detail produk, lalu ubah jumlah dengan tap cepat.",
+ steps:[
+  {f:"UI",t:"Notifier",k:"req",l:"add(productId, qty)",d:"Tombol 'Tambah ke keranjang' menampilkan loading."},
+  {f:"Notifier",t:"Go API",k:"db",l:"POST /cart/items",d:"Lewat use case AddToCart (validasi 1…1000), repository, data source. Jumlah DITAMBAHKAN ke yang sudah ada."},
+  {f:"Go API",t:"Notifier",k:"ret",l:"keranjang lengkap",d:"Backend mengembalikan seluruh keranjang, total dihitung dari harga terkini."},
+  {f:"Notifier",t:"UI",k:"ret",l:"badge + SnackBar 'Lihat'",d:"cartCountProvider: hanya ikon keranjang yang rebuild."},
+  {f:"Go API",t:"UI",k:"err",l:"409 stok kurang → SnackBar",d:"Pesan dari backend, keranjang tidak berubah."},
+  {f:"UI",t:"Notifier",k:"req",l:"tap + tiga kali (2, 3, 4)",d:"Di halaman keranjang.",concept:"optimistic"},
+  {f:"Notifier",t:"UI",k:"ret",l:"layar langsung 2 → 3 → 4",d:"Optimistic update."},
+  {f:"Notifier",t:"Go API",k:"db",l:"PUT /cart/items/:id (2), lalu (3), lalu (4)",d:"Antrean: request berikutnya menunggu yang sebelumnya selesai."},
+  {f:"Go API",t:"Notifier",k:"ret",l:"respons 2 & 3 diabaikan, 4 dipasang",d:"_pending > 0 → jangan timpa layar."},
+  {f:"Go API",t:"Notifier",k:"err",l:"gagal → GET /cart",d:"Rollback ke data server, SnackBar menampilkan alasannya."},
+  {f:"UI",t:"UI",k:"self",l:"produk stok kurang → banner merah",d:"available=false dari backend: tombol Checkout nonaktif."}
+ ]},
+
+{id:"checkout", name:"Checkout", desc:"Dari keranjang menjadi pesanan, termasuk saat stok berubah.",
+ steps:[
+  {f:"UI",t:"UI",k:"self",l:"Keranjang → Checkout",d:"Tombol nonaktif kalau ada item yang available=false."},
+  {f:"UI",t:"Notifier",k:"req",l:"placeOrder()",d:"Tap kedua selama loading diabaikan.",concept:"checkout"},
+  {f:"Notifier",t:"Go API",k:"db",l:"POST /orders (tanpa body)",d:"Lewat use case PlaceOrder, repository, data source."},
+  {f:"Go API",t:"Go API",k:"self",l:"1 transaksi: kunci keranjang & stok, snapshot harga, kurangi stok, kosongkan keranjang",d:"Lihat flow checkout di panduan backend."},
+  {f:"Go API",t:"Notifier",k:"ret",l:"201 { order }",d:""},
+  {f:"Notifier",t:"Notifier",k:"self",l:"invalidate(cart), invalidate(orders)",d:"Badge keranjang kembali 0."},
+  {f:"Notifier",t:"UI",k:"ret",l:"go('/home') + push('/orders/:id')",d:"SnackBar: 'Pesanan ORD-… dibuat'."},
+  {f:"Go API",t:"Notifier",k:"err",l:"409 stok habis",d:"AsyncError → ErrorBanner, keranjang dimuat ulang dan item ditandai merah."}
+ ]},
+
+{id:"riwayat", name:"Riwayat & batal", desc:"Daftar pesanan, detail dengan timeline status, dan pembatalan.",
+ steps:[
+  {f:"UI",t:"Go API",k:"db",l:"GET /orders?page=1&limit=20",d:"orderListControllerProvider, infinite scroll seperti katalog.",concept:"pagination"},
+  {f:"UI",t:"Notifier",k:"req",l:"orderDetailControllerProvider(id)",d:"Family notifier: satu state per pesanan.",concept:"checkout"},
+  {f:"Notifier",t:"Go API",k:"db",l:"GET /orders/:id",d:""},
+  {f:"Go API",t:"UI",k:"ret",l:"timeline: Dibuat → Dibayar → Diproses → Dikirim → Selesai",d:"Harga per item = snapshot saat checkout."},
+  {f:"UI",t:"Notifier",k:"req",l:"Batalkan → dialog konfirmasi → cancel()",d:"Hanya untuk PENDING."},
+  {f:"Notifier",t:"Go API",k:"db",l:"POST /orders/:id/cancel",d:"Backend mengembalikan stok dalam transaksi yang sama."},
+  {f:"Go API",t:"Notifier",k:"ret",l:"status CANCELLED",d:"Detail diperbarui dan item yang sama di daftar diganti (replace)."},
+  {f:"Go API",t:"Notifier",k:"err",l:"409 sudah dibayar",d:"invalidateSelf(): tampilkan status yang sebenarnya."}
+ ]},
+
+{id:"bayar", name:"Pembayaran", desc:"Bayar pesanan dengan Idempotency-Key, termasuk timeout dan pembayaran ditolak.",
+ steps:[
+  {f:"UI",t:"Notifier",k:"req",l:"paymentControllerProvider(orderId)",d:"Layar pembayaran dibuka dari detail pesanan.",concept:"idempotency"},
+  {f:"Notifier",t:"UseCase",k:"req",l:"StartPayment(orderId)",d:""},
+  {f:"UseCase",t:"Storage",k:"req",l:"keyFor(orderId)",d:"Ada → pakai. Belum ada → buat UUID v4 dan simpan dulu."},
+  {f:"UseCase",t:"Go API",k:"db",l:"POST /payments + Idempotency-Key",d:"Lewat repository dan data source."},
+  {f:"Go API",t:"UseCase",k:"err",l:"timeout",d:"Key tetap tersimpan. 'Coba lagi' mengirim key yang sama → pembayaran yang sama (200)."},
+  {f:"Go API",t:"UI",k:"ret",l:"PENDING + referensi + countdown 15 menit",d:""},
+  {f:"UI",t:"Go API",k:"db",l:"POST /payments/:id/simulate-success",d:"Simulasi bank. Backend mengubah pembayaran dan pesanan dalam satu transaksi."},
+  {f:"Go API",t:"UseCase",k:"ret",l:"SUCCESS → hapus key",d:"Detail dan daftar pesanan di-invalidate: status jadi 'Dibayar'."},
+  {f:"Go API",t:"UseCase",k:"err",l:"ditolak / kedaluwarsa → hapus key",d:"'Coba bayar lagi' membuat percobaan baru dengan key baru."}
+ ]},
+
+{id:"admin", name:"Admin", desc:"Kelola produk dan memproses pesanan yang sudah dibayar.",
+ steps:[
+  {f:"UI",t:"UI",k:"self",l:"login sebagai admin → ikon admin",d:"Router mengalihkan non-admin dari /admin.",concept:"admin"},
+  {f:"UI",t:"UseCase",k:"req",l:"SaveProduct(draft)",d:"Validasi per field di app, sama dengan validator backend."},
+  {f:"UseCase",t:"Go API",k:"db",l:"POST /products atau PUT /products/:id",d:"Middleware Go memeriksa role admin."},
+  {f:"Go API",t:"Notifier",k:"ret",l:"produk tersimpan",d:"invalidate(productList) dan invalidate(productDetail(id)): katalog pelanggan ikut berubah."},
+  {f:"UI",t:"Go API",k:"db",l:"PATCH /products/:id/stock",d:"Menu 'Ubah stok' di daftar produk."},
+  {f:"UI",t:"Go API",k:"db",l:"PATCH /orders/:id/status (PROCESSING)",d:"Tombol di detail pesanan: Dibayar → Diproses → Dikirim → Selesai."},
+  {f:"Go API",t:"UI",k:"err",l:"409 transisi tidak valid / kategori masih dipakai",d:"Pesan backend ditampilkan apa adanya."}
+ ]},
+
+{id:"refresh", name:"Auto refresh token", desc:"Access token habis (15 menit) saat tiga request berjalan bersamaan.",
+ steps:[
+  {f:"UI",t:"Dio",k:"req",l:"3 request bersamaan",d:"Misalnya halaman memuat profil, produk, dan cart sekaligus."},
+  {f:"Dio",t:"Go API",k:"db",l:"semua pakai token lama",d:""},
+  {f:"Go API",t:"Dio",k:"err",l:"401, 401, 401",d:"Ketiga error masuk antrean QueuedInterceptor.",concept:"interceptor"},
+  {f:"Dio",t:"Storage",k:"db",l:"#1: token masih sama → perlu refresh",d:""},
+  {f:"Dio",t:"Go API",k:"db",l:"#1: POST /auth/refresh",d:"Lewat Dio kedua yang tidak punya interceptor."},
+  {f:"Go API",t:"Dio",k:"ret",l:"token baru (yang lama dicabut)",d:"Refresh token rotation di backend."},
+  {f:"Dio",t:"Storage",k:"db",l:"simpan token baru",d:""},
+  {f:"Dio",t:"Go API",k:"db",l:"#1: ulangi request → 200",d:""},
+  {f:"Dio",t:"Storage",k:"db",l:"#2, #3: token sudah berubah",d:"Tidak refresh lagi. Kalau refresh dua kali, backend menganggap token dicuri dan mencabut semua sesi."},
+  {f:"Dio",t:"Go API",k:"db",l:"#2, #3: ulangi → 200",d:""},
+  {f:"Dio",t:"UI",k:"ret",l:"tiga respons sukses",d:"User tidak melihat apa pun. Dibuktikan oleh test: refreshCalls == 1.",concept:"fakebackend"}
+ ]},
+
+{id:"expired", name:"Sesi habis", desc:"Refresh token ditolak (kedaluwarsa 7 hari, atau sudah dicabut).",
+ steps:[
+  {f:"Dio",t:"Go API",k:"db",l:"POST /auth/refresh",d:""},
+  {f:"Go API",t:"Dio",k:"err",l:"401 refresh ditolak",d:""},
+  {f:"Dio",t:"Storage",k:"db",l:"hapus semua token",d:""},
+  {f:"Dio",t:"Notifier",k:"req",l:"SessionEvents.notifyExpired()",d:"Interceptor tidak meng-import Riverpod. Ia hanya mengirim kabar lewat Stream.",concept:"stream"},
+  {f:"Notifier",t:"Notifier",k:"self",l:"state = AsyncData(null)",d:"Listener stream di AuthController.build()."},
+  {f:"Notifier",t:"UI",k:"ret",l:"AsyncData(null) → router ke /login",d:"Dari layar mana pun user berada.",concept:"router"}
+ ]},
+
+{id:"logout", name:"Logout", desc:"Mencabut sesi di server dan di HP.",
+ steps:[
+  {f:"UI",t:"Notifier",k:"req",l:"authController.logout()",d:"Tombol logout di AppBar memanggil ref.read(authControllerProvider.notifier).logout()."},
+  {f:"Notifier",t:"UseCase",k:"req",l:"Logout",d:""},
+  {f:"UseCase",t:"Repository",k:"req",l:"logout()",d:""},
+  {f:"Repository",t:"Go API",k:"db",l:"POST /auth/logout",d:"Refresh token dicabut di server. Kalau server tidak bisa dihubungi, proses tetap lanjut."},
+  {f:"Repository",t:"Storage",k:"db",l:"hapus token",d:"Selalu dijalankan, sehingga user tetap ter-logout di HP ini."},
+  {f:"Notifier",t:"UI",k:"ret",l:"AsyncData(null) → /login",d:""}
+ ]},
+];
+
+const JOURNEY = [
+  {who:"App", what:"Dibuka", flow:"startup"},
+  {who:"User", what:"Daftar", flow:"register"},
+  {who:"User", what:"Login", flow:"login"},
+  {who:"User", what:"Lihat katalog", flow:"katalog"},
+  {who:"User", what:"Scroll", flow:"scroll"},
+  {who:"User", what:"Cari & filter", flow:"search"},
+  {who:"User", what:"Detail produk", flow:"detail"},
+  {who:"User", what:"Keranjang", flow:"keranjang"},
+  {who:"User", what:"Checkout", flow:"checkout"},
+  {who:"User", what:"Riwayat pesanan", flow:"riwayat"},
+  {who:"User", what:"Bayar", flow:"bayar"},
+  {who:"Admin", what:"Kelola toko", flow:"admin"},
+  {who:"Otomatis", what:"Token diperbarui", flow:"refresh"},
+  {who:"Otomatis", what:"Sesi habis", flow:"expired"},
+  {who:"User", what:"Logout", flow:"logout"},
+];
+
+let curFlow = FLOWS[0], playing = false, playToken = 0;
+const KCOL = {req:"#00add8", ret:"#8b98a9", db:"#f2b84b", err:"#f0605d", self:"#a78bfa"};
+
+function renderJourney(){
+  $("#journey").innerHTML = JOURNEY.map((j,i)=>`
+    <button class="jstep" data-flow="${j.flow}" style="animation-delay:${i*60}ms">
+      <span class="jwho ${j.who==="Admin"?"admin":j.who==="Selesai"?"done":""}">${j.who}</span>
+      <span class="jwhat">${j.what}</span></button>${i<JOURNEY.length-1?'<span class="jarrow">→</span>':""}`).join("");
+  $("#journey").querySelectorAll(".jstep").forEach(b=>b.onclick=()=>{selectFlow(b.dataset.flow);document.querySelector(".seqcard").scrollIntoView({behavior:"smooth",block:"start"});});
+}
+function renderFlowChips(){
+  $("#flowchips").innerHTML = FLOWS.map(f=>`<button class="chip ${f.id===curFlow.id?"on":""}" data-flow="${f.id}">${f.name}</button>`).join("");
+  $("#flowchips").querySelectorAll(".chip").forEach(b=>b.onclick=()=>selectFlow(b.dataset.flow));
+}
+function selectFlow(id){
+  curFlow = FLOWS.find(f=>f.id===id) || FLOWS[0];
+  playToken++; playing=false; $("#flow-play").textContent="Putar alur";
+  renderFlowChips(); drawSeq();
+  document.querySelectorAll(".jstep").forEach(b=>b.classList.toggle("on", b.dataset.flow===curFlow.id));
+  try{ history.replaceState(null,"","#"+curFlow.id); }catch{}
+}
+
+function drawSeq(){
+  const f = curFlow;
+  const used = LANES.filter(l=>f.steps.some(s=>s.f===l||s.t===l));
+  const colW = 158, left = 20, top = 64, rowH = 50;
+  const W = Math.max(680, left*2 + used.length*colW);
+  const H = top + f.steps.length*rowH + 30;
+  const x = l => left + used.indexOf(l)*colW + colW/2;
+  $("#flow-title").textContent = f.name;
+  $("#flow-desc").textContent = f.desc;
+  $("#flow-caption").innerHTML = 'Tekan "Putar alur" atau klik salah satu panah.';
+  const svg = $("#seq");
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`); svg.setAttribute("width",W); svg.setAttribute("height",H);
+  let s = `<defs>${Object.entries(KCOL).map(([k,c])=>`<marker id="ah-${k}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9z" fill="${c}"/></marker>`).join("")}</defs>`;
+  used.forEach(l=>{
+    s += `<line class="life" x1="${x(l)}" y1="${top-14}" x2="${x(l)}" y2="${H-10}"/>`;
+    s += `<g class="lanehd" data-lane="${l}"><title>${LANE_HINT[l]}</title><rect x="${x(l)-66}" y="8" width="132" height="36" rx="9"/><text x="${x(l)}" y="31" text-anchor="middle">${l}</text></g>`;
+  });
+  f.steps.forEach((st,i)=>{
+    const y = top + i*rowH + 22, c = KCOL[st.k];
+    const label = `${i+1}. ${esc(st.l)}`;
+    s += `<g class="step" data-i="${i}" tabindex="0">`;
+    s += `<rect class="hit" x="0" y="${y-30}" width="${W}" height="${rowH}"/>`;
+    if(st.f===st.t){
+      const x0 = x(st.f);
+      s += `<path d="M${x0} ${y-6} h34 v16 h-30" fill="none" stroke="${c}" stroke-width="1.6" marker-end="url(#ah-${st.k})"/>`;
+      s += `<text class="lbl" x="${x0+42}" y="${y+6}">${label}</text>`;
+    } else {
+      const x1=x(st.f), x2=x(st.t), dir = x2>x1?1:-1;
+      const dash = st.k==="ret"||st.k==="err" ? 'stroke-dasharray="6 5"' : "";
+      s += `<line x1="${x1+dir*4}" y1="${y}" x2="${x2-dir*6}" y2="${y}" stroke="${c}" stroke-width="1.7" ${dash} marker-end="url(#ah-${st.k})"/>`;
+      s += `<text class="lbl" x="${(x1+x2)/2}" y="${y-9}" text-anchor="middle">${label}</text>`;
+    }
+    s += `</g>`;
+  });
+  s += `<circle id="packet" r="6" cx="0" cy="0" style="opacity:0"/>`;
+  svg.innerHTML = s;
+  svg.querySelectorAll(".step").forEach(g=>{
+    g.onclick=()=>openStep(+g.dataset.i);
+    g.onkeydown=e=>{if(e.key==="Enter"){openStep(+g.dataset.i);}};
+    g.onmouseenter=()=>showCaption(+g.dataset.i);
+  });
+  svg._x = x; svg._top=top; svg._rowH=rowH;
+}
+
+function showCaption(i){
+  const st = curFlow.steps[i];
+  $("#flow-caption").innerHTML = `<b>${i+1}. ${esc(st.l)}</b> <span class="cap-who">${st.f} → ${st.t}</span><br>${st.d||""}${st.file?` <span class="cap-file">${st.file}${st.fn?" · "+st.fn:""}</span>`:""}`;
+}
+function highlight(i){
+  const svg=$("#seq");
+  svg.querySelectorAll(".step").forEach(g=>g.classList.toggle("active", +g.dataset.i===i));
+  svg.querySelectorAll(".step").forEach(g=>g.classList.toggle("done", +g.dataset.i<i));
+  const st=curFlow.steps[i]||{};
+  svg.querySelectorAll(".lanehd").forEach(g=>g.classList.toggle("on", g.dataset.lane===st.f||g.dataset.lane===st.t));
+}
+
+async function playFlow(){
+  if(playing){ playToken++; playing=false; $("#flow-play").textContent="Putar alur"; return; }
+  playing=true; const my=++playToken; $("#flow-play").textContent="Jeda";
+  const svg=$("#seq"), p=$("#packet");
+  for(let i=0;i<curFlow.steps.length;i++){
+    if(my!==playToken) return;
+    const st=curFlow.steps[i], y=svg._top+i*svg._rowH+22, x1=svg._x(st.f), x2=svg._x(st.t);
+    highlight(i); showCaption(i);
+    p.style.transition="none"; p.style.fill=KCOL[st.k]; p.style.opacity=1;
+    p.style.transform=`translate(${x1}px,${y}px)`; p.getBoundingClientRect();
+    p.style.transition="transform .75s cubic-bezier(.5,0,.3,1)";
+    p.style.transform= st.f===st.t ? `translate(${x1+34}px,${y+5}px)` : `translate(${x2}px,${y}px)`;
+    await sleep(1500);
+  }
+  if(my===playToken){ playing=false; $("#flow-play").textContent="Putar ulang"; p.style.opacity=0; }
+}
+function resetFlow(){ playToken++; playing=false; $("#flow-play").textContent="Putar alur"; drawSeq(); }
+
+function openStep(i){
+  const f=curFlow, st=f.steps[i]; highlight(i); showCaption(i);
+  const concept = st.concept && C.find(c=>c.id===st.concept);
+  $("#modal").innerHTML = `
+  <div class="m-top"><div><span class="tag t-go">LANGKAH ${i+1} / ${f.steps.length} · ${f.name}</span>
+    <h2 id="m-title">${esc(st.l)}</h2>
+    <div class="flowwho"><span class="who">${st.f}</span><span class="arrow">→</span><span class="who">${st.t}</span><span class="kind" style="color:${KCOL[st.k]}">${{req:"request",ret:"respons",db:"API / storage",err:"jalur gagal",self:"proses internal"}[st.k]}</span></div></div>
+    <button class="x" aria-label="Tutup">✕</button></div>
+  <div class="m-body"><div class="pane on">
+    <h4>Apa yang terjadi</h4><p>${st.d||"Hasil diteruskan ke lapisan berikutnya."}</p>
+    ${st.file?`<h4>Di mana kodenya</h4><p><code>${st.file}</code>${st.fn?` → <code>${st.fn}</code>`:""}</p>`:""}
+    ${st.code?`<div class="codehead"><span>Potongan kode</span></div><pre><code class="language-dart">${esc(st.code)}</code></pre>`:""}
+    ${concept?`<h4>Konsep terkait</h4><button class="nav" id="goconcept">Buka penjelasan: ${concept.title} →</button>`:""}
+    <div class="navrow">
+      <button class="nav" ${i>0?`data-step="${i-1}"`:"disabled style='opacity:.35'"}>← Langkah sebelumnya</button>
+      <button class="nav" ${i<f.steps.length-1?`data-step="${i+1}"`:"disabled style='opacity:.35'"}>Langkah berikutnya →</button>
+    </div></div></div>`;
+  const m=$("#modal");
+  m.querySelector(".x").onclick=closeModal;
+  m.querySelectorAll("[data-step]").forEach(b=>b.onclick=()=>openStep(+b.dataset.step));
+  if(concept) m.querySelector("#goconcept").onclick=()=>openModal(concept.id);
+  if(window.Prism) Prism.highlightAllUnder(m);
+  m.scrollTop=0; $("#overlay").classList.add("open"); document.body.style.overflow="hidden";
+  modalMode="step"; m.querySelector(".x").focus();
+}
+
+/* ---- Kenapa view ---- */
+const WHYMODS = [
+  {t:"domain/",flow:"arsitektur",tag:"arch",d:"Aturan bisnis: entity, kontrak repository, use case. Pure Dart, sehingga bertahan walaupun UI atau API berganti."},
+  {t:"data/",flow:"login",tag:"net",d:"Cara mengambil dan menyimpan data: HTTP ke Go API, JSON, secure storage."},
+  {t:"presentation/",flow:"login",tag:"state",d:"Widget dan notifier Riverpod. Hanya tahu use case dan AsyncValue."},
+  {t:"core/network",flow:"refresh",tag:"net",d:"Satu Dio untuk seluruh app, refresh token otomatis, dan penerjemah error backend."},
+  {t:"features/catalog",flow:"katalog",tag:"state",d:"Fase 2: katalog dengan pagination, pencarian ber-debounce, filter kategori, dan detail produk."},
+  {t:"features/cart",flow:"keranjang",tag:"state",d:"Fase 3: keranjang dengan optimistic update, antrean request, badge, dan peringatan stok."},
+  {t:"features/orders",flow:"checkout",tag:"state",d:"Fase 4: checkout, riwayat pesanan berhalaman, detail dengan timeline status, dan pembatalan."},
+  {t:"features/payment",flow:"bayar",tag:"state",d:"Fase 5: pembayaran dengan Idempotency-Key yang disimpan per pesanan, countdown, dan percobaan ulang."},
+  {t:"features/admin",flow:"admin",tag:"arch",d:"Fase 6: produk, kategori, dan status pesanan untuk role admin."},
+  {t:"core/theme",flow:"katalog",tag:"arch",d:"Token desain dari Figma (warna, ukuran, text style) sebagai konstanta dan ThemeData."},
+  {t:"core/router",flow:"startup",tag:"arch",d:"Menentukan layar mana yang boleh dibuka berdasarkan status login."},
+  {t:"*_providers.dart",flow:"startup",tag:"arch",d:"Dependency injection lewat Riverpod: provider merangkai data → domain, dan bisa di-override saat test."},
+];
+const WHYTECH = [
+  {t:"flutter_riverpod 3",tag:"state",d:"State management sekaligus DI: AsyncNotifier, AsyncValue, dan override untuk test. Diminta langsung oleh lowongan yang dituju."},
+  {t:"dio",tag:"net",d:"HTTP client dengan interceptor, timeout, dan adapter yang bisa diganti untuk test."},
+  {t:"GitHub Actions",tag:"test",d:"CI: analyze dan test otomatis di setiap push dan pull request, untuk Flutter dan backend Go."},
+  {t:"go_router",tag:"arch",d:"Router resmi tim Flutter: deklaratif, redirect, dan mendukung URL di Flutter Web."},
+  {t:"flutter_secure_storage",tag:"net",d:"Menyimpan token di Keystore/Keychain, bukan file teks biasa."},
+  {t:"equatable",tag:"state",d:"Perbandingan berdasarkan isi untuk entity, params, dan Failure; dibutuhkan mocktail untuk mencocokkan argumen."},
+  {t:"mocktail",tag:"test",d:"Mock tanpa build_runner, dipakai bersama provider override untuk unit test notifier dan use case."},
+  {t:"Dart 3",tag:"dart",d:"Sealed class, record, dan pattern matching menggantikan package seperti dartz."},
+];
+const DOCKFLOW = [
+  ["flutter pub get","Membaca pubspec.yaml lalu memilih versi package yang cocok dengan Flutter SDK di laptopmu (versinya ditulis sebagai rentang)."],
+  ["Build","Mode debug memakai JIT sehingga hot reload bisa dipakai. Mode release dikompilasi AOT ke kode native."],
+  ["Pasang ke target","APK ke emulator Android, bundle web ke Chrome, atau exe ke Windows."],
+  ["main()","runApp(ProviderScope(child: App())). ProviderScope menyimpan semua provider."],
+  ["App + router","App membaca routerProvider; router me-listen authControllerProvider sehingga AuthController.build() mulai. Splash tampil selama AsyncLoading."],
+  ["Cek sesi","Ada refresh token tersimpan? GET /users/me ke backend lokal. Tidak ada? Langsung unauthenticated."],
+  ["Redirect","go_router memindahkan ke /home atau /login sesuai AsyncValue dari AuthController."],
+];
+function renderWhy(){
+  $("#whymods").innerHTML = WHYMODS.map((m,i)=>{const [tl,tc]=TAGS[m.tag];return `<article class="card" tabindex="0" data-flow="${m.flow}" style="animation-delay:${i*40}ms"><span class="tag ${tc}">${tl}</span><h3>${m.t}</h3><p>${m.d}</p><div class="file">lihat alur →</div></article>`}).join("");
+  $("#whymods").querySelectorAll(".card").forEach(c=>c.onclick=()=>{setView("alur");selectFlow(c.dataset.flow);});
+  $("#whytech").innerHTML = WHYTECH.map((m,i)=>{const [tl,tc]=TAGS[m.tag];return `<article class="card static" style="animation-delay:${i*40}ms"><span class="tag ${tc}">${tl}</span><h3>${m.t}</h3><p>${m.d}</p></article>`}).join("");
+  $("#dockflow").innerHTML = DOCKFLOW.map((d,i)=>`<button class="dstep" data-i="${i}"><span class="dn">${i+1}</span>${d[0]}</button>${i<DOCKFLOW.length-1?'<span class="jarrow">→</span>':""}`).join("");
+  $("#dockflow").querySelectorAll(".dstep").forEach(b=>b.onclick=()=>{
+    $("#dockflow").querySelectorAll(".dstep").forEach(x=>x.classList.toggle("on",x===b));
+    const d=DOCKFLOW[+b.dataset.i]; $("#dock-caption").innerHTML=`<b>${d[0]}</b><br>${d[1]}`;
+  });
+}
+
+/* ---- views ---- */
+const VIEWS=["konsep","alur","jalankan","kenapa"];
+let curView="konsep", modalMode="concept";
+function setView(v, keepHash){
+  curView = VIEWS.includes(v)?v:"konsep";
+  document.querySelectorAll(".vbtn").forEach(b=>b.classList.toggle("on",b.dataset.view===curView));
+  document.querySelectorAll(".view").forEach(el=>el.classList.toggle("on",el.id==="v-"+curView));
+  if(!keepHash){ try{ history.replaceState(null,"","#"+(curView==="alur"?curFlow.id:curView)); }catch{} }
+  window.scrollTo({top:0});
+}
+document.querySelectorAll(".vbtn").forEach(b=>b.onclick=()=>setView(b.dataset.view));
+document.querySelectorAll(".rtab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".rtab").forEach(x=>x.classList.toggle("on",x===t));
+  document.querySelectorAll(".runpane").forEach(p=>p.classList.toggle("on",p.dataset.run===t.dataset.run));
+});
+$("#flow-play").onclick=playFlow; $("#flow-reset").onclick=resetFlow;
+
+renderChips(); renderCards(); renderJourney(); renderFlowChips(); drawSeq(); renderWhy();
+(function(){
+  const h=location.hash.slice(1);
+  if(VIEWS.includes(h)) setView(h,true);
+  else if(FLOWS.find(f=>f.id===h)){ setView("alur",true); selectFlow(h); }
+  else if(C.find(c=>c.id===h)){ openModal(h); }
+})();
+</script>
+</body>
+</html>

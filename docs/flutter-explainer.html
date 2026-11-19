@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>rombong-app (Flutter) — Panduan Visual</title>
+<title>rombong-app (Flutter): Panduan Visual</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -193,7 +193,7 @@ table.cmp th{background:var(--panel2);color:var(--text);font:600 13px Inter,sans
 <div class="wrap">
   <header class="hero">
     <div class="eyebrow">rombong-app / flutter / docs</div>
-    <h1>Flutter + <span>Clean Architecture + Riverpod</span></h1>
+    <h1>rombong-app: penjelasan kode</h1>
     <p class="lead">Panduan visual aplikasi Flutter yang tersambung ke backend rombong-api: konsep yang dipakai beserta kode aslinya, alur data dalam sequence diagram yang bisa diklik, cara menjalankan dengan backend lokal, dan alasan memilih Riverpod.</p>
     <div class="legend">
       <span class="tag t-go">DART</span><span class="tag t-pattern">ARSITEKTUR</span><span class="tag t-db">STATE</span><span class="tag t-sec">NETWORK</span><span class="tag t-test">TESTING</span>
@@ -208,7 +208,7 @@ table.cmp th{background:var(--panel2);color:var(--text);font:600 13px Inter,sans
     <button class="vbtn on" data-view="konsep">Konsep kode</button>
     <button class="vbtn" data-view="alur">Alur sistem</button>
     <button class="vbtn" data-view="jalankan">Cara menjalankan</button>
-    <button class="vbtn" data-view="kenapa">Kenapa begini?</button>
+    <button class="vbtn" data-view="kenapa">Keputusan desain</button>
   </nav>
 
   <div class="view on" id="v-konsep">
@@ -251,7 +251,7 @@ table.cmp th{background:var(--panel2);color:var(--text);font:600 13px Inter,sans
   <section class="mod">
     <div class="mod-head"><h2>Menjalankan aplikasi</h2><p>backend Go berjalan lokal di laptop, Flutter tersambung ke sana</p></div>
     <div class="runtabs">
-      <button class="rtab on" data-run="backend">1. Nyalakan backend</button>
+      <button class="rtab on" data-run="backend">1. Jalankan backend</button>
       <button class="rtab" data-run="flutter">2. Jalankan Flutter</button>
       <button class="rtab" data-run="cek">3. Cek & test</button>
       <button class="rtab" data-run="error">Kalau error</button>
@@ -328,7 +328,7 @@ flutter pub get</code></pre></li>
 </div>
 <div class="view" id="v-kenapa">
   <section class="mod">
-    <div class="mod-head"><h2>Kenapa aplikasi ini ada?</h2></div>
+    <div class="mod-head"><h2>Latar belakang aplikasi</h2></div>
     <div class="whybox">
       <p>Ini <b>aplikasi toko online</b> yang memakai backend <code>rombong-api</code>. Semua aturan (harga, stok, status pesanan) tetap di server; aplikasi hanya menampilkan dan mengirim aksi user.</p>
       <p>Sebagai portfolio, pasangan backend Go + aplikasi Flutter menunjukkan kemampuan <b>end-to-end</b>: merancang API sekaligus memakainya dengan benar, termasuk hal yang sering terlewat seperti refresh token paralel, error validasi per field, dan sesi yang kedaluwarsa.</p>
@@ -336,7 +336,7 @@ flutter pub get</code></pre></li>
   </section>
 
   <section class="mod">
-    <div class="mod-head"><h2>Kenapa Clean Architecture?</h2></div>
+    <div class="mod-head"><h2>Alasan memakai Clean Architecture</h2></div>
     <div class="vs">
       <div class="vscol bad"><h4>Semua di widget</h4><ul>
         <li>Widget memanggil HTTP, parsing JSON, dan menyimpan token sendiri.</li>
@@ -364,7 +364,7 @@ flutter pub get</code></pre></li>
   </section>
 
   <section class="mod">
-    <div class="mod-head"><h2>Kenapa tiap bagian ada?</h2><p>klik untuk melihat alurnya</p></div>
+    <div class="mod-head"><h2>Peran setiap bagian</h2><p>klik untuk melihat alurnya</p></div>
     <div class="grid" id="whymods"></div>
   </section>
 
@@ -375,7 +375,7 @@ flutter pub get</code></pre></li>
   </section>
 
   <section class="mod">
-    <div class="mod-head"><h2>Kenapa package ini?</h2></div>
+    <div class="mod-head"><h2>Pilihan package</h2></div>
     <div class="grid" id="whytech"></div>
   </section>
 </div>
@@ -405,7 +405,7 @@ flutter pub get</code></pre></li>
       pages/login_page.dart, register_page.dart
 
 Arah dependency:  presentation → domain ← data</script>
-<script type="text/plain" id="c-entity">// domain/entities/user.dart — entity: hanya data yang dipahami aplikasi
+<script type="text/plain" id="c-entity">// domain/entities/user.dart, entity: hanya data yang dipahami aplikasi
 class User extends Equatable {
   const User({required this.id, required this.name, required this.email, required this.role});
   final String id;
@@ -418,7 +418,7 @@ class User extends Equatable {
   List<Object?> get props => [id, name, email, role];
 }
 
-// data/models/auth_models.dart — model: entity + cara membaca JSON
+// data/models/auth_models.dart, model: entity + cara membaca JSON
 class UserModel extends User {
   const UserModel({required super.id, required super.name, required super.email, required super.role});
 
@@ -429,7 +429,7 @@ class UserModel extends User {
         role: json['role'] as String,
       );
 }</script>
-<script type="text/plain" id="c-repo">// domain/repositories/auth_repository.dart — KONTRAK, ditulis di domain
+<script type="text/plain" id="c-repo">// domain/repositories/auth_repository.dart, KONTRAK, ditulis di domain
 abstract interface class AuthRepository {
   Future<Result<User>> login({required String email, required String password});
   Future<Result<User?>> currentUser();
@@ -437,7 +437,7 @@ abstract interface class AuthRepository {
   ...
 }
 
-// data/repositories/auth_repository_impl.dart — IMPLEMENTASI, di data
+// data/repositories/auth_repository_impl.dart, IMPLEMENTASI, di data
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required AuthRemoteDataSource remote, required TokenStorage storage})
       : _remote = remote, _storage = storage;
@@ -490,7 +490,7 @@ emit(switch (result) {
   Ok(:final value)     => AuthFormState(status: FormStatus.success, user: value),
   Err(:final failure)  => AuthFormState.fromFailure(failure),
 });</script>
-<script type="text/plain" id="c-di">// lib/core/providers.dart — objek bersama
+<script type="text/plain" id="c-di">// lib/core/providers.dart, objek bersama
 final tokenStorageProvider = Provider<TokenStorage>(
   (ref) => SecureTokenStorage(const FlutterSecureStorage()),
 );
@@ -505,7 +505,7 @@ final dioProvider = Provider<Dio>((ref) {
   return dio;
 });
 
-// lib/features/auth/auth_providers.dart — wiring fitur auth
+// lib/features/auth/auth_providers.dart, wiring fitur auth
 final authRepositoryProvider = Provider<AuthRepository>(   // bertipe INTERFACE domain
   (ref) => AuthRepositoryImpl(
     remote: ref.watch(authRemoteDataSourceProvider),
@@ -515,7 +515,7 @@ final authRepositoryProvider = Provider<AuthRepository>(   // bertipe INTERFACE 
 
 final loginUseCaseProvider = Provider<Login>((ref) => Login(ref.watch(authRepositoryProvider)));
 
-// lib/main.dart — ProviderScope = container semua provider
+// lib/main.dart, ProviderScope = container semua provider
 runApp(const ProviderScope(child: App()));</script>
 <script type="text/plain" id="c-bloc">// presentation/controllers/auth_controller.dart
 //   AsyncLoading     → sedang cek sesi (splash)
@@ -621,7 +621,7 @@ when(() => login(const LoginParams(email: 'a@b.co', password: 'Secret123')))
   }
 }
 
-// home_page.dart — select: rebuild hanya kalau user berubah
+// home_page.dart, select: rebuild hanya kalau user berubah
 final user = ref.watch(authControllerProvider.select((s) => s.value));</script>
 <script type="text/plain" id="c-interceptor">// core/network/auth_interceptor.dart
 class AuthInterceptor extends QueuedInterceptor {   // error ditangani SATU per SATU
@@ -760,12 +760,12 @@ test('starts as AsyncLoading, then restores the saved session', () async {
   expect(await container.read(authControllerProvider.future), testUser);
 });
 
-// test/widget_test.dart — override yang sama di widget test
+// test/widget_test.dart, override yang sama di widget test
 await tester.pumpWidget(ProviderScope(
   overrides: [loginUseCaseProvider.overrideWithValue(login)],
   child: const MaterialApp(home: LoginPage()),
 ));</script>
-<script type="text/plain" id="c-fakebackend">// test/helpers/fakes.dart — pura-pura jadi backend Go, tanpa jaringan
+<script type="text/plain" id="c-fakebackend">// test/helpers/fakes.dart, pura-pura jadi backend Go, tanpa jaringan
 class FakeBackend implements HttpClientAdapter {
   int refreshCalls = 0;
 
@@ -836,7 +836,7 @@ class ProductListController extends AsyncNotifier<ProductListState> {
   }
 }
 
-// catalog_page.dart — infinite scroll
+// catalog_page.dart, infinite scroll
 void _maybeLoadMore() {
   if (_scroll.position.extentAfter < 400) {
     ref.read(productListControllerProvider.notifier).loadMore();
@@ -991,7 +991,7 @@ class StartPayment implements UseCase<Payment, String> {
       _repository.createPayment(orderId: orderId, idempotencyKey: await _keys.keyFor(orderId));
 }
 
-// payment_repository_impl.dart — key disimpan di keystore, per pesanan
+// payment_repository_impl.dart, key disimpan di keystore, per pesanan
 Future<String> keyFor(String orderId) async {
   final existing = await _storage.read(key: 'payment_key_$orderId');
   if (existing != null) return existing;      // retry / buka ulang / restart → key sama
@@ -1003,10 +1003,10 @@ Future<String> keyFor(String orderId) async {
 // payment_remote_data_source.dart
 _dio.post('/payments', data: {'order_id': orderId},
     options: Options(headers: {'Idempotency-Key': idempotencyKey}));</script>
-<script type="text/plain" id="c-admin">// app_router.dart — menyembunyikan layar admin (kenyamanan, bukan keamanan)
+<script type="text/plain" id="c-admin">// app_router.dart, menyembunyikan layar admin (kenyamanan, bukan keamanan)
 if (location.startsWith('/admin') && !user.isAdmin) return '/home';
 
-// admin_providers.dart — setelah menulis, segarkan data yang basi
+// admin_providers.dart, setelah menulis, segarkan data yang basi
 Future<Failure?> saveProduct(ProductDraft draft, {String? id}) async {
   final result = await _ref.read(saveProductUseCaseProvider)(draft, id: id);
   if (result is Ok<Product>) {
@@ -1016,7 +1016,7 @@ Future<Failure?> saveProduct(ProductDraft draft, {String? id}) async {
   return result.failureOrNull;
 }
 
-// admin_usecases.dart — use case hanya untuk operasi yang punya aturan
+// admin_usecases.dart, use case hanya untuk operasi yang punya aturan
 class SaveProduct {
   Future<Result<Product>> call(ProductDraft input, {String? id}) async {
     final draft = input.trimmed();
@@ -1030,11 +1030,11 @@ class SaveProduct {
   }
 }
 
-// order.dart — tabel transisi yang sama dengan backend
+// order.dart, tabel transisi yang sama dengan backend
 OrderStatus? get nextForAdmin => switch (this) {
   paid => processing, processing => shipped, shipped => completed, _ => null,
 };</script>
-<script type="text/plain" id="c-async-mini">// Contoh goroutine kamu (Go):
+<script type="text/plain" id="c-async-mini">// Contoh goroutine Anda (Go):
 //   go getCurrency()
 //   go getExchangeRate()
 //   time.Sleep(time.Second)
@@ -1233,7 +1233,7 @@ const C = [
  qa:[["Kapan memakai autoDispose?","Untuk state milik satu layar atau satu pencarian. State yang dibagi seluruh app, seperti sesi, tidak boleh autoDispose."],
      ["Kenapa perlu cek ref.mounted?","Setelah await, provider autoDispose mungkin sudah dibuang karena layarnya ditutup. Menulis state ke provider yang sudah dibuang akan error."]]},
 
-{id:"vsriverpod", mod:"state", tag:"state", title:"Kenapa Riverpod, bukan Bloc?", short:"Awalnya Bloc. Pindah ke Riverpod karena lowongan yang dituju memintanya.",
+{id:"vsriverpod", mod:"state", tag:"state", title:"Riverpod dibanding Bloc", short:"Awalnya Bloc. Pindah ke Riverpod karena lowongan yang dituju memintanya.",
  file:"keputusan arsitektur",
  code:[["Gambaran versi Bloc (tidak dipakai lagi)","c-riverpod"]],
  what:`<table class="cmp"><tr><th></th><th>Riverpod (dipakai)</th><th>Bloc</th></tr>
@@ -1244,7 +1244,7 @@ const C = [
  <tr><td>Jumlah kode</td><td>Lebih ringkas</td><td>Lebih banyak</td></tr></table>`,
  why:`<p>Versi pertama project ini memakai Bloc. Setelah melihat lowongan Flutter Mobile Engineer yang secara spesifik meminta <b>Riverpod di production, AsyncValue, provider overrides untuk testing, dan DI lewat Riverpod</b>, state management dipindah.</p>
  <p>Yang berubah hanya <b>presentation</b> dan wiring DI. <code>domain/</code> dan <code>data/</code> tidak tersentuh sama sekali. Itu bukti praktis bahwa Clean Architecture bekerja, dan cerita bagus untuk interview.</p>
- <div class="callout">Dua-duanya dipakai luas. Pilihan terbaik adalah yang dipakai tim tempat kamu melamar.</div>`,
+ <div class="callout">Dua-duanya dipakai luas. Pilihan terbaik adalah yang dipakai tim tempat Anda melamar.</div>`,
  without:`<div class="callout">Kalau hanya <code>setState</code>: cukup untuk state satu widget, tapi tidak bisa dibagi antar layar dan tidak bisa di-test tanpa widget.</div>`,
  qa:[["Kenapa memilih Riverpod?","AsyncValue menangani loading/data/error, provider sekaligus menjadi DI, override memudahkan test, dan kodenya lebih ringkas dari Bloc."],
      ["Kalau pindah dari Bloc ke Riverpod, apa yang berubah?","Dengan Clean Architecture hanya presentation dan wiring DI. Entity, use case, repository, dan data source tetap sama."]]},
@@ -1324,7 +1324,7 @@ const C = [
  <li><b>Gagal di tengah tidak menghapus daftar</b>: error halaman pertama menampilkan layar error penuh, error halaman berikutnya hanya menampilkan "Coba lagi" di bawah.</li>
  <li>Halaman pertama yang terlalu pendek untuk di-scroll tetap memicu pengecekan setelah layout.</li></ul>`,
  without:`<div class="callout bad">Tanpa guard: scroll cepat mengirim halaman 2 tiga kali dan produk tampil dobel. Tanpa cek filter: hasil pencarian lama muncul di tengah hasil pencarian baru.</div>`,
- qa:[["Bagaimana kamu mengimplementasikan infinite scroll?","ScrollController memanggil loadMore saat mendekati bawah. Notifier menyimpan page, totalPages, dan flag isLoadingMore, lalu menolak panggilan ganda dan berhenti saat page sama dengan totalPages."],
+ qa:[["Bagaimana Anda mengimplementasikan infinite scroll?","ScrollController memanggil loadMore saat mendekati bawah. Notifier menyimpan page, totalPages, dan flag isLoadingMore, lalu menolak panggilan ganda dan berhenti saat page sama dengan totalPages."],
      ["Bagaimana menangani race condition saat filter berubah di tengah load?","Setiap state menyimpan filter-nya. Setelah respons datang, notifier membandingkan filter saat request dikirim dengan filter sekarang; kalau berbeda, respons dibuang."]]},
 
 {id:"debounce", mod:"katalog", tag:"state", title:"Debounce pencarian", short:"Request dikirim 400ms setelah user berhenti mengetik, bukan setiap huruf.",
@@ -1355,13 +1355,13 @@ const C = [
 {id:"tokens", mod:"katalog", tag:"arch", title:"Dari Figma ke kode (design token)", short:"Warna, ukuran, dan text style di Figma disalin satu-satu ke AppColors, AppSizes, AppTextStyles.",
  file:"lib/core/theme/app_theme.dart",
  code:[["Di project ini","c-tokens"]],
- what:`<p>File Figma "Rombong App — UI Design" berisi variable collection <b>Color</b> dan <b>Size</b>, 9 text style Roboto, dan komponen <b>Button</b>, <b>TextField</b>, <b>CategoryChip</b>, <b>ProductCard</b>. Nama dan nilainya dipetakan langsung ke kode:</p>
+ what:`<p>File Figma "Rombong App, UI Design" berisi variable collection <b>Color</b> dan <b>Size</b>, 9 text style Roboto, dan komponen <b>Button</b>, <b>TextField</b>, <b>CategoryChip</b>, <b>ProductCard</b>. Nama dan nilainya dipetakan langsung ke kode:</p>
  <ul><li><code>Color/primary</code> → <code>AppColors.primary</code></li><li><code>Size/radius-12</code> → <code>AppSizes.radius12</code></li><li>Text style <code>Price</code> → <code>AppTextStyles.price</code></li><li>Komponen <code>ProductCard</code> → widget <code>ProductCard</code></li></ul>`,
  why:`<ul><li><b>Pixel-accurate</b>: angka di kode sama persis dengan Figma, bukan kira-kira dari screenshot.</li>
  <li><b>Satu sumber</b>: <code>buildAppTheme()</code> memasang warna dan bentuk ke ThemeData, sehingga widget bawaan (TextField, FilledButton) otomatis mengikuti desain.</li>
  <li>Desainer mengganti warna primer → cukup ubah satu konstanta.</li></ul>`,
  without:`<div class="callout bad">Warna hex ditulis langsung di setiap widget: lama-lama ada lima versi "biru" yang sedikit berbeda, dan perubahan desain harus dicari satu per satu.</div>`,
- qa:[["Bagaimana kamu menerjemahkan desain Figma ke Flutter?","Token Figma (warna, spacing, radius, text style) dijadikan konstanta di AppColors/AppSizes/AppTextStyles dan dipasang ke ThemeData. Komponen Figma punya pasangan widget dengan nama yang sama."]]},
+ qa:[["Bagaimana Anda menerjemahkan desain Figma ke Flutter?","Token Figma (warna, spacing, radius, text style) dijadikan konstanta di AppColors/AppSizes/AppTextStyles dan dipasang ke ThemeData. Komponen Figma punya pasangan widget dengan nama yang sama."]]},
 
 {id:"optimistic", mod:"keranjang", tag:"state", title:"Optimistic update + antrean request", short:"Jumlah di keranjang langsung berubah saat ditap; server menyusul, dan kalau gagal dikembalikan.",
  file:"lib/features/cart/presentation/controllers/cart_controller.dart", viz:"optimistic",
@@ -1418,7 +1418,7 @@ const C = [
  <li><b>AdminActions</b>: setiap aksi meng-<code>invalidate</code> data yang terdampak, jadi katalog pelanggan langsung ikut berubah.</li>
  <li>Daftar pesanan memakai widget yang sama dengan pelanggan (<code>OrderListView</code>): endpoint yang sama mengembalikan semua pesanan untuk admin.</li></ul>`,
  why:`<ul><li><b>Keamanan ada di backend</b>: menyembunyikan tombol hanya kenyamanan. Siapa pun bisa memanggil API langsung; middleware admin di Go yang menolak.</li>
- <li><b>Use case hanya bila ada aturan</b>: <code>SaveProduct</code> (validasi per field, sama dengan validator backend) dan <code>AdvanceOrder</code> (tabel transisi). Hapus/rename langsung ke repository: use case yang cuma meneruskan panggilan tidak menambah makna. Ini keputusan sadar, bagus untuk dibahas saat interview.</li>
+ <li><b>Use case hanya bila ada aturan</b>: <code>SaveProduct</code> (validasi per field, sama dengan validator backend) dan <code>AdvanceOrder</code> (tabel transisi). Hapus/rename langsung ke repository: use case yang hanya meneruskan panggilan tidak menambah makna. Ini keputusan sadar, bagus untuk dibahas saat interview.</li>
  <li>Error backend seperti "Category still has products" ditampilkan apa adanya.</li></ul>`,
  without:`<div class="callout bad">Mengandalkan UI saja untuk membatasi admin: user biasa cukup memanggil PATCH /orders/:id/status dengan curl. Lupa invalidate: admin menghapus produk tapi produk itu masih tampil di katalog sampai app di-restart.</div>`,
  qa:[["Di mana otorisasi seharusnya ditegakkan?","Di server. Client hanya menyesuaikan tampilan berdasarkan role."],
@@ -1465,7 +1465,7 @@ const C = [
  what:`<p><b>Record</b> <code>(UserModel, TokenPair)</code> adalah tipe ringan untuk mengembalikan beberapa nilai sekaligus, mirip multiple return value di Go. <b>Pattern</b> membongkar dan mencocokkan data: <code>final (user, tokens) = ...</code> atau <code>if (result case Err(failure: UnauthorizedFailure()))</code>.</p>`,
  why:`<p>Login mengembalikan user dan token sekaligus. Tanpa record, perlu class <code>LoginResult</code> yang hanya dipakai sekali. Pattern matching membuat pengecekan jenis error ringkas dan dicek compiler.</p>`,
  without:`<div class="callout">Alternatif lama: <code>Map&lt;String, dynamic&gt;</code> (tidak aman tipe) atau class kecil khusus (lebih panjang).</div>`,
- qa:[["Fitur Dart 3 apa yang kamu pakai?","Sealed class untuk Result dan Failure, record untuk mengembalikan user dan token, serta pattern matching di switch dan if-case."]]},
+ qa:[["Fitur Dart 3 apa yang Anda pakai?","Sealed class untuk Result dan Failure, record untuk mengembalikan user dan token, serta pattern matching di switch dan if-case."]]},
 
 /* ---------------- TESTING ---------------- */
 {id:"blocte", mod:"testing", tag:"test", title:"Provider override + mocktail", short:"Mengganti use case dengan mock di ProviderContainer (unit test) dan ProviderScope (widget test).",
@@ -1557,7 +1557,7 @@ function vizHTML(kind){
   if(kind==="oversell") return `<div class="viz"><div class="viz-title">20 pembeli, 5 unit, bersamaan <button class="play" data-viz="oversell">Mulai flash sale</button></div>
     <div class="stockbox">stok: <span class="unit"></span><span class="unit"></span><span class="unit"></span><span class="unit"></span><span class="unit"></span></div>
     <div class="buyers">${Array.from({length:20},(_,i)=>`<div class="buyer">${i+1}</div>`).join("")}</div>
-    <div class="log" id="olog">UPDATE ... WHERE stock &gt;= 1 — hanya 5 yang mendapat baris.</div></div>`;
+    <div class="log" id="olog">UPDATE ... WHERE stock &gt;= 1, hanya 5 yang mendapat baris.</div></div>`;
   if(kind==="deadlock") return `<div class="viz"><div class="viz-title">Urutan lock <button class="play" data-viz="deadlock">Bandingkan</button></div>
     <div class="flow"><span class="node">tanpa sort</span><span class="node" id="d1">U1: Kopi → Teh</span><span class="node" id="d2">U2: Teh → Kopi</span><span class="node" id="d3">?</span></div>
     <div class="flow"><span class="node">dengan sort</span><span class="node" id="d4">U1: Kopi → Teh</span><span class="node" id="d5">U2: Kopi → Teh</span><span class="node" id="d6">?</span></div>
@@ -1647,7 +1647,7 @@ async function runViz(kind){
       if(stock>0){stock--;units[4-stock].classList.add("gone");buyers[i].classList.add("ok");}
       else buyers[i].classList.add("no");
       L.textContent=`stok tersisa: ${stock}`;}
-    L.textContent="Selesai: 5 order (201), 15 ditolak (409 CONFLICT), stok 0 — tidak pernah minus.";
+    L.textContent="Selesai: 5 order (201), 15 ditolak (409 CONFLICT), stok 0, tidak pernah minus.";
   }
   if(kind==="deadlock"){
     ["d1","d2","d3","d4","d5","d6"].forEach(i=>{const e=document.getElementById(i);e.className="node";});
@@ -1759,17 +1759,17 @@ function openModal(id){
   <div class="m-body">
     <div class="tabs" role="tablist">
       <button class="tab on" data-p="code">Kode</button><button class="tab" data-p="what">Apa ini?</button>
-      <button class="tab" data-p="why">Kenapa dipakai?</button><button class="tab" data-p="without">Kalau tidak?</button>
+      <button class="tab" data-p="why">Alasan pemakaian</button><button class="tab" data-p="without">Kalau tidak?</button>
       <button class="tab" data-p="qa">Interview</button>
     </div>
     <div class="pane on" data-p="code">${c.viz?vizHTML(c.viz):""}${c.code.map(([l,i])=>codeBlock(l,i)).join("")}</div>
     <div class="pane" data-p="what"><h4>Apa ini?</h4>${c.what}</div>
-    <div class="pane" data-p="why"><h4>Kenapa dipakai di sini?</h4>${c.why}</div>
+    <div class="pane" data-p="why"><h4>Alasan pemakaian</h4>${c.why}</div>
     <div class="pane" data-p="without"><h4>Kalau tidak dipakai?</h4>${c.without}</div>
     <div class="pane" data-p="qa"><h4>Latihan interview</h4>${c.qa.map(([q,a])=>`<div class="qa"><b>${q}</b><span>${a}</span></div>`).join("")}</div>
     <div class="navrow">
       <button class="nav" ${prev?`data-go="${prev.id}"`:"disabled style='opacity:.35'"}>← ${prev?prev.title:""}</button>
-      <button class="nav" ${next?`data-go="${next.id}"`:"disabled style='opacity:.35'"}>${next?next.title:""} →</button>
+      <button class="nav" ${next?`data-go="${next.id}"`:"disabled style='opacity:.35'"}>${next?next.title:""}</button>
     </div>
   </div>`;
   const m=$("#modal");
@@ -1813,12 +1813,12 @@ $("#q").oninput=renderCards;
 const LANES = ["UI","Notifier","UseCase","Repository","DataSource","Dio","Storage","Go API"];
 const LANE_HINT = {
   UI:"Widget / page (presentation)",
-  Notifier:"AuthController, LoginController, RegisterController — AsyncNotifier (presentation)",
+  Notifier:"AuthController, LoginController, RegisterController, AsyncNotifier (presentation)",
   UseCase:"Login, Register, GetCurrentUser, Logout (domain)",
-  Repository:"AuthRepositoryImpl (data) — implements AuthRepository (domain)",
-  DataSource:"AuthRemoteDataSource (data) — bicara HTTP",
+  Repository:"AuthRepositoryImpl (data), implements AuthRepository (domain)",
+  DataSource:"AuthRemoteDataSource (data), bicara HTTP",
   Dio:"HTTP client + AuthInterceptor (core/network)",
-  Storage:"SecureTokenStorage — Keystore / Keychain",
+  Storage:"SecureTokenStorage, Keystore / Keychain",
   "Go API":"Backend rombong-api yang berjalan lokal"
 };
 const L = a => a.join("\n");
@@ -2157,10 +2157,10 @@ function openStep(i){
     <h4>Apa yang terjadi</h4><p>${st.d||"Hasil diteruskan ke lapisan berikutnya."}</p>
     ${st.file?`<h4>Di mana kodenya</h4><p><code>${st.file}</code>${st.fn?` → <code>${st.fn}</code>`:""}</p>`:""}
     ${st.code?`<div class="codehead"><span>Potongan kode</span></div><pre><code class="language-dart">${esc(st.code)}</code></pre>`:""}
-    ${concept?`<h4>Konsep terkait</h4><button class="nav" id="goconcept">Buka penjelasan: ${concept.title} →</button>`:""}
+    ${concept?`<h4>Konsep terkait</h4><button class="nav" id="goconcept">Buka penjelasan: ${concept.title}</button>`:""}
     <div class="navrow">
-      <button class="nav" ${i>0?`data-step="${i-1}"`:"disabled style='opacity:.35'"}>← Langkah sebelumnya</button>
-      <button class="nav" ${i<f.steps.length-1?`data-step="${i+1}"`:"disabled style='opacity:.35'"}>Langkah berikutnya →</button>
+      <button class="nav" ${i>0?`data-step="${i-1}"`:"disabled style='opacity:.35'"}>Langkah sebelumnya</button>
+      <button class="nav" ${i<f.steps.length-1?`data-step="${i+1}"`:"disabled style='opacity:.35'"}>Langkah berikutnya</button>
     </div></div></div>`;
   const m=$("#modal");
   m.querySelector(".x").onclick=closeModal;

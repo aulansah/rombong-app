@@ -1,9 +1,9 @@
-# E-Commerce App (Flutter)
+# Rombong — aplikasi Flutter
 
-Flutter client for [go-ecommerce-api](../ECommerce%20API), built with
+Flutter client for [rombong-api](https://github.com/aulansah/rombong-api), built with
 **Clean Architecture** and **Riverpod 3** (providers, `AsyncNotifier`, `AsyncValue`, provider overrides for testing, dependency injection through Riverpod).
 
-![Flutter CI](https://github.com/aulansah/ecommerce_app/actions/workflows/flutter-ci.yml/badge.svg)
+![Flutter CI](https://github.com/aulansah/rombong-app/actions/workflows/flutter-ci.yml/badge.svg)
 
 ## Design
 
@@ -37,7 +37,7 @@ Figma file: [E-Commerce App — UI Design](https://www.figma.com/design/B9ckLWw2
 3. **Generate platform folders** (first time only; existing files are kept):
 
    ```bash
-   flutter create --org com.aulansah --project-name ecommerce_app .
+   flutter create --org com.aulansah --project-name rombong .
    ```
 
 4. **Install packages, check, test:**

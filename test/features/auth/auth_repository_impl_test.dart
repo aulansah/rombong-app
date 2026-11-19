@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:ecommerce_app/core/error/failure.dart';
-import 'package:ecommerce_app/core/result.dart';
-import 'package:ecommerce_app/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:ecommerce_app/features/auth/data/models/auth_models.dart';
-import 'package:ecommerce_app/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:rombong/core/error/failure.dart';
+import 'package:rombong/core/result.dart';
+import 'package:rombong/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:rombong/features/auth/data/models/auth_models.dart';
+import 'package:rombong/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

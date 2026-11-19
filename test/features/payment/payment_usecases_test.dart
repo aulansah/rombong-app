@@ -1,10 +1,10 @@
-import 'package:ecommerce_app/core/error/failure.dart';
-import 'package:ecommerce_app/core/result.dart';
-import 'package:ecommerce_app/core/utils/uuid.dart';
-import 'package:ecommerce_app/features/payment/data/models/payment_model.dart';
-import 'package:ecommerce_app/features/payment/domain/entities/payment.dart';
-import 'package:ecommerce_app/features/payment/domain/repositories/payment_repository.dart';
-import 'package:ecommerce_app/features/payment/domain/usecases/payment_usecases.dart';
+import 'package:rombong/core/error/failure.dart';
+import 'package:rombong/core/result.dart';
+import 'package:rombong/core/utils/uuid.dart';
+import 'package:rombong/features/payment/data/models/payment_model.dart';
+import 'package:rombong/features/payment/domain/entities/payment.dart';
+import 'package:rombong/features/payment/domain/repositories/payment_repository.dart';
+import 'package:rombong/features/payment/domain/usecases/payment_usecases.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

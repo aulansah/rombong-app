@@ -1,5 +1,5 @@
-name: ecommerce_app
-description: Flutter client for go-ecommerce-api (Clean Architecture + Riverpod).
+name: rombong
+description: Flutter client for rombong-api (Clean Architecture + Riverpod).
 publish_to: "none"
 version: 0.1.0+1
 

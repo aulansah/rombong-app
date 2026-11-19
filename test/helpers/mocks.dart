@@ -1,7 +1,7 @@
-import 'package:ecommerce_app/core/usecase.dart';
-import 'package:ecommerce_app/features/auth/domain/entities/user.dart';
-import 'package:ecommerce_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:ecommerce_app/features/auth/domain/usecases/auth_usecases.dart';
+import 'package:rombong/core/usecase.dart';
+import 'package:rombong/features/auth/domain/entities/user.dart';
+import 'package:rombong/features/auth/domain/repositories/auth_repository.dart';
+import 'package:rombong/features/auth/domain/usecases/auth_usecases.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}

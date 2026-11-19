@@ -10,7 +10,7 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      title: 'E-Commerce',
+      title: 'Rombong',
       debugShowCheckedModeBanner: false,
       routerConfig: ref.watch(routerProvider),
       theme: buildAppTheme(),

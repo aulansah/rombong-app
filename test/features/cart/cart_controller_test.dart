@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:ecommerce_app/core/error/failure.dart';
-import 'package:ecommerce_app/core/result.dart';
-import 'package:ecommerce_app/features/auth/domain/entities/user.dart';
-import 'package:ecommerce_app/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:ecommerce_app/features/cart/cart_providers.dart';
-import 'package:ecommerce_app/features/cart/domain/entities/cart.dart';
-import 'package:ecommerce_app/features/cart/domain/repositories/cart_repository.dart';
-import 'package:ecommerce_app/features/cart/presentation/controllers/cart_controller.dart';
+import 'package:rombong/core/error/failure.dart';
+import 'package:rombong/core/result.dart';
+import 'package:rombong/features/auth/domain/entities/user.dart';
+import 'package:rombong/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:rombong/features/cart/cart_providers.dart';
+import 'package:rombong/features/cart/domain/entities/cart.dart';
+import 'package:rombong/features/cart/domain/repositories/cart_repository.dart';
+import 'package:rombong/features/cart/presentation/controllers/cart_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

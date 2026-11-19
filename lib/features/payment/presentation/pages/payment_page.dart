@@ -223,8 +223,8 @@ class _CountdownState extends State<_Countdown> {
     final s = (_left.inSeconds % 60).toString().padLeft(2, '0');
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(color: const Color(0xFFFFF4D6), borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
-      child: Text('Bayar dalam $m:$s', style: AppTextStyles.label.copyWith(color: const Color(0xFF8A5A00))),
+      decoration: BoxDecoration(color: AppColors.warningContainer, borderRadius: BorderRadius.circular(AppSizes.radiusFull)),
+      child: Text('Bayar dalam $m:$s', style: AppTextStyles.label.copyWith(color: AppColors.warning)),
     );
   }
 }

@@ -1,6 +1,6 @@
-import 'package:ecommerce_app/core/error/failure.dart';
-import 'package:ecommerce_app/core/result.dart';
-import 'package:ecommerce_app/features/auth/domain/usecases/auth_usecases.dart';
+import 'package:rombong/core/error/failure.dart';
+import 'package:rombong/core/result.dart';
+import 'package:rombong/features/auth/domain/usecases/auth_usecases.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

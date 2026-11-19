@@ -1,10 +1,10 @@
-import 'package:ecommerce_app/core/error/failure.dart';
-import 'package:ecommerce_app/core/result.dart';
-import 'package:ecommerce_app/features/admin/domain/entities/product_draft.dart';
-import 'package:ecommerce_app/features/admin/domain/repositories/admin_repository.dart';
-import 'package:ecommerce_app/features/admin/domain/usecases/admin_usecases.dart';
-import 'package:ecommerce_app/features/catalog/domain/entities/catalog_entities.dart';
-import 'package:ecommerce_app/features/orders/domain/entities/order.dart';
+import 'package:rombong/core/error/failure.dart';
+import 'package:rombong/core/result.dart';
+import 'package:rombong/features/admin/domain/entities/product_draft.dart';
+import 'package:rombong/features/admin/domain/repositories/admin_repository.dart';
+import 'package:rombong/features/admin/domain/usecases/admin_usecases.dart';
+import 'package:rombong/features/catalog/domain/entities/catalog_entities.dart';
+import 'package:rombong/features/orders/domain/entities/order.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

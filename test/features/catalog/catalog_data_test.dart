@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:ecommerce_app/core/error/failure.dart';
-import 'package:ecommerce_app/core/result.dart';
-import 'package:ecommerce_app/core/utils/currency.dart';
-import 'package:ecommerce_app/features/catalog/data/datasources/catalog_remote_data_source.dart';
-import 'package:ecommerce_app/features/catalog/data/repositories/catalog_repository_impl.dart';
-import 'package:ecommerce_app/features/catalog/domain/repositories/catalog_repository.dart';
+import 'package:rombong/core/error/failure.dart';
+import 'package:rombong/core/result.dart';
+import 'package:rombong/core/utils/currency.dart';
+import 'package:rombong/features/catalog/data/datasources/catalog_remote_data_source.dart';
+import 'package:rombong/features/catalog/data/repositories/catalog_repository_impl.dart';
+import 'package:rombong/features/catalog/domain/repositories/catalog_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Answers like the Go backend and records the last request.

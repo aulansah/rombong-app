@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:ecommerce_app/core/storage/token_storage.dart';
+import 'package:rombong/core/storage/token_storage.dart';
 
 /// TokenStorage kept in memory, for tests.
 class InMemoryTokenStorage implements TokenStorage {

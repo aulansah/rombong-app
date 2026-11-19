@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:ecommerce_app/core/network/api_client.dart';
-import 'package:ecommerce_app/core/network/session_events.dart';
+import 'package:rombong/core/network/api_client.dart';
+import 'package:rombong/core/network/session_events.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fakes.dart';

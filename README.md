@@ -1,13 +1,13 @@
-# E-Commerce App (Flutter)
+# Rombong — aplikasi Flutter
 
-Flutter client for [go-ecommerce-api](../ECommerce%20API), built with
+Flutter client for [rombong-api](https://github.com/aulansah/rombong-api), built with
 **Clean Architecture** and **Riverpod 3** (providers, `AsyncNotifier`, `AsyncValue`, provider overrides for testing, dependency injection through Riverpod).
 
-![Flutter CI](https://github.com/aulansah/ecommerce_app/actions/workflows/flutter-ci.yml/badge.svg)
+![Flutter CI](https://github.com/aulansah/rombong-app/actions/workflows/flutter-ci.yml/badge.svg)
 
 ## Design
 
-Figma file: [E-Commerce App — UI Design](https://www.figma.com/design/B9ckLWw2BNWUWNO3h5zdqa). Its `Color`/`Size` variables and text styles map 1:1 to `lib/core/theme/app_theme.dart` (`AppColors`, `AppSizes`, `AppTextStyles`), and its components (Button, TextField, CategoryChip, ProductCard) map to widgets of the same name.
+Figma file: [Rombong — UI Design](https://www.figma.com/design/0c97QesZUU2kNCA0ipNoFS). Brand: oranye gerobak `#D9541E`, kuning terpal `#F2B33D`, krem `#FBF7F2`, font **Plus Jakarta Sans** (bundled in `assets/fonts`, OFL). Its `Color`/`Size` variables and text styles map 1:1 to `lib/core/theme/app_theme.dart` (`AppColors`, `AppSizes`, `AppTextStyles`); the logo is `Logo/Mark` → `RombongLogo` (`lib/core/widgets/rombong_logo.dart`); components (Button, TextField, CategoryChip, StockBadge, OrderStatusChip, QuantityStepper, ProductCard) map to widgets of the same name.
 
 ## Progress
 
@@ -21,7 +21,7 @@ Figma file: [E-Commerce App — UI Design](https://www.figma.com/design/B9ckLWw2
 
 ## Quick start
 
-1. **Run the backend** (in the `ECommerce API` folder):
+1. **Run the backend** (in the `rombong-api` folder):
 
    ```bash
    docker compose up --build -d
@@ -37,7 +37,7 @@ Figma file: [E-Commerce App — UI Design](https://www.figma.com/design/B9ckLWw2
 3. **Generate platform folders** (first time only; existing files are kept):
 
    ```bash
-   flutter create --org com.aulansah --project-name ecommerce_app .
+   flutter create --org com.aulansah --project-name rombong .
    ```
 
 4. **Install packages, check, test:**

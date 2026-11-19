@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ecommerce_app (Flutter) — Panduan Visual</title>
+<title>rombong (Flutter) — Panduan Visual</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -192,9 +192,9 @@ table.cmp th{background:var(--panel2);color:var(--text);font:600 13px Inter,sans
 <body>
 <div class="wrap">
   <header class="hero">
-    <div class="eyebrow">ecommerce_app / flutter / docs</div>
+    <div class="eyebrow">rombong / flutter / docs</div>
     <h1>Flutter + <span>Clean Architecture + Riverpod</span></h1>
-    <p class="lead">Panduan visual aplikasi Flutter yang tersambung ke backend go-ecommerce-api: konsep yang dipakai beserta kode aslinya, alur data dalam sequence diagram yang bisa diklik, cara menjalankan dengan backend lokal, dan alasan memilih Riverpod.</p>
+    <p class="lead">Panduan visual aplikasi Flutter yang tersambung ke backend rombong-api: konsep yang dipakai beserta kode aslinya, alur data dalam sequence diagram yang bisa diklik, cara menjalankan dengan backend lokal, dan alasan memilih Riverpod.</p>
     <div class="legend">
       <span class="tag t-go">DART</span><span class="tag t-pattern">ARSITEKTUR</span><span class="tag t-db">STATE</span><span class="tag t-sec">NETWORK</span><span class="tag t-test">TESTING</span>
     </div>
@@ -276,7 +276,7 @@ docker compose up --build -d</code></pre></li>
       <ol class="steps">
         <li><h4>Buat folder platform (sekali saja)</h4>
 <pre><code>cd "I:\Fullstack Web Developer and Flutter Developer\ECommerce App"
-flutter create --org com.aulansah --project-name ecommerce_app .</code></pre>
+flutter create --org com.aulansah --project-name rombong .</code></pre>
 <p>Ini membuat folder <code>android/</code>, <code>ios/</code>, <code>web/</code>, <code>windows/</code>. File yang sudah ada (<code>lib/</code>, <code>test/</code>, <code>pubspec.yaml</code>) tidak ditimpa.</p></li>
         <li><h4>Install package</h4>
 <pre><code>flutter --version   # app ini butuh Flutter 3.35+ (Dart 3.9+)
@@ -330,7 +330,7 @@ flutter pub get</code></pre></li>
   <section class="mod">
     <div class="mod-head"><h2>Kenapa aplikasi ini ada?</h2></div>
     <div class="whybox">
-      <p>Ini <b>aplikasi toko online</b> yang memakai backend <code>go-ecommerce-api</code>. Semua aturan (harga, stok, status pesanan) tetap di server; aplikasi hanya menampilkan dan mengirim aksi user.</p>
+      <p>Ini <b>aplikasi toko online</b> yang memakai backend <code>rombong-api</code>. Semua aturan (harga, stok, status pesanan) tetap di server; aplikasi hanya menampilkan dan mengirim aksi user.</p>
       <p>Sebagai portfolio, pasangan backend Go + aplikasi Flutter menunjukkan kemampuan <b>end-to-end</b>: merancang API sekaligus memakainya dengan benar, termasuk hal yang sering terlewat seperti refresh token paralel, error validasi per field, dan sesi yang kedaluwarsa.</p>
     </div>
   </section>
@@ -1819,7 +1819,7 @@ const LANE_HINT = {
   DataSource:"AuthRemoteDataSource (data) — bicara HTTP",
   Dio:"HTTP client + AuthInterceptor (core/network)",
   Storage:"SecureTokenStorage — Keystore / Keychain",
-  "Go API":"Backend go-ecommerce-api yang berjalan lokal"
+  "Go API":"Backend rombong-api yang berjalan lokal"
 };
 const L = a => a.join("\n");
 

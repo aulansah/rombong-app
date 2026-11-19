@@ -7,7 +7,7 @@ Flutter client for [rombong-api](https://github.com/aulansah/rombong-api), built
 
 ## Design
 
-Figma file: [E-Commerce App — UI Design](https://www.figma.com/design/B9ckLWw2BNWUWNO3h5zdqa). Its `Color`/`Size` variables and text styles map 1:1 to `lib/core/theme/app_theme.dart` (`AppColors`, `AppSizes`, `AppTextStyles`), and its components (Button, TextField, CategoryChip, ProductCard) map to widgets of the same name.
+Figma file: [Rombong — UI Design](https://www.figma.com/design/0c97QesZUU2kNCA0ipNoFS). Brand: oranye gerobak `#D9541E`, kuning terpal `#F2B33D`, krem `#FBF7F2`, font **Plus Jakarta Sans** (bundled in `assets/fonts`, OFL). Its `Color`/`Size` variables and text styles map 1:1 to `lib/core/theme/app_theme.dart` (`AppColors`, `AppSizes`, `AppTextStyles`); the logo is `Logo/Mark` → `RombongLogo` (`lib/core/widgets/rombong_logo.dart`); components (Button, TextField, CategoryChip, StockBadge, OrderStatusChip, QuantityStepper, ProductCard) map to widgets of the same name.
 
 ## Progress
 
@@ -21,7 +21,7 @@ Figma file: [E-Commerce App — UI Design](https://www.figma.com/design/B9ckLWw2
 
 ## Quick start
 
-1. **Run the backend** (in the `ECommerce API` folder):
+1. **Run the backend** (in the `rombong-api` folder):
 
    ```bash
    docker compose up --build -d

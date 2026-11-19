@@ -1,6 +1,6 @@
-import 'package:ecommerce_app/core/theme/app_theme.dart';
-import 'package:ecommerce_app/features/catalog/domain/entities/catalog_entities.dart';
-import 'package:ecommerce_app/features/catalog/presentation/widgets/catalog_widgets.dart';
+import 'package:rombong/core/theme/app_theme.dart';
+import 'package:rombong/features/catalog/domain/entities/catalog_entities.dart';
+import 'package:rombong/features/catalog/presentation/widgets/catalog_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

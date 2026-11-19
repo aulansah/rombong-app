@@ -1,10 +1,10 @@
-import 'package:ecommerce_app/core/error/failure.dart';
-import 'package:ecommerce_app/core/network/session_events.dart';
-import 'package:ecommerce_app/core/providers.dart';
-import 'package:ecommerce_app/core/result.dart';
-import 'package:ecommerce_app/features/auth/auth_providers.dart';
-import 'package:ecommerce_app/features/auth/domain/entities/user.dart';
-import 'package:ecommerce_app/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:rombong/core/error/failure.dart';
+import 'package:rombong/core/network/session_events.dart';
+import 'package:rombong/core/providers.dart';
+import 'package:rombong/core/result.dart';
+import 'package:rombong/features/auth/auth_providers.dart';
+import 'package:rombong/features/auth/domain/entities/user.dart';
+import 'package:rombong/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

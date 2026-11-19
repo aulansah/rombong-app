@@ -15,7 +15,7 @@ extension OrderStatusUi on OrderStatus {
       };
 
   (Color background, Color foreground) get colors => switch (this) {
-        OrderStatus.pending => (const Color(0xFFFFF4D6), const Color(0xFF8A5A00)),
+        OrderStatus.pending => (AppColors.warningContainer, AppColors.warning),
         OrderStatus.cancelled => (AppColors.errorContainer, AppColors.error),
         OrderStatus.completed => (AppColors.successContainer, AppColors.success),
         OrderStatus.unknown => (AppColors.surfaceVariant, AppColors.textMuted),

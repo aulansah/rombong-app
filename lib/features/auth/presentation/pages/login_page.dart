@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/app_text_field.dart';
 import '../../../../core/widgets/form_widgets.dart';
+import '../../../../core/widgets/rombong_logo.dart';
 import '../../domain/entities/user.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/auth_form_controllers.dart';
@@ -58,11 +59,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Icon(Icons.shopping_bag_outlined, size: 56, color: AppColors.primary),
+                    const Center(child: RombongLogo(size: 48, withWordmark: true)),
                     const SizedBox(height: 16),
-                    const Text('Masuk', style: AppTextStyles.headline, textAlign: TextAlign.center),
+                    const Text('Selamat datang kembali', style: AppTextStyles.headline, textAlign: TextAlign.center),
                     const SizedBox(height: 8),
-                    Text('Belanja dengan akunmu', style: AppTextStyles.body.copyWith(color: AppColors.textMuted), textAlign: TextAlign.center),
+                    Text('Masuk untuk lanjut belanja produk lokal favoritmu.', style: AppTextStyles.body.copyWith(color: AppColors.textMuted), textAlign: TextAlign.center),
                     const SizedBox(height: 32),
                     AppTextField(
                       label: 'Email',

@@ -1,10 +1,10 @@
 // Also prevents `flutter create .` from generating its default counter test,
 // which would not compile against this app.
-import 'package:ecommerce_app/core/error/failure.dart';
-import 'package:ecommerce_app/core/result.dart';
-import 'package:ecommerce_app/core/widgets/form_widgets.dart';
-import 'package:ecommerce_app/features/auth/auth_providers.dart';
-import 'package:ecommerce_app/features/auth/presentation/pages/login_page.dart';
+import 'package:rombong/core/error/failure.dart';
+import 'package:rombong/core/result.dart';
+import 'package:rombong/core/widgets/form_widgets.dart';
+import 'package:rombong/features/auth/auth_providers.dart';
+import 'package:rombong/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:ecommerce_app/core/error/failure.dart';
-import 'package:ecommerce_app/core/network/api_error_mapper.dart';
-import 'package:ecommerce_app/core/result.dart';
+import 'package:rombong/core/error/failure.dart';
+import 'package:rombong/core/network/api_error_mapper.dart';
+import 'package:rombong/core/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 DioException _response(int status, Object? body) {

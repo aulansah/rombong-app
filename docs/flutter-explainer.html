@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ecommerce_app (Flutter) — Panduan Visual</title>
+<title>rombong-app (Flutter) — Panduan Visual</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -192,9 +192,9 @@ table.cmp th{background:var(--panel2);color:var(--text);font:600 13px Inter,sans
 <body>
 <div class="wrap">
   <header class="hero">
-    <div class="eyebrow">ecommerce_app / flutter / docs</div>
+    <div class="eyebrow">rombong-app / flutter / docs</div>
     <h1>Flutter + <span>Clean Architecture + Riverpod</span></h1>
-    <p class="lead">Panduan visual aplikasi Flutter yang tersambung ke backend go-ecommerce-api: konsep yang dipakai beserta kode aslinya, alur data dalam sequence diagram yang bisa diklik, cara menjalankan dengan backend lokal, dan alasan memilih Riverpod.</p>
+    <p class="lead">Panduan visual aplikasi Flutter yang tersambung ke backend rombong-api: konsep yang dipakai beserta kode aslinya, alur data dalam sequence diagram yang bisa diklik, cara menjalankan dengan backend lokal, dan alasan memilih Riverpod.</p>
     <div class="legend">
       <span class="tag t-go">DART</span><span class="tag t-pattern">ARSITEKTUR</span><span class="tag t-db">STATE</span><span class="tag t-sec">NETWORK</span><span class="tag t-test">TESTING</span>
     </div>
@@ -261,7 +261,7 @@ table.cmp th{background:var(--panel2);color:var(--text);font:600 13px Inter,sans
       <div class="need">Flutter hanya tampilan. Tanpa backend Go yang hidup, login akan gagal dengan pesan "Tidak bisa terhubung ke server".</div>
       <ol class="steps">
         <li><h4>Pakai Docker (paling mudah)</h4>
-<pre><code>cd "I:\Fullstack Web Developer and Flutter Developer\ECommerce API"
+<pre><code>cd "I:\Fullstack Web Developer and Flutter Developer\rombong-api"
 docker compose up --build -d</code></pre></li>
         <li><h4>Atau tanpa Docker</h4>
 <pre><code>go run ./cmd/api</code></pre>
@@ -275,8 +275,8 @@ docker compose up --build -d</code></pre></li>
     <div class="runpane" data-run="flutter">
       <ol class="steps">
         <li><h4>Buat folder platform (sekali saja)</h4>
-<pre><code>cd "I:\Fullstack Web Developer and Flutter Developer\ECommerce App"
-flutter create --org com.aulansah --project-name ecommerce_app .</code></pre>
+<pre><code>cd "I:\Fullstack Web Developer and Flutter Developer\rombong-app"
+flutter create --org com.aulansah --project-name rombong .</code></pre>
 <p>Ini membuat folder <code>android/</code>, <code>ios/</code>, <code>web/</code>, <code>windows/</code>. File yang sudah ada (<code>lib/</code>, <code>test/</code>, <code>pubspec.yaml</code>) tidak ditimpa.</p></li>
         <li><h4>Install package</h4>
 <pre><code>flutter --version   # app ini butuh Flutter 3.35+ (Dart 3.9+)
@@ -330,7 +330,7 @@ flutter pub get</code></pre></li>
   <section class="mod">
     <div class="mod-head"><h2>Kenapa aplikasi ini ada?</h2></div>
     <div class="whybox">
-      <p>Ini <b>aplikasi toko online</b> yang memakai backend <code>go-ecommerce-api</code>. Semua aturan (harga, stok, status pesanan) tetap di server; aplikasi hanya menampilkan dan mengirim aksi user.</p>
+      <p>Ini <b>aplikasi toko online</b> yang memakai backend <code>rombong-api</code>. Semua aturan (harga, stok, status pesanan) tetap di server; aplikasi hanya menampilkan dan mengirim aksi user.</p>
       <p>Sebagai portfolio, pasangan backend Go + aplikasi Flutter menunjukkan kemampuan <b>end-to-end</b>: merancang API sekaligus memakainya dengan benar, termasuk hal yang sering terlewat seperti refresh token paralel, error validasi per field, dan sesi yang kedaluwarsa.</p>
     </div>
   </section>
@@ -1355,7 +1355,7 @@ const C = [
 {id:"tokens", mod:"katalog", tag:"arch", title:"Dari Figma ke kode (design token)", short:"Warna, ukuran, dan text style di Figma disalin satu-satu ke AppColors, AppSizes, AppTextStyles.",
  file:"lib/core/theme/app_theme.dart",
  code:[["Di project ini","c-tokens"]],
- what:`<p>File Figma "E-Commerce App — UI Design" berisi variable collection <b>Color</b> dan <b>Size</b>, 9 text style Roboto, dan komponen <b>Button</b>, <b>TextField</b>, <b>CategoryChip</b>, <b>ProductCard</b>. Nama dan nilainya dipetakan langsung ke kode:</p>
+ what:`<p>File Figma "Rombong App — UI Design" berisi variable collection <b>Color</b> dan <b>Size</b>, 9 text style Roboto, dan komponen <b>Button</b>, <b>TextField</b>, <b>CategoryChip</b>, <b>ProductCard</b>. Nama dan nilainya dipetakan langsung ke kode:</p>
  <ul><li><code>Color/primary</code> → <code>AppColors.primary</code></li><li><code>Size/radius-12</code> → <code>AppSizes.radius12</code></li><li>Text style <code>Price</code> → <code>AppTextStyles.price</code></li><li>Komponen <code>ProductCard</code> → widget <code>ProductCard</code></li></ul>`,
  why:`<ul><li><b>Pixel-accurate</b>: angka di kode sama persis dengan Figma, bukan kira-kira dari screenshot.</li>
  <li><b>Satu sumber</b>: <code>buildAppTheme()</code> memasang warna dan bentuk ke ThemeData, sehingga widget bawaan (TextField, FilledButton) otomatis mengikuti desain.</li>
@@ -1819,7 +1819,7 @@ const LANE_HINT = {
   DataSource:"AuthRemoteDataSource (data) — bicara HTTP",
   Dio:"HTTP client + AuthInterceptor (core/network)",
   Storage:"SecureTokenStorage — Keystore / Keychain",
-  "Go API":"Backend go-ecommerce-api yang berjalan lokal"
+  "Go API":"Backend rombong-api yang berjalan lokal"
 };
 const L = a => a.join("\n");
 

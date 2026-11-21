@@ -18,6 +18,8 @@ class PaymentRemoteDataSource {
         options: Options(headers: {idempotencyHeader: idempotencyKey}),
       ));
 
+  Future<PaymentModel> get(String id) async => _payment(await _dio.get('/payments/$id'));
+
   Future<PaymentModel> simulateSuccess(String id) async => _payment(await _dio.post('/payments/$id/simulate-success'));
 
   Future<PaymentModel> simulateFailure(String id) async => _payment(await _dio.post('/payments/$id/simulate-failure'));

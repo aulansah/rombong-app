@@ -25,6 +25,9 @@ final startPaymentUseCaseProvider = Provider(
 final confirmPaymentUseCaseProvider = Provider(
   (ref) => ConfirmPayment(ref.watch(paymentRepositoryProvider), ref.watch(idempotencyKeyStoreProvider)),
 );
+final checkPaymentUseCaseProvider = Provider(
+  (ref) => CheckPayment(ref.watch(paymentRepositoryProvider), ref.watch(idempotencyKeyStoreProvider)),
+);
 final failPaymentUseCaseProvider = Provider(
   (ref) => FailPayment(ref.watch(paymentRepositoryProvider), ref.watch(idempotencyKeyStoreProvider)),
 );

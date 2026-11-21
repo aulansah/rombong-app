@@ -17,6 +17,7 @@ Figma file: [Rombong — UI Design](https://www.figma.com/design/0c97QesZUU2kNCA
 - [x] **Phase 4** — checkout (review, double-tap guard, stock-conflict handling) and order history (paginated list, detail with status timeline, cancel)
 - [x] **Phase 5** — payment: Idempotency-Key persisted per order (safe retry, resume after restart), simulated success/decline, expiry countdown, new attempt after failure
 - [x] **Phase 6** — admin: products (create, edit, stock, delete), categories, all orders with status changes; hidden for customers and enforced by the backend
+- [x] **Midtrans** — when the backend runs `PAYMENT_PROVIDER=midtrans`, the payment screen opens the Midtrans Snap page (`url_launcher`) and re-reads the status when the app returns to the foreground; the result arrives at the backend through the signed webhook
 - [x] CI — GitHub Actions: `flutter analyze` + `flutter test --coverage` on every push and pull request
 
 ## Quick start

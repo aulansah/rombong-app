@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -22,8 +23,39 @@ class PaymentPage extends ConsumerStatefulWidget {
   ConsumerState<PaymentPage> createState() => _PaymentPageState();
 }
 
-class _PaymentPageState extends ConsumerState<PaymentPage> {
+class _PaymentPageState extends ConsumerState<PaymentPage> with WidgetsBindingObserver {
   bool _busy = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  /// Coming back from the Midtrans page: read the new status right away.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) return;
+    final payment = ref.read(paymentControllerProvider(widget.orderId)).value;
+    if (payment != null && payment.usesGateway && payment.status == PaymentStatus.pending && !_busy) {
+      _run((c) => c.checkStatus());
+    }
+  }
+
+  Future<void> _openGateway(String url) async {
+    final opened = await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    if (!opened && mounted) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(const SnackBar(content: Text('Halaman pembayaran tidak bisa dibuka')));
+    }
+  }
 
   Future<void> _run(Future<Failure?> Function(PaymentController c) action) async {
     setState(() => _busy = true);
@@ -67,6 +99,8 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                 busy: _busy,
                 onPay: () => _run((c) => c.confirm()),
                 onDecline: () => _run((c) => c.decline()),
+                onOpenGateway: () => _openGateway(value.redirectUrl!),
+                onCheck: () => _run((c) => c.checkStatus()),
                 onExpired: () => ref.read(provider.notifier).retry(),
               ),
           },
@@ -92,6 +126,8 @@ class _Pending extends StatelessWidget {
     required this.busy,
     required this.onPay,
     required this.onDecline,
+    required this.onOpenGateway,
+    required this.onCheck,
     required this.onExpired,
   });
 
@@ -99,6 +135,8 @@ class _Pending extends StatelessWidget {
   final bool busy;
   final VoidCallback onPay;
   final VoidCallback onDecline;
+  final VoidCallback onOpenGateway;
+  final VoidCallback onCheck;
   final VoidCallback onExpired;
 
   @override
@@ -150,19 +188,31 @@ class _Pending extends StatelessWidget {
           padding: const EdgeInsets.all(AppSizes.space12),
           decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(AppSizes.radius12)),
           child: Text(
-            'Ini simulasi payment gateway. Tombol di bawah meniru hasil dari bank: berhasil atau ditolak. '
-            'Menutup layar ini aman, pembayaran yang sama akan dilanjutkan.',
+            payment.usesGateway
+                ? 'Pembayaran diproses oleh Midtrans. Pilih metode (QRIS, transfer bank, e-wallet) di halaman '
+                    'Midtrans, lalu kembali ke aplikasi. Status diperbarui otomatis.'
+                : 'Ini simulasi payment gateway. Tombol di bawah meniru hasil dari bank: berhasil atau ditolak. '
+                    'Menutup layar ini aman, pembayaran yang sama akan dilanjutkan.',
             style: muted,
           ),
         ),
         const SizedBox(height: AppSizes.space24),
-        PrimaryButton(label: 'Bayar sekarang', loading: busy, onPressed: onPay),
-        const SizedBox(height: AppSizes.space8),
-        TextButton(
-          onPressed: busy ? null : onDecline,
-          style: TextButton.styleFrom(foregroundColor: AppColors.error),
-          child: const Text('Simulasikan pembayaran ditolak'),
-        ),
+        if (payment.usesGateway) ...[
+          PrimaryButton(label: 'Bayar di Midtrans', loading: false, onPressed: busy ? null : onOpenGateway),
+          const SizedBox(height: AppSizes.space8),
+          TextButton(
+            onPressed: busy ? null : onCheck,
+            child: const Text('Saya sudah bayar, cek status'),
+          ),
+        ] else ...[
+          PrimaryButton(label: 'Bayar sekarang', loading: busy, onPressed: onPay),
+          const SizedBox(height: AppSizes.space8),
+          TextButton(
+            onPressed: busy ? null : onDecline,
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: const Text('Simulasikan pembayaran ditolak'),
+          ),
+        ],
       ],
     );
   }

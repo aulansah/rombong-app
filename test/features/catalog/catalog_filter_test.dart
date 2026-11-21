@@ -1,10 +1,11 @@
 import 'package:rombong/features/catalog/presentation/controllers/catalog_filter_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../../helpers/no_retry.dart';
 
 void main() {
   test('search is debounced: only the last term is applied', () async {
-    final container = ProviderContainer.test(overrides: [
+    final container = ProviderContainer.test(retry: noRetry, overrides: [
       searchDebounceProvider.overrideWithValue(const Duration(milliseconds: 50)),
     ]);
     final applied = <String>[];
@@ -22,7 +23,7 @@ void main() {
   });
 
   test('whitespace-only changes do not trigger a new search', () async {
-    final container = ProviderContainer.test(overrides: [
+    final container = ProviderContainer.test(retry: noRetry, overrides: [
       searchDebounceProvider.overrideWithValue(Duration.zero),
     ]);
     var changes = 0;
@@ -38,7 +39,7 @@ void main() {
   });
 
   test('selecting a category keeps the search term', () async {
-    final container = ProviderContainer.test(overrides: [
+    final container = ProviderContainer.test(retry: noRetry, overrides: [
       searchDebounceProvider.overrideWithValue(Duration.zero),
     ]);
     final filter = container.read(catalogFilterProvider.notifier);

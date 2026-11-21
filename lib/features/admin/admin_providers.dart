@@ -73,7 +73,7 @@ class AdminActions {
 
   void _orderChanged(Order order) {
     _ref.invalidate(orderDetailControllerProvider(order.id));
-    if (_ref.exists(orderListControllerProvider)) {
+    if (_ref.read(orderListControllerProvider.exists)) {
       _ref.read(orderListControllerProvider.notifier).replace(order);
     }
   }

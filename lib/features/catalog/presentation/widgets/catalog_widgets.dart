@@ -27,7 +27,10 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ProductImage(soldOut: soldOut, height: 120, iconSize: 40),
+            // The grid gives every card the same height. The image takes
+            // whatever the text below leaves, so a two-line name or a taller
+            // font never overflows the card.
+            Expanded(child: ProductImage(soldOut: soldOut, iconSize: 40)),
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
               child: Column(
@@ -51,10 +54,12 @@ class ProductCard extends StatelessWidget {
 /// The backend has no product photos yet, so the card shows a colored tile
 /// with an icon (the "Image" layer of the Figma component).
 class ProductImage extends StatelessWidget {
-  const ProductImage({super.key, required this.soldOut, required this.height, required this.iconSize});
+  const ProductImage({super.key, required this.soldOut, this.height, required this.iconSize});
 
   final bool soldOut;
-  final double height;
+
+  /// Fixed height, or null to fill the space the parent gives it.
+  final double? height;
   final double iconSize;
 
   @override

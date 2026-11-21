@@ -114,7 +114,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
 
     if (data.items.isEmpty) {
       return [
-        if (reloading != null) reloading,
+        ?reloading,
         SliverFillRemaining(
           hasScrollBody: false,
           child: StateView(
@@ -129,7 +129,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
     }
 
     return [
-      if (reloading != null) reloading,
+      ?reloading,
       SliverPadding(
         padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
         sliver: SliverGrid(

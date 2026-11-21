@@ -18,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/mocks.dart';
+import '../../helpers/no_retry.dart';
 
 class MockOrderRepository extends Mock implements OrderRepository {}
 
@@ -52,7 +53,7 @@ void main() {
   setUp(() {
     orders = MockOrderRepository();
     carts = MockCartRepository();
-    container = ProviderContainer.test(overrides: [
+    container = ProviderContainer.test(retry: noRetry, overrides: [
       orderRepositoryProvider.overrideWithValue(orders),
       cartRepositoryProvider.overrideWithValue(carts),
       authControllerProvider.overrideWith(_SignedIn.new),
@@ -104,14 +105,15 @@ void main() {
         (_) async => const Err(ServerFailure('Kopi is out of stock', statusCode: 409)),
       );
       container.listen(cartControllerProvider, (previous, next) {});
-      final sub = container.listen(checkoutControllerProvider, (previous, next) {});
+      final states = <AsyncValue<Object?>>[];
+      container.listen(checkoutControllerProvider, (previous, next) => states.add(next));
       await container.read(cartControllerProvider.future);
 
       final order = await container.read(checkoutControllerProvider.notifier).placeOrder();
       await container.read(cartControllerProvider.future);
 
       expect(order, isNull);
-      expect(sub.read().error, isA<ServerFailure>());
+      expect(states.last.error, isA<ServerFailure>());
       expect(cartLoads, 2);
     });
   });

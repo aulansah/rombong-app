@@ -33,9 +33,9 @@ class CartPage extends ConsumerWidget {
         ],
       ),
     );
-    if (ok == true && context.mounted) {
-      _report(context, await ref.read(cartControllerProvider.notifier).clear());
-    }
+    if (ok != true) return;
+    final failure = await ref.read(cartControllerProvider.notifier).clear();
+    if (context.mounted) _report(context, failure);
   }
 
   @override
@@ -72,10 +72,14 @@ class CartPage extends ConsumerWidget {
                 for (final item in value.items) ...[
                   _CartItemTile(
                     item: item,
-                    onQuantity: (q) async =>
-                        _report(context, await ref.read(cartControllerProvider.notifier).updateQuantity(item.id, q)),
-                    onRemove: () async =>
-                        _report(context, await ref.read(cartControllerProvider.notifier).remove(item.id)),
+                    onQuantity: (q) async {
+                      final failure = await ref.read(cartControllerProvider.notifier).updateQuantity(item.id, q);
+                      if (context.mounted) _report(context, failure);
+                    },
+                    onRemove: () async {
+                      final failure = await ref.read(cartControllerProvider.notifier).remove(item.id);
+                      if (context.mounted) _report(context, failure);
+                    },
                   ),
                   const SizedBox(height: AppSizes.space12),
                 ],

@@ -185,7 +185,7 @@ class OrderDetailController extends AsyncNotifier<Order> {
     switch (result) {
       case Ok(:final value):
         state = AsyncData(value);
-        if (ref.read(orderListControllerProvider.exist)) {
+        if (ref.read(orderListControllerProvider.exists)) {
           ref.read(orderListControllerProvider.notifier).replace(value);
         }
         return null;

@@ -46,6 +46,7 @@ class CheckoutController extends AsyncNotifier<Order?> {
         }
         return null;
     }
+    return null;
   }
 }
 
@@ -186,6 +187,7 @@ class OrderDetailController extends AsyncNotifier<Order> {
         if (failure is ServerFailure && failure.statusCode == 409) ref.invalidateSelf();
         return failure;
     }
+    return null;
   }
 }
 

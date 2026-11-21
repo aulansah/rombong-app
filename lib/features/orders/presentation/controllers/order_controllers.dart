@@ -54,7 +54,6 @@ class CheckoutController extends AsyncNotifier<Order?> {
     } finally {
       _placing = false;
     }
-    return null; // the analyzer does not treat the switch above as exhaustive here
   }
 }
 
@@ -186,7 +185,7 @@ class OrderDetailController extends AsyncNotifier<Order> {
     switch (result) {
       case Ok(:final value):
         state = AsyncData(value);
-        if (ref.exists(orderListControllerProvider)) {
+        if (ref.read(orderListControllerProvider.exist)) {
           ref.read(orderListControllerProvider.notifier).replace(value);
         }
         return null;
@@ -195,7 +194,6 @@ class OrderDetailController extends AsyncNotifier<Order> {
         if (failure is ServerFailure && failure.statusCode == 409) ref.invalidateSelf();
         return failure;
     }
-    return null;
   }
 }
 

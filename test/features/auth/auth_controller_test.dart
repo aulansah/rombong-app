@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/mocks.dart';
+import '../../helpers/no_retry.dart';
 
 void main() {
   setUpAll(registerFallbacks);
@@ -27,7 +28,7 @@ void main() {
   /// Dependency injection through Riverpod: the real use cases are replaced
   /// by mocks for this container only. ProviderContainer.test disposes the
   /// container automatically at the end of the test.
-  ProviderContainer makeContainer() => ProviderContainer.test(
+  ProviderContainer makeContainer() => ProviderContainer.test(retry: noRetry, 
         overrides: [
           getCurrentUserUseCaseProvider.overrideWithValue(getCurrentUser),
           logoutUseCaseProvider.overrideWithValue(logout),

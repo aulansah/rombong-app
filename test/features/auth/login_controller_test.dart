@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/mocks.dart';
+import '../../helpers/no_retry.dart';
 
 void main() {
   setUpAll(registerFallbacks);
@@ -20,7 +21,7 @@ void main() {
 
   setUp(() {
     login = MockLogin();
-    container = ProviderContainer.test(overrides: [loginUseCaseProvider.overrideWithValue(login)]);
+    container = ProviderContainer.test(retry: noRetry, overrides: [loginUseCaseProvider.overrideWithValue(login)]);
     states = [];
     // Listening keeps the autoDispose provider alive and records every state.
     container.listen(loginControllerProvider, (previous, next) => states.add(next), fireImmediately: true);

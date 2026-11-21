@@ -155,4 +155,50 @@ void main() {
     expect(a, matches(RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$')));
     expect(uuidV4(), isNot(a));
   });
+
+  group('CheckPayment', () {
+    Payment gateway(PaymentStatus status) => Payment(
+          id: 'p1',
+          orderId: 'o1',
+          reference: 'PAY-p1',
+          amount: 170000,
+          status: status,
+          expiresAt: _now.add(const Duration(minutes: 30)),
+          provider: 'midtrans',
+          redirectUrl: 'https://app.sandbox.midtrans.com/snap/v4/redirection/tok',
+        );
+
+    test('a paid gateway payment clears the stored key', () async {
+      keys.keys['o1'] = 'key-x';
+      when(() => repo.getPayment('p1')).thenAnswer((_) async => Ok(gateway(PaymentStatus.success)));
+
+      final result = await CheckPayment(repo, keys)(gateway(PaymentStatus.pending));
+
+      expect((result as Ok).value.status, PaymentStatus.success);
+      expect(keys.keys.containsKey('o1'), isFalse);
+    });
+
+    test('a still-pending payment keeps the key so the page can resume', () async {
+      keys.keys['o1'] = 'key-x';
+      when(() => repo.getPayment('p1')).thenAnswer((_) async => Ok(gateway(PaymentStatus.pending)));
+
+      await CheckPayment(repo, keys)(gateway(PaymentStatus.pending));
+
+      expect(keys.keys['o1'], 'key-x');
+    });
+
+    test('an expired gateway payment clears the key for a new attempt', () async {
+      keys.keys['o1'] = 'key-x';
+      when(() => repo.getPayment('p1')).thenAnswer((_) async => Ok(gateway(PaymentStatus.expired)));
+
+      await CheckPayment(repo, keys)(gateway(PaymentStatus.pending));
+
+      expect(keys.keys.containsKey('o1'), isFalse);
+    });
+
+    test('usesGateway is false for simulated payments', () {
+      expect(gateway(PaymentStatus.pending).usesGateway, isTrue);
+      expect(_payment('p2', PaymentStatus.pending).usesGateway, isFalse);
+    });
+  });
 }

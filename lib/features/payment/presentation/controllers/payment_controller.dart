@@ -30,6 +30,10 @@ class PaymentController extends AsyncNotifier<Payment> {
   /// Simulates a declined payment. The order stays PENDING.
   Future<Failure?> decline() => _act((payment) => ref.read(failPaymentUseCaseProvider)(payment));
 
+  /// Gateway payments: re-reads the status after the buyer paid on the
+  /// Midtrans page. Safe to call often; it only reads.
+  Future<Failure?> checkStatus() => _act((payment) => ref.read(checkPaymentUseCaseProvider)(payment));
+
   /// New attempt after FAILED/EXPIRED (the key was already cleared).
   void retry() => ref.invalidateSelf();
 

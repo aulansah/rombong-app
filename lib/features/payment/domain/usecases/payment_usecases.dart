@@ -67,6 +67,25 @@ class FailPayment implements UseCase<Payment, Payment> {
   }
 }
 
+/// Re-reads a gateway payment after the buyer returns from the Midtrans
+/// page. Once the payment is final (paid, failed or expired) the stored key
+/// is no longer needed: a paid order has nothing to resume, and a failed one
+/// needs a new attempt with a new key.
+class CheckPayment implements UseCase<Payment, Payment> {
+  const CheckPayment(this._repository, this._keys);
+  final PaymentRepository _repository;
+  final IdempotencyKeyStore _keys;
+
+  @override
+  Future<Result<Payment>> call(Payment payment) async {
+    final result = await _repository.getPayment(payment.id);
+    if (result case Ok(:final value) when value.status == PaymentStatus.success || value.status.isFinalFailure) {
+      await _keys.clear(payment.orderId);
+    }
+    return result;
+  }
+}
+
 /// 409 "Payment has expired" / "Payment is already FAILED".
 bool _isFinal(Failure f) =>
     f is ServerFailure &&

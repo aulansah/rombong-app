@@ -6,7 +6,11 @@ abstract interface class PaymentRepository {
   /// again returns the payment created the first time instead of a new one.
   Future<Result<Payment>> createPayment({required String orderId, required String idempotencyKey});
 
-  /// Payment gateway simulation (the backend has no real gateway).
+  /// GET /payments/{id}: the current status, e.g. after paying on the
+  /// Midtrans page (the result reaches the backend through its webhook).
+  Future<Result<Payment>> getPayment(String paymentId);
+
+  /// Payment simulation (only when the backend runs PAYMENT_PROVIDER=simulated).
   Future<Result<Payment>> simulateSuccess(String paymentId);
   Future<Result<Payment>> simulateFailure(String paymentId);
 }

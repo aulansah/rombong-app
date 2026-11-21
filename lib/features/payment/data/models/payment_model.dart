@@ -9,6 +9,8 @@ class PaymentModel extends Payment {
     required super.status,
     required super.expiresAt,
     super.paidAt,
+    super.provider,
+    super.redirectUrl,
   });
 
   factory PaymentModel.fromJson(Map<String, dynamic> json) => PaymentModel(
@@ -19,5 +21,7 @@ class PaymentModel extends Payment {
         status: PaymentStatus.fromApi(json['status'] as String?),
         expiresAt: DateTime.parse(json['expires_at'] as String),
         paidAt: json['paid_at'] == null ? null : DateTime.parse(json['paid_at'] as String),
+        provider: (json['provider'] as String?) ?? Payment.providerSimulated,
+        redirectUrl: json['redirect_url'] as String?,
       );
 }

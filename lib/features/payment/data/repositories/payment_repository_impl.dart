@@ -16,6 +16,9 @@ class PaymentRepositoryImpl implements PaymentRepository {
       guard(() => _remote.create(orderId, idempotencyKey));
 
   @override
+  Future<Result<Payment>> getPayment(String paymentId) => guard(() => _remote.get(paymentId));
+
+  @override
   Future<Result<Payment>> simulateSuccess(String paymentId) => guard(() => _remote.simulateSuccess(paymentId));
 
   @override

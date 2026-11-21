@@ -29,7 +29,11 @@ class Payment extends Equatable {
     required this.status,
     required this.expiresAt,
     this.paidAt,
+    this.provider = providerSimulated,
+    this.redirectUrl,
   });
+
+  static const providerSimulated = 'simulated';
 
   final String id;
   final String orderId;
@@ -39,8 +43,18 @@ class Payment extends Equatable {
   final DateTime expiresAt;
   final DateTime? paidAt;
 
+  /// "simulated" or "midtrans".
+  final String provider;
+
+  /// Payment page of the gateway (Midtrans Snap). Null for simulated payments.
+  final String? redirectUrl;
+
+  /// True when the buyer pays on the gateway's page and the result arrives
+  /// through the backend webhook, so the app only checks the status.
+  bool get usesGateway => provider != providerSimulated && redirectUrl != null;
+
   bool isExpiredAt(DateTime now) => status == PaymentStatus.pending && !now.isBefore(expiresAt);
 
   @override
-  List<Object?> get props => [id, orderId, reference, amount, status, expiresAt, paidAt];
+  List<Object?> get props => [id, orderId, reference, amount, status, expiresAt, paidAt, provider, redirectUrl];
 }

@@ -90,11 +90,14 @@ void main() {
 
   test('first page failing → AsyncError (full error screen)', () async {
     when(() => getProducts(_q(1))).thenAnswer((_) async => const Err(NetworkFailure('offline')));
-    final sub = container.listen(productListControllerProvider, (previous, next) {});
+    // Record what listeners receive instead of reading the subscription:
+    // Riverpod 3.5 may close a subscription once its provider errors.
+    final states = <AsyncValue<ProductListState>>[];
+    container.listen(productListControllerProvider, (previous, next) => states.add(next));
 
     await expectLater(container.read(productListControllerProvider.future), throwsA(anything));
-    expect(sub.read().hasError, isTrue);
-    expect(sub.read().error, isA<NetworkFailure>());
+    expect(states.last.hasError, isTrue);
+    expect(states.last.error, isA<NetworkFailure>());
   });
 
   test('a later page failing keeps the loaded items and exposes loadMoreError', () async {
@@ -113,7 +116,8 @@ void main() {
   test('changing the category reloads from page 1 with the new filter', () async {
     when(() => getProducts(_q(1))).thenAnswer((_) async => Ok(_page(1, 3)));
     when(() => getProducts(_q(1, categoryId: 'c2'))).thenAnswer((_) async => Ok(_page(1, 1, size: 1)));
-    final sub = container.listen(productListControllerProvider, (previous, next) {});
+    final states = <AsyncValue<ProductListState>>[];
+    container.listen(productListControllerProvider, (previous, next) => states.add(next));
     await container.read(productListControllerProvider.future);
 
     container.read(catalogFilterProvider.notifier).selectCategory('c2');
@@ -121,7 +125,7 @@ void main() {
 
     expect(state.filter.categoryId, 'c2');
     expect(state.items, hasLength(1));
-    expect(sub.read().value!.page, 1);
+    expect(states.last.value!.page, 1);
   });
 
   test('a page that arrives after the filter changed is ignored', () async {

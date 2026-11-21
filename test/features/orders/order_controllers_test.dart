@@ -18,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/mocks.dart';
+import '../../helpers/no_retry.dart';
 
 class MockOrderRepository extends Mock implements OrderRepository {}
 
@@ -52,7 +53,7 @@ void main() {
   setUp(() {
     orders = MockOrderRepository();
     carts = MockCartRepository();
-    container = ProviderContainer.test(overrides: [
+    container = ProviderContainer.test(retry: noRetry, overrides: [
       orderRepositoryProvider.overrideWithValue(orders),
       cartRepositoryProvider.overrideWithValue(carts),
       authControllerProvider.overrideWith(_SignedIn.new),

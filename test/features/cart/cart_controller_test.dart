@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/mocks.dart';
+import '../../helpers/no_retry.dart';
 
 class MockCartRepository extends Mock implements CartRepository {}
 
@@ -43,7 +44,7 @@ Cart _cart(List<CartItem> items) => Cart(id: 'cart1', items: items);
 void main() {
   late MockCartRepository repo;
 
-  ProviderContainer makeContainer({User? user = testUser}) => ProviderContainer.test(overrides: [
+  ProviderContainer makeContainer({User? user = testUser}) => ProviderContainer.test(retry: noRetry, overrides: [
         cartRepositoryProvider.overrideWithValue(repo),
         authControllerProvider.overrideWith(() => FakeAuthController(user)),
       ]);

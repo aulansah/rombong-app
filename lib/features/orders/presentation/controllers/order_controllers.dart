@@ -17,6 +17,8 @@ import '../../order_providers.dart';
 /// State of the checkout button: `AsyncData(null)` idle, `AsyncLoading`
 /// placing the order, `AsyncData(order)` placed, `AsyncError(failure)`.
 class CheckoutController extends AsyncNotifier<Order?> {
+  bool _placing = false;
+
   @override
   Future<Order?> build() async => null;
 
@@ -25,28 +27,34 @@ class CheckoutController extends AsyncNotifier<Order?> {
     // A second tap while the first request is running is ignored. The
     // backend would reject it anyway (the cart row is locked and then
     // empty), but the user should not see an error for a double tap.
-    if (state.isLoading) return null;
-    state = const AsyncLoading();
+    // A flag rather than state.isLoading: the state is also "loading"
+    // while build() runs, which would swallow the first tap.
+    if (_placing) return null;
+    _placing = true;
+    try {
+      state = const AsyncLoading();
+      final result = await ref.read(placeOrderUseCaseProvider)(const NoParams());
+      if (!ref.mounted) return null;
 
-    final result = await ref.read(placeOrderUseCaseProvider)(const NoParams());
-    if (!ref.mounted) return null;
-
-    switch (result) {
-      case Ok(:final value):
-        state = AsyncData(value);
-        ref.invalidate(cartControllerProvider); // the backend emptied it
-        ref.invalidate(orderListControllerProvider);
-        return value;
-      case Err(:final failure):
-        state = AsyncError(failure, StackTrace.current);
-        // 409: stock changed since the cart was loaded. Reload the cart so
-        // the unavailable items are highlighted.
-        if (failure is ServerFailure && failure.statusCode == 409) {
-          ref.invalidate(cartControllerProvider);
-        }
-        return null;
+      switch (result) {
+        case Ok(:final value):
+          state = AsyncData(value);
+          ref.invalidate(cartControllerProvider); // the backend emptied it
+          ref.invalidate(orderListControllerProvider);
+          return value;
+        case Err(:final failure):
+          state = AsyncError(failure, StackTrace.current);
+          // 409: stock changed since the cart was loaded. Reload the cart so
+          // the unavailable items are highlighted.
+          if (failure is ServerFailure && failure.statusCode == 409) {
+            ref.invalidate(cartControllerProvider);
+          }
+          return null;
+      }
+    } finally {
+      _placing = false;
     }
-    return null;
+    return null; // the analyzer does not treat the switch above as exhaustive here
   }
 }
 

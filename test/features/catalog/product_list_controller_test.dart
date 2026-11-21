@@ -12,6 +12,7 @@ import 'package:rombong/features/catalog/presentation/controllers/product_list_c
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import '../../helpers/no_retry.dart';
 
 class MockGetProducts extends Mock implements GetProducts {}
 
@@ -41,7 +42,7 @@ void main() {
 
   setUp(() {
     getProducts = MockGetProducts();
-    container = ProviderContainer.test(overrides: [
+    container = ProviderContainer.test(retry: noRetry, overrides: [
       getProductsUseCaseProvider.overrideWithValue(getProducts),
       searchDebounceProvider.overrideWithValue(Duration.zero),
     ]);
